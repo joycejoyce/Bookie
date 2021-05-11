@@ -1,5 +1,6 @@
 import { Component } from "react";
 import Logo from "./Logo.js";
+import '../CreateAccount.scss';
 
 class CreateAccount extends Component {
     render() {
@@ -8,7 +9,7 @@ class CreateAccount extends Component {
                 <div className="contents">
                     <Logo />
                     <h1>Create your Bookie Account</h1>
-                    
+
                 </div>
             </div>
         );

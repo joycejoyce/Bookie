@@ -1,6 +1,5 @@
 import './App.scss';
 import './InputText.scss';
-import './SignIn.scss';
 import CreateAccount from './components/CreateAccount';
 import SignIn from './components/SignIn';
 import {

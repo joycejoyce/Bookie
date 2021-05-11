@@ -1,0 +1,13 @@
+@import "App";
+
+.createAccount {
+    @extend %signInAndCreateAccountCommonSettings;
+
+    .contents {
+        text-align: center;
+        h1 {
+            font-size: 1.25rem;
+            font-family: Montserrat-Regular;
+        }
+    }
+}
