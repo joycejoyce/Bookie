@@ -9,15 +9,13 @@ const Logo = styled(LogoImg)`
 const ClassName_inputText = "inputText";
 const ClassName_inputTextOnFocus = "inputTextOnFocus";
 const ClassName_inputTextOnBlur = "inputTextOnBlur";
+const ClassName_inputTextOnBlur_hasText = "inputTextOnBlur_hasText";
 
 class SignIn extends Component {
     handleInputOnFocus = (e) => {
         console.log("onFocus");
-        let classList = document.getElementsByClassName(ClassName_inputText)[0].classList;
-        classList.remove(ClassName_inputTextOnBlur);
-        if (!classList.contains(ClassName_inputTextOnFocus)) {
-            classList.add(ClassName_inputTextOnFocus);
-        }
+        let targetElem = e.target.parentElement;
+        targetElem.className = ClassName_inputText + " " + ClassName_inputTextOnFocus;
     }
 
     handleInputOnChange = (e) => {
@@ -27,12 +25,12 @@ class SignIn extends Component {
     handleInputOnBlur = (e) => {
         console.log("OnBlur");
         const value = e.target.value;
+        let targetElem = e.target.parentElement;
         if (value.length === 0) {
-            let classList = document.getElementsByClassName("inputText")[0].classList;
-            classList.remove(ClassName_inputTextOnFocus);
-            if (!classList.contains(ClassName_inputTextOnBlur)) {
-                classList.add(ClassName_inputTextOnBlur);
-            }
+            targetElem.className = ClassName_inputText + " " + ClassName_inputTextOnBlur;
+        }
+        else {
+            targetElem.className = ClassName_inputText + " " + ClassName_inputTextOnBlur_hasText;
         }
     }
 

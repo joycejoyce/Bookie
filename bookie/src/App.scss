@@ -80,6 +80,7 @@ body {
     text-align: center;
     h1 {
       margin-top: 20px;
+      color: $darkBlue;
     }
     .btnSection {
       margin-top: 87px;
@@ -106,7 +107,7 @@ body {
       color: $blue1;
 
       /*animation*/
-      &:active {
+      &:hover {
         background-position: left;
         background: linear-gradient(to left, $lightBlue 50%, white 50%) right;
         background-size: 200%;
@@ -166,6 +167,16 @@ body {
     }
     input {
       border: 2px solid $blue1;
+    }
+  }
+  
+  .inputTextOnBlur_hasText {
+    @extend .inputTextOnFocus;
+    label {
+      color: $grey;
+    }
+    input {
+      border: 1px solid $grey;
     }
   }
 }
