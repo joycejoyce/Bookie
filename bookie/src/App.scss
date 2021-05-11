@@ -1,9 +1,9 @@
 /* color */
-$lightGrey: #D0D0D0;
+$lightGrey: #d0d0d0;
 $darkBlue: hsl(195, 83%, 16%);
-$lightBlue: #D6F1FA;
-$blue1: #118AB2;
-$blue2: #1A5F76;
+$lightBlue: #d6f1fa;
+$blue1: #118ab2;
+$blue2: #1a5f76;
 $grey: #828181;
 
 /* border-radius */
@@ -12,16 +12,16 @@ $inputBorderRadius: 5px;
 
 /* font */
 @font-face {
-    font-family: Montserrat-Regular;
-    src:url("fonts/Montserrat/Montserrat-Regular.ttf");
+  font-family: Montserrat-Regular;
+  src: url("fonts/Montserrat/Montserrat-Regular.ttf");
 }
 @font-face {
   font-family: Roboto-Regular;
-  src:url("fonts/Roboto/Roboto-Regular.ttf");
+  src: url("fonts/Roboto/Roboto-Regular.ttf");
 }
 @font-face {
   font-family: Montserrat-SemiBold;
-  src:url("fonts/Montserrat/Montserrat-SemiBold.ttf");
+  src: url("fonts/Montserrat/Montserrat-SemiBold.ttf");
 }
 
 body {
@@ -51,66 +51,3 @@ body {
   cursor: pointer;
   @include btnFont();
 }
-
-.signIn {
-  margin: auto;
-  top: 0; bottom: 0; left: 0; right: 0;
-  position: absolute;
-  width: 448px;
-  height: 500px;
-  padding: 48px 40px 36px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .contents {
-    width: 296px;
-    text-align: center;
-    h1 {
-      margin-top: 20px;
-      color: $darkBlue;
-    }
-    .btnSection {
-      margin-top: 87px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .nextBtn {
-      @include btn(83px, 40px);
-      border: none;
-      background: $blue1;
-      color: white;
-      &:hover {
-        background: $blue2;
-      }
-      &:active {
-        background: $blue1;
-      }
-    }
-    .createAccountBtn {
-      @include btn(128px, 40px);
-      transform: translateX(-10px);
-      border: none;
-      background: transparent;
-      color: $blue1;
-
-      /*animation*/
-      &:hover {
-        background-position: left;
-        background: linear-gradient(to left, $lightBlue 50%, white 50%) right;
-        background-size: 200%;
-        transition: .1s ease-out;
-      }
-    }
-  }
-  
-  h1 {
-    font-family: Montserrat-Regular;
-    font-size: 1.75rem;
-  }
-}
-
-/* input [text] (start) */
-/* input [text] (end) */
-
