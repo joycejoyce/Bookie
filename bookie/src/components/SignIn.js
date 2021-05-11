@@ -1,10 +1,5 @@
 import { Component } from "react";
-import styled from '@emotion/styled';
-import { ReactComponent as LogoImg } from '../assets/logo.svg';
-
-const Logo = styled(LogoImg)`
-    width: 90px;
-`;
+import Logo from "./Logo.js";
 
 const ClassName_inputText = "inputText";
 const ClassName_inputTextOnFocus = "inputTextOnFocus";
@@ -48,8 +43,8 @@ class SignIn extends Component {
                         onBlur={(e) => this.handleInputOnBlur(e)}/>
                     </div>
                     <div className="btnSection">
-                        <button className="createAccount">Create account</button>
-                        <button className="next">Next</button>
+                        <button className="createAccountBtn">Create account</button>
+                        <button className="nextBtn">Next</button>
                     </div>
                 </div>
             </div>

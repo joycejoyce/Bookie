@@ -1,0 +1,71 @@
+@import "App";
+
+@mixin inputText($width, $height) {
+  width: $width;
+  height: $height;
+  border: solid $lightGrey 1px;
+  border-radius: 5px;
+  padding: 13px 15px;
+  font-size: 1rem;
+  color: $darkBlue;
+}
+
+input {
+  @include inputText(296px, 57px);
+}
+
+.inputText {
+  margin-top: 34px;
+  position: relative;
+  label {
+    position: absolute;
+  }
+  input {
+    padding: 0.8rem;
+    border-radius: $inputBorderRadius;
+    border: 1px solid lightGrey;
+    outline: none;
+    color: $darkBlue;
+  }
+}
+
+.inputTextOnBlur {
+  label {
+    cursor: auto;
+    top: 0;
+    bottom: 0;
+    left: 1rem;
+    margin: auto;
+    width: 50%;
+    height: 30%;
+    color: $grey;
+    font-size: 1rem;
+    transition: 0.1s ease-out;
+  }
+}
+
+.inputTextOnFocus {
+  label {
+    cursor: context-menu;
+    padding: 0 0.2rem;
+    top: -0.5em;
+    left: 1rem;
+    background-color:white;
+    font-size: 0.875rem;
+    color: $blue1;
+    transition: 0.1s ease-in;
+  }
+  input {
+    border: 2px solid $blue1;
+  }
+}
+
+.inputTextOnBlur_hasText {
+  @extend .inputTextOnFocus;
+  label {
+    color: $grey;
+  }
+  input {
+    border: 1px solid $grey;
+  }
+}
