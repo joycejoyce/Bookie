@@ -1,6 +1,6 @@
 import { Component } from "react";
 import Logo from "./Logo.js";
-import "../CreateAccount.scss";
+import "../scss/CreateAccount.scss";
 import InputText from "./InputText.js";
 
 class CreateAccount extends Component {

@@ -1,6 +1,6 @@
 import { Component, useState } from "react";
 import Logo from "./Logo.js";
-import '../SignIn.scss';
+import '../scss/SignIn.scss';
 import InputText from "./InputText.js";
 
 class SignIn extends Component {

@@ -1,5 +1,4 @@
-import './App.scss';
-import './InputText.scss';
+import './scss/App.scss';
 import CreateAccount from './components/CreateAccount';
 import SignIn from './components/SignIn';
 import {
@@ -12,7 +11,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={CreateAccount} />
+        <Route path="/" component={SignIn} />
         <Route path="/createAccount" component={CreateAccount} />
         <Route path="/signIn" component={SignIn} />
       </Switch>

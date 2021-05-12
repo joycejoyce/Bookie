@@ -1,5 +1,5 @@
 import { Component } from "react";
-import '../InputText.scss';
+import '../scss/InputText.scss';
 //import {handleInputOnFocus, handleInputOnBlur} from "../HandlInputTextEvents.js";
 
 const ClassName_inputText = "inputText";
