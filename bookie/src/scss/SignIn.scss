@@ -5,13 +5,6 @@
   @extend %signInAndCreateAccountCommonSettings;
 
   .contents {
-    width: 296px;
-    text-align: center;
-    h1 {
-      color: $darkBlue;
-      font-family: Montserrat-Regular;
-      font-size: 1.75rem;
-    }
     @include btnSection(128px);
   }
 }

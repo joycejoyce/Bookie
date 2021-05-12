@@ -5,6 +5,7 @@ $lightBlue: #d6f1fa;
 $blue1: #118ab2;
 $blue2: #1a5f76;
 $grey: #828181;
+$green: #06D6A0;
 
 /* border-radius */
 $btnBorderRadius: 5px;
@@ -15,13 +16,18 @@ $inputBorderRadius: 5px;
   font-family: Montserrat-Regular;
   src: url("../fonts/Montserrat/Montserrat-Regular.ttf");
 }
+
+@font-face {
+  font-family: Montserrat-SemiBold;
+  src: url("../fonts/Montserrat/Montserrat-SemiBold.ttf");
+}
 @font-face {
   font-family: Roboto-Regular;
   src: url("../fonts/Roboto/Roboto-Regular.ttf");
 }
 @font-face {
-  font-family: Montserrat-SemiBold;
-  src: url("../fonts/Montserrat/Montserrat-SemiBold.ttf");
+  font-family: Roboto-Medium;
+  src: url("../fonts/Roboto/Roboto-Medium.ttf");
 }
 
 body {
@@ -76,6 +82,8 @@ body {
   h1 {
     margin-top: 20px;
     margin-bottom: 35px;
+    font-size: 1.25rem;
+    font-family: Montserrat-Regular;
   }
   .btnSection {
     margin-top: 87px;

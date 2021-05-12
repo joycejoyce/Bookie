@@ -1,11 +1,20 @@
 import { Component } from "react";
 
 class BtnSection extends Component {
+    checkShouldDisplayLeftBtn = (leftBtnText) => {
+        return leftBtnText.length > 0;
+    }
+
     render() {
         const {leftBtnText} = this.props;
+        const shouldDisplayLeftBtn = this.checkShouldDisplayLeftBtn(leftBtnText);
+        let style = {};
+        if (!shouldDisplayLeftBtn) {
+            style = { display: "none" };
+        }
         return (
             <div className="btnSection">
-                <button className="leftBtn">{leftBtnText}</button>
+                <button className="leftBtn" style={style}>{leftBtnText}</button>
                 <button className="rightBtn">Next</button>
             </div>
         );

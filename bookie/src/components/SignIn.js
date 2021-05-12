@@ -27,10 +27,6 @@ class SignIn extends Component {
                         onChange={(e) => this.handleOnChange(e)}
                     />
                     <BtnSection leftBtnText="Create account" />
-                    {/*<div className="btnSection">
-                        <button className="leftBtn">Create account</button>
-                        <button className="rightBtn">Next</button>
-                    </div>*/}
                 </div>
             </div>
         );

@@ -1,6 +1,7 @@
-import './scss/App.scss';
-import CreateAccount from './components/CreateAccount';
-import SignIn from './components/SignIn';
+import "./scss/App.scss";
+import CreateAccount from "./components/CreateAccount.js";
+import SignIn from "./components/SignIn.js";
+import VerifyCreateAccount from "./components/VerifyCreateAccount.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,9 +12,10 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={CreateAccount} />
+        <Route path="/" component={VerifyCreateAccount} />
         <Route path="/createAccount" component={CreateAccount} />
         <Route path="/signIn" component={SignIn} />
+        <Route path="/verifyCreateAccount" component={VerifyCreateAccount} />
       </Switch>
     </Router>
   );
