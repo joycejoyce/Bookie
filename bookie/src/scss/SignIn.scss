@@ -1,4 +1,5 @@
 @import "App";
+@import "BtnSection";
 
 .signIn {
   @extend %signInAndCreateAccountCommonSettings;
@@ -11,37 +12,6 @@
       font-family: Montserrat-Regular;
       font-size: 1.75rem;
     }
-    .btnSection {
-      margin-top: 87px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .nextBtn {
-      @include btn(83px, 40px);
-      border: none;
-      background: $blue1;
-      color: white;
-      &:hover {
-        background: $blue2;
-      }
-      &:active {
-        background: $blue1;
-      }
-    }
-    .createAccountBtn {
-      @include btn(128px, 40px);
-      transform: translateX(-10px);
-      border: none;
-      background: transparent;
-      color: $blue1;
-
-      /*animation*/
-      &:hover {
-        background-position: left;
-        background: linear-gradient(to left, $lightBlue 50%, white 50%) right;
-        background-size: 200%;
-        transition: 0.1s ease-out;
-      }
-    }
+    @include btnSection(128px);
   }
 }

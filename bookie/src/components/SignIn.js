@@ -1,7 +1,8 @@
-import { Component, useState } from "react";
+import { Component } from "react";
 import Logo from "./Logo.js";
 import '../scss/SignIn.scss';
 import InputText from "./InputText.js";
+import BtnSection from "./BtnSection.js";
 
 class SignIn extends Component {
     constructor(props) {
@@ -25,10 +26,11 @@ class SignIn extends Component {
                         label="Enter email address"
                         onChange={(e) => this.handleOnChange(e)}
                     />
-                    <div className="btnSection">
-                        <button className="createAccountBtn">Create account</button>
-                        <button className="nextBtn">Next</button>
-                    </div>
+                    <BtnSection leftBtnText="Create account" />
+                    {/*<div className="btnSection">
+                        <button className="leftBtn">Create account</button>
+                        <button className="rightBtn">Next</button>
+                    </div>*/}
                 </div>
             </div>
         );

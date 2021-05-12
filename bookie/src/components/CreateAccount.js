@@ -3,6 +3,7 @@ import Logo from "./Logo.js";
 import "../scss/CreateAccount.scss";
 import InputText from "./InputText.js";
 import InputCheckbox from "./InputCheckbox.js";
+import BtnSection from "./BtnSection.js";
 
 class CreateAccount extends Component {
     constructor(props) {
@@ -41,6 +42,7 @@ class CreateAccount extends Component {
                             label="Show password"
                         />
                     </div>
+                    <BtnSection leftBtnText="Sign in instead" />
                 </div>
             </div>
         );
