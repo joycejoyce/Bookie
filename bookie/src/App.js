@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={SignIn} />
+        <Route path="/" component={CreateAccount} />
         <Route path="/createAccount" component={CreateAccount} />
         <Route path="/signIn" component={SignIn} />
       </Switch>

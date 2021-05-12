@@ -21,7 +21,7 @@ class SignIn extends Component {
                 <div className="contents">
                     <Logo />
                     <h1>Sign In</h1>
-                    <InputText id="email"
+                    <InputText id="email" type="email"
                         label="Enter email address"
                         onChange={(e) => this.handleOnChange(e)}
                     />
