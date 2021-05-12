@@ -2,13 +2,15 @@ import { Component } from "react";
 import Logo from "./Logo.js";
 import "../scss/CreateAccount.scss";
 import InputText from "./InputText.js";
+import InputCheckbox from "./InputCheckbox.js";
 
 class CreateAccount extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            confirmPassword: ""
         };
     }
 
@@ -35,10 +37,9 @@ class CreateAccount extends Component {
                             label="Confirm password"
                             onChange={(e) => this.handleOnChange(e)}
                         />
-                    </div>
-                    <div className="inputCheckbox">
-                        <input type="checkbox" id="showPassword" />
-                        <label htmlFor="showPassword">Show password</label>
+                        <InputCheckbox id="showPassword"
+                            label="Show password"
+                        />
                     </div>
                 </div>
             </div>
