@@ -19,6 +19,7 @@ input {
   position: relative;
   label {
     position: absolute;
+    z-index: 100;
   }
   input {
     padding: 0.8rem;
