@@ -9,11 +9,29 @@
             font-size: 1.25rem;
             font-family: Montserrat-Regular;
         }
-        /*input {
-            height: 40px;
+        .inputSection {
+            .inputText {
+                margin: 0;
+            }
+            display: grid;
+            grid-template-columns: 1fr;
+            row-gap: 1rem;
+            margin-bottom: 1.5rem;
         }
-        label {
-            font-size: 0.875px;
-        }*/
+        .inputCheckbox {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            label {
+                margin-left: 1rem;
+            }
+            input {
+                transform: scale(1.5) translateX(.1rem);
+                border: none;
+                outline: none;
+                box-shadow: 0 0 1px 5px #f3d42e;
+            }
+        }
     }
 }

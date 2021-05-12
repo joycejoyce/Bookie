@@ -28,7 +28,6 @@ class InputText extends Component {
 
     render() {
         const {id, type, label, onChange} = this.props;
-        console.log({id, label});
         return(
             <div id={id} className="inputText inputTextOnBlur">
                 <label htmlFor={id}>{label}</label>

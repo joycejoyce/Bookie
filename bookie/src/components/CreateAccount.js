@@ -22,18 +22,24 @@ class CreateAccount extends Component {
                 <div className="contents">
                     <Logo />
                     <h1>Create your Bookie Account</h1>
-                    <InputText id="email" type="email"
-                        label="Email address"
-                        onChange={(e) => this.handleOnChange(e)}
-                    />
-                    <InputText id="password" type="password"
-                        label="Password"
-                        onChange={(e) => this.handleOnChange(e)}
-                    />
-                    <InputText id="confirmPassword" type="password"
-                        label="Confirm password"
-                        onChange={(e) => this.handleOnChange(e)}
-                    />
+                    <div className="inputSection">
+                        <InputText id="email" type="email"
+                            label="Email address"
+                            onChange={(e) => this.handleOnChange(e)}
+                        />
+                        <InputText id="password" type="password"
+                            label="Password"
+                            onChange={(e) => this.handleOnChange(e)}
+                        />
+                        <InputText id="confirmPassword" type="password"
+                            label="Confirm password"
+                            onChange={(e) => this.handleOnChange(e)}
+                        />
+                    </div>
+                    <div className="inputCheckbox">
+                        <input type="checkbox" id="showPassword" />
+                        <label htmlFor="showPassword">Show password</label>
+                    </div>
                 </div>
             </div>
         );

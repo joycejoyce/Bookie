@@ -9,8 +9,7 @@
   font-size: 1rem;
   color: $darkBlue;
 }
-
-input:-webkit-autofill,
+/*input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active
@@ -20,13 +19,21 @@ input:-webkit-autofill:active
 
 input {
   @include inputText(296px, 57px);
-}
+}*/
 
 .inputText {
-  margin-top: 34px;
   position: relative;
   * {
     font-family: Roboto-Regular;
+  }
+  input {
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
+    }
+    @include inputText(296px, 57px);
   }
   label {
     position: absolute;
