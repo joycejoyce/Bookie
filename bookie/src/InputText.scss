@@ -19,9 +19,10 @@ input {
   position: relative;
   label {
     position: absolute;
-    z-index: 100;
+    z-index: -1;
   }
   input {
+    background-color: transparent;
     padding: 0.8rem;
     border-radius: $inputBorderRadius;
     border: 1px solid lightGrey;
@@ -47,6 +48,7 @@ input {
 
 .inputTextOnFocus {
   label {
+    z-index: 99;
     cursor: context-menu;
     padding: 0 0.2rem;
     top: -0.5em;
