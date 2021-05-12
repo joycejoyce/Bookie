@@ -2,7 +2,7 @@
 @import "BtnSection";
 
 .verifyCreateAccount {
-  @extend %signInAndCreateAccountCommonSettings;
+    @extend %signInAndCreateAccountCommonSettings;
 
   .contents {
     .description {
