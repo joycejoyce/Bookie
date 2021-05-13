@@ -1,0 +1,43 @@
+@import "App";
+
+.welcome {
+  @extend %signInAndCreateAccountCommonSettings;
+
+  .contents {
+      * {
+        color: $darkBlue;
+      }
+      .welcomeTitle {
+        margin-top: $titleMarginTop;
+        margin-bottom: $titleMarginBottom;
+        font-size: $fontSize_big2;
+        font-family: Roboto-Medium;
+        text-align: left;
+      }
+      .description {
+          font-size: $fontSize_normal;
+          text-align: left;
+      }
+      .signInBtn {
+          display: block;
+          margin-top: calc(#{$titleMarginTop}*2);
+          @include btn(100%, $btnHeight);
+          background: transparent;
+          color: $blue1;
+          border: 2px solid $blue1;
+          &:hover {
+            background-position: left;
+            background: linear-gradient(to left, $blue1 50%, white 50%) right;
+            background-size: 200%;
+            transition: .2s ease-out;
+            color: white;
+          }
+          &:focus {
+              box-shadow: 1px 1px 5px $grey;
+              background: transparent;
+              color: white;
+              background: $blue1;
+          }
+      }
+  }
+}

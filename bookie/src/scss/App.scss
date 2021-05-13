@@ -11,6 +11,13 @@ $green: #06D6A0;
 $btnBorderRadius: 5px;
 $inputBorderRadius: 5px;
 
+/* margin */
+$titleMarginTop: 2rem;
+$titleMarginBottom: 1.75rem;
+
+/* btn */
+$btnHeight: 40px;
+
 /* font-face */
 @font-face {
   font-family: Montserrat-Regular;
@@ -32,6 +39,7 @@ $inputBorderRadius: 5px;
 
 /* font-family */
 $fontSize_big: 1.25rem;
+$fontSize_big2: 1.5rem;
 $fontSize_normal: 0.875rem;
 $fontSize_small: 0.5rem;
 
@@ -119,8 +127,8 @@ body {
     @extend %forCenter_child;
   }
   h1 {
-    margin-top: 2rem;
-    margin-bottom: 1.75rem;
+    margin-top: $titleMarginTop;
+    margin-bottom: $titleMarginBottom;
     font-size: $fontSize_big;
     font-family: Montserrat-Regular;
     color: $darkBlue;

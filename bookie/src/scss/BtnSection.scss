@@ -1,6 +1,6 @@
 @mixin btnSection($leftBtnWidth) {
   .leftBtn {
-    @include btn($leftBtnWidth, 40px);
+    @include btn($leftBtnWidth, $btnHeight);
     transform: translateX(-10px);
     border: none;
     background: transparent;
@@ -15,7 +15,7 @@
     }
   }
   .rightBtn {
-    @include btn(83px, 40px);
+    @include btn(83px, $btnHeight);
     border: none;
     background: $blue1;
     color: white;
