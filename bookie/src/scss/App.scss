@@ -11,7 +11,7 @@ $green: #06D6A0;
 $btnBorderRadius: 5px;
 $inputBorderRadius: 5px;
 
-/* font */
+/* font-face */
 @font-face {
   font-family: Montserrat-Regular;
   src: url("../fonts/Montserrat/Montserrat-Regular.ttf");
@@ -30,6 +30,11 @@ $inputBorderRadius: 5px;
   src: url("../fonts/Roboto/Roboto-Medium.ttf");
 }
 
+/* font-family */
+$fontSize_big: 1.25rem;
+$fontSize_normal: 0.875rem;
+$fontSize_small: 0.5rem;
+
 body {
   font-size: 16px;
 }
@@ -47,7 +52,7 @@ body {
 
 @mixin btnFont() {
   font-family: Montserrat-SemiBold;
-  font-size: 0.875rem;
+  font-size: $fontSize_normal;
 }
 
 @mixin btn($width, $height) {
@@ -90,10 +95,11 @@ body {
     @extend %forCenter_child
   }
   h1 {
-    margin-top: 20px;
-    margin-bottom: 35px;
-    font-size: 1.25rem;
+    margin-top: 2rem;
+    margin-bottom: 1.75rem;
+    font-size: $fontSize_big;
     font-family: Montserrat-Regular;
+    color: $darkBlue;
   }
   .btnSection {
     margin-top: 87px;

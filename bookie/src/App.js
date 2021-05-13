@@ -12,10 +12,11 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={VerifyCreateAccount} />
         <Route path="/createAccount" component={CreateAccount} />
         <Route path="/signIn" component={SignIn} />
-        <Route path="/verifyCreateAccount" component={VerifyCreateAccount} />
+        <Route path="/" component={CreateAccount} />
+        {/*<Route path="/welcome" component={Welcome} />*/}
+        {/*<Route path="/verifyCreateAccount" component={VerifyCreateAccount} />*/}
       </Switch>
     </Router>
   );

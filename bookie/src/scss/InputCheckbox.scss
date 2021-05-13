@@ -8,16 +8,13 @@
     label {
         margin-left: 1rem;
         color: $darkBlue;
-    }/*
-    input {
-        transform: scale(1.5) translateX(.1rem);
-    }*/
+        font-size: $fontSize_normal;
+    }
 }
 
 /* customize checkbox */
 .inputCheckbox {
     display: inline-flex;
-    cursor: pointer;
     position: relative;
 }
 
@@ -50,7 +47,7 @@
     color: #41B883;
     position: absolute;
     left: 0.2rem;
-    top: 0.1rem;
+    top: 0.2rem;
 }
 
 .inputCheckbox > input:checked + label + .boxWrapper {

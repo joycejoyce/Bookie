@@ -3,11 +3,11 @@ import "../scss/InputCheckbox.scss";
 
 class InputCheckbox extends Component {
     render() {
-        const {id, label} = this.props;
+        const {id, label, handleOnClick} = this.props;
 
         return(
             <div className="inputCheckbox">
-                <input type="checkbox" id={id} />
+                <input type="checkbox" id={id} onClick={(e) => handleOnClick(e)} />
                 <label htmlFor={id}>{label}</label>
                 <div className="boxWrapper"></div>
             </div>
