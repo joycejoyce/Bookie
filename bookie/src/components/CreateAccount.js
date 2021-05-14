@@ -83,7 +83,10 @@ class CreateAccount extends Component {
         }
         
         try {
-            const {username, email, password} = this.state;
+            const username = this.state.username.value;
+            const email = this.state.email.value;
+            const password = this.state.password.value;
+            
             const response = await Auth.signUp({
                 username,
                 password,
@@ -95,7 +98,8 @@ class CreateAccount extends Component {
 
             this.props.history.push("/welcome");
         } catch(error) {
-            console.error(error);
+            console.log("Got error");
+            //console.error(error);
             let err = null;
             !error.message ? err = {"message": error} : err = error;
             this.setState({ errMsg: err.message });
