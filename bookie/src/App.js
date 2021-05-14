@@ -16,7 +16,7 @@ function App() {
         <Route path="/createAccount" component={CreateAccount} />
         <Route path="/welcome" component={Welcome} />
         <Route path="/signIn" component={SignIn} />
-        <Route path="/" component={SignIn} />
+        <Route path="/" component={CreateAccount} />
         {/*<Route path="/verifyCreateAccount" component={VerifyCreateAccount} />*/}
       </Switch>
     </Router>

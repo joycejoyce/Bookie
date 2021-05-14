@@ -73,3 +73,24 @@
     border: 1px solid $grey;
   }
 }
+
+.showErr {
+  label {
+    color: $red;
+  }
+  input {
+    border-color: $red;
+  }
+  .errMsg {
+    color: $red;
+    margin-top: .2rem;
+    margin-left: .3rem;
+    text-align: left;
+    font-size: $fontSize_small;
+  }
+  &.inputTextOnBlur {
+    label {
+      top: 25%;
+    }
+  }
+}

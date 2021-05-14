@@ -26,7 +26,9 @@ class SignIn extends Component {
                         label="Enter email address"
                         onChange={(e) => this.handleOnChange(e)}
                     />
-                    <BtnSection leftBtnText="Create account" />
+                    <BtnSection leftBtnText="Create account"
+                        handleOnClickRightBtn={this.handleOnClickRightBtn}
+                    />
                 </div>
             </div>
         );
