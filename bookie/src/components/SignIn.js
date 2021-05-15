@@ -3,6 +3,7 @@ import Logo from "./Logo.js";
 import '../scss/SignIn.scss';
 import InputText from "./InputText.js";
 import BtnSection from "./BtnSection.js";
+import { Auth } from "aws-amplify";
 import { Msg_UsernameBlank, Msg_PasswordBlank } from "./Message.js";
 import { getClassName_init, getClassName_onSubmit } from "./InputClassNameGetter.js";
 
@@ -44,10 +45,30 @@ class SignIn extends Component {
         }));
     }
 
-    handleOnClickRightBtn = () => {
+    handleOnClickRightBtn = async () => {
         let isFormValid = this.checkForm();
+        console.log(isFormValid);
         if (!isFormValid) {
             return;
+        }
+
+        try {
+            const username = this.state.username.value;
+            const password = this.state.password.value;
+            console.log(username, password);
+            
+            const response = await Auth.signIn({
+                username,
+                password
+            });
+            console.log({response});
+
+            this.props.history.push("/userProfile");
+        } catch(error) {
+            console.error(error);
+            let err = null;
+            !error.message ? err = {"message": error} : err = error;
+            this.setState({ errMsg: err.message });
         }
     }
 
@@ -59,6 +80,11 @@ class SignIn extends Component {
         const errMsg_password = this.checkPassword();
         const isValid_password = errMsg_password.length === 0;
         this.setState_byValidateResult("password", isValid_password, errMsg_password);
+
+        const isFormValid = isValid_username && isValid_password;
+        this.setState({ isFormValid });
+
+        return isFormValid;
     }
 
     checkUsername = () => {
