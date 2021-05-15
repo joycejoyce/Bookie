@@ -98,8 +98,7 @@ class CreateAccount extends Component {
 
             this.props.history.push("/welcome");
         } catch(error) {
-            console.log("Got error");
-            //console.error(error);
+            console.error(error);
             let err = null;
             !error.message ? err = {"message": error} : err = error;
             this.setState({ errMsg: err.message });
@@ -133,7 +132,7 @@ class CreateAccount extends Component {
         const isValid_confirmPssword = errMsg_confirmPssword.length === 0;
         this.setState_byValidateResult("confirmPassword", isValid_confirmPssword, errMsg_confirmPssword);
 
-        const isFormValid = isValid_username && isValid_password && isValid_confirmPssword;
+        const isFormValid = isValid_username && isValid_email && isValid_password && isValid_confirmPssword;
         this.setState({ isFormValid });
 
         return isFormValid;
@@ -191,7 +190,7 @@ class CreateAccount extends Component {
                 <div className="contents">
                     <Logo />
                     <h1>Create your Bookie Account</h1>
-                    <div className="errMsg">{this.state.errMsg}</div>
+                    <div className="formErrMsg">{this.state.errMsg}</div>
                     <div className="inputSection">
                         <InputText data={this.state.username} handleOnChange={this.handleOnChange} />
                         <InputText data={this.state.email} handleOnChange={this.handleOnChange} />

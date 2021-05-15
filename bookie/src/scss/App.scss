@@ -139,4 +139,13 @@ body {
     display: flex;
     justify-content: space-between;
   }
+  
+  .inputSection {
+      .inputText {
+          margin: 0;
+      }
+      display: grid;
+      grid-template-columns: 1fr;
+      row-gap: 1rem;
+  }
 }

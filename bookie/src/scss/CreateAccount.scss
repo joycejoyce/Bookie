@@ -5,15 +5,12 @@
     @extend %signInAndCreateAccountCommonSettings;
 
     .contents {
-        .inputSection {
-            .inputText {
-                margin: 0;
-            }
-            display: grid;
-            grid-template-columns: 1fr;
-            row-gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
         @include btnSection(128px);
+        .formErrMsg {
+            font-size: $fontSize_small;
+            color: $red;
+            text-align: left;
+            margin-bottom: .8rem;
+        }
     }
 }

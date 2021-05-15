@@ -5,6 +5,15 @@
   @extend %signInAndCreateAccountCommonSettings;
 
   .contents {
+    .forgotPwd {
+      text-align: left;
+      font-size: $fontSize_small;
+      color: $darkBlue;
+      font-family: Roboto-Medium;
+      margin-top: .5rem;
+      margin-left: .3rem;
+      cursor: pointer;
+    }
     @include btnSection(128px);
   }
 }
