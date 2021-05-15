@@ -96,7 +96,10 @@ class CreateAccount extends Component {
             });
             console.log({response});
 
-            this.props.history.push("/welcome");
+            this.props.history.push({
+                pathname: '/welcome',
+                state: { username, email }
+            });
         } catch(error) {
             console.error(error);
             let err = null;

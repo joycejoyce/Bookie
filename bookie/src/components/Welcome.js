@@ -4,8 +4,7 @@ import '../scss/Welcome.scss';
 
 class Welcome extends Component {
     render() {
-        const username = "Joyce";
-        const email = "xxx@gmail.com";
+        const { username, email } = this.props.location.state;
         return (
             <div className="welcome">
                 <div className="contents">
