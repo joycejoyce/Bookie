@@ -39,17 +39,18 @@ $btnHeight: 40px;
 }
 
 /* font-family */
-$fontSize_big: 1.25rem;
-$fontSize_big2: 1.5rem;
-$fontSize_normal: 0.875rem;
 $fontSize_small: 0.5rem;
+$fontSize_normal: 0.875rem;
+$fontSize_big: 1.25rem;
+$fontSize_bigger: 1.5rem;
 
 /* window size */
-$windowSize_small: 600px;
+$windowSize_small: 640px;
+$windowSize_medium: 1007px;
 
 /* width */
 $width_small: 296px;
-$width_medium: 448px;
+$width_medium: 466px;
 
 body {
   font-size: 16px;
@@ -62,10 +63,13 @@ body {
   padding: 0;
 }
 
-.container {
-  width: $width_small;
+/*.container {
   margin: 0 auto;
-}
+  width: $width_small;
+  @media only screen and (min-width: $windowSize_small) {
+    width: $width_medium;
+  }
+}*/
 
 @mixin debugBorder() {
   border: solid red 1px;
@@ -84,6 +88,13 @@ body {
   @include btnFont();
 }
 
+@mixin absoluteHorizontalCenter() {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 @mixin absoluteCenter() {
   margin: 0;
   position: absolute;
@@ -97,14 +108,10 @@ body {
   height: 100vh;
 }
 
-%signInAndCreateAccountCommonSettings {
+%commonSettings {
   @extend %forCenter_parent;
-
   .contents {
-    margin-top: 4rem;
     text-align: center;
-    @include absoluteCenter();
-    width: 100%;
   }
   h1 {
     margin-bottom: $titleMarginBottom;
@@ -118,11 +125,16 @@ body {
     justify-content: space-between;
   }
   .inputSection {
-      display: grid;
-      grid-template-columns: 1fr;
-      row-gap: 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
   }
+}
 
+%signInAndAccountSettings {
+  width: $width_small;
+  @include absoluteHorizontalCenter();
+  margin-top: 6rem;
   @media only screen and (min-width: $windowSize_small) {
     width: $width_medium;
     @include absoluteCenter();
@@ -130,7 +142,6 @@ body {
     border: 1px solid $lightGrey;
     border-radius: $btnBorderRadius;
     .contents {
-      width: $width_small;
       @include absoluteCenter();
     }
   }

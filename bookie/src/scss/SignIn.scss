@@ -2,7 +2,8 @@
 @import "BtnSection";
 
 .signIn {
-  @extend %signInAndCreateAccountCommonSettings;
+  @extend %commonSettings;
+  @extend %signInAndAccountSettings;
 
   .contents {
     .forgotPwd {

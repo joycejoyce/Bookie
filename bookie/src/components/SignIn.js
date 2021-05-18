@@ -1,5 +1,4 @@
 import { Component } from "react";
-import Logo from "./Logo.js";
 import '../scss/SignIn.scss';
 import InputText from "./InputText.js";
 import BtnSection from "./BtnSection.js";
@@ -120,7 +119,6 @@ class SignIn extends Component {
         return (
             <div className="signIn">
                 <div className="contents">
-                    {/*<Logo />*/}
                     <h1>Sign In</h1>
                     <div className="formErrMsg">{this.state.errMsg}</div>
                     <div className="inputSection">

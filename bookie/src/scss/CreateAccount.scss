@@ -2,7 +2,8 @@
 @import "BtnSection";
 
 .createAccount {
-    @extend %signInAndCreateAccountCommonSettings;
+    @extend %commonSettings;
+    @extend %signInAndAccountSettings;
 
     .contents {
         @include btnSection(128px);

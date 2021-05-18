@@ -1,7 +1,7 @@
 @import "App";
 
 .welcome {
-  @extend %signInAndCreateAccountCommonSettings;
+  @extend %commonSettings;
 
   .contents {
       * {
@@ -10,7 +10,7 @@
       .welcomeTitle {
         margin-top: $titleMarginTop;
         margin-bottom: $titleMarginBottom;
-        font-size: $fontSize_big2;
+        font-size: $fontSize_bigger;
         font-family: Roboto-Medium;
         text-align: left;
       }

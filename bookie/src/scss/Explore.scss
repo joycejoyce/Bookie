@@ -1,0 +1,14 @@
+@import "App";
+
+.explore {
+    @extend %commonSettings;
+    @include absoluteHorizontalCenter();
+    margin-top: 6rem;
+    @media only screen and (min-width: $windowSize_small) {
+        width: $width_medium;
+        margin-top: 8rem;
+        .inputText input {
+            width: 100%;
+        }
+    }
+}
