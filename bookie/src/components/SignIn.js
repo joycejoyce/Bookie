@@ -120,7 +120,7 @@ class SignIn extends Component {
         return (
             <div className="signIn">
                 <div className="contents">
-                    <Logo />
+                    {/*<Logo />*/}
                     <h1>Sign In</h1>
                     <div className="formErrMsg">{this.state.errMsg}</div>
                     <div className="inputSection">

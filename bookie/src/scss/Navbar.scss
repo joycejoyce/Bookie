@@ -1,0 +1,28 @@
+@import "App";
+
+.navbar {
+    z-index: 99;
+    position: fixed;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: $width_small;
+    @media screen and (min-width: $windowSize_small) {
+        width: $width_medium;
+    }
+    .contents {
+        display: flex;
+        justify-content: space-between;
+        .logo,.menu {
+            cursor: pointer;
+        }
+        @media screen and (min-width: $windowSize_small) {
+            .logo {
+                width: 110px;
+            }
+            .menu {
+                width: 22px;
+            }
+        }
+    }
+}

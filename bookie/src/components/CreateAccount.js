@@ -1,5 +1,4 @@
 import { Component } from "react";
-import Logo from "./Logo.js";
 import "../scss/CreateAccount.scss";
 import InputText from "./InputText.js";
 import InputCheckbox from "./InputCheckbox.js";
@@ -191,7 +190,6 @@ class CreateAccount extends Component {
         return(
             <div className="createAccount">
                 <div className="contents">
-                    <Logo />
                     <h1>Create your Bookie Account</h1>
                     <div className="formErrMsg">{this.state.errMsg}</div>
                     <div className="inputSection">

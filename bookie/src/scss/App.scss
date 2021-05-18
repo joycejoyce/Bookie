@@ -47,6 +47,10 @@ $fontSize_small: 0.5rem;
 /* window size */
 $windowSize_small: 600px;
 
+/* width */
+$width_small: 296px;
+$width_medium: 448px;
+
 body {
   font-size: 16px;
 }
@@ -56,6 +60,11 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+.container {
+  width: $width_small;
+  margin: 0 auto;
 }
 
 @mixin debugBorder() {
@@ -110,25 +119,13 @@ body {
 %signInAndCreateAccountCommonSettings {
   @extend %forCenter_parent;
 
-  @media only screen and (min-width: $windowSize_small) {
-    width: 448px;
-    height: 600px;
-    border: 1px solid $lightGrey;
-    position: absolute;
-    margin: 0;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: $btnBorderRadius;
-  }
-
   .contents {
-    width: 296px;
+    margin-top: 4rem;
     text-align: center;
     @extend %forCenter_child;
+    width: 100%;
   }
   h1 {
-    margin-top: $titleMarginTop;
     margin-bottom: $titleMarginBottom;
     font-size: $fontSize_big;
     font-family: Montserrat-Regular;
@@ -139,13 +136,29 @@ body {
     display: flex;
     justify-content: space-between;
   }
-  
   .inputSection {
-      .inputText {
-          margin: 0;
-      }
       display: grid;
       grid-template-columns: 1fr;
       row-gap: 1rem;
+  }
+
+  @media only screen and (min-width: $windowSize_small) {
+    width: $width_medium;
+    height: 600px;
+    border: 1px solid $lightGrey;
+    position: absolute;
+    margin: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: $btnBorderRadius;
+    .contents {
+      position: absolute;
+      margin: 0;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: $width_small;
+    }
   }
 }

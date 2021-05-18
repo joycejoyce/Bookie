@@ -1,8 +1,12 @@
+import { Component } from "react";
 import "./scss/App.scss";
+import Navbar from "./components/Navbar.js";
+import Home from "./components/Home.js";
 import CreateAccount from "./components/CreateAccount.js";
 import SignIn from "./components/SignIn.js";
 import Welcome from "./components/Welcome.js";
 import UserProfile from "./components/UserProfile.js";
+import Explore from "./components/Explore.js";
 //import VerifyCreateAccount from "./components/VerifyCreateAccount.js";
 import {
   BrowserRouter as Router,
@@ -10,19 +14,48 @@ import {
   Route
 } from "react-router-dom";
 
-function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route path="/createAccount" component={CreateAccount} />
-        <Route path="/welcome" component={Welcome} />
-        <Route path="/signIn" component={SignIn} />
-        <Route path="/userProfile" component={UserProfile} />
-        <Route path="/" component={CreateAccount} />
-        {/*<Route path="/verifyCreateAccount" component={VerifyCreateAccount} />*/}
-      </Switch>
-    </Router>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isAuthenticated: false,
+      user: null
+    }
+  }
+
+  setIsAuthenticated = (isAuthenticated) => {
+    this.setState({ isAuthenticated });
+  }
+
+  setUser = (user) => {
+    this.setState({ user });
+  }
+
+  render() {
+    const authProps = {
+      isAuthenticated: this.state.isAuthenticated,
+      user: this.state.user,
+      setIsAuthenticated: this.setIsAuthenticated,
+      setUser: this.setUser
+    };
+
+    return (
+      <Router>
+        <div className="container">
+          <Navbar auth={authProps} />
+          <Switch>
+            <Route path="/createAccount" component={CreateAccount} />
+            <Route path="/welcome" component={Welcome} />
+            <Route path="/signIn" render={(props) => <SignIn {...props} auth={authProps} />} />
+            <Route path="/userProfile" render={(props) => <UserProfile {...props} auth={authProps} />} />
+            <Route path="/explore" render={(props) => <Explore {...props} auth={authProps} />} />
+            <Route path="/" render={(props) => <CreateAccount {...props} auth={authProps} />} />
+            {/*<Route path="/verifyCreateAccount" component={VerifyCreateAccount} />*/}
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
