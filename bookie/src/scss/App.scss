@@ -51,7 +51,7 @@ $windowSize_medium: 1024px;
 $windowSize_big: 1280px;
 
 /* width */
-$width_contents: 80vmin;
+$width_contents: clamp(375px, 80vmin, 600px);
 // $width_xs: calc(#{$windowSize_xs} * 0.6);
 // $width_small: calc(#{$windowSize_small} * 0.6);
 // $width_medium: calc(#{$windowSize_medium} * 0.6);
@@ -110,7 +110,7 @@ body {
   h1 {
     font-family: Montserrat-Regular;
     color: $darkBlue;
-    font-size: 5vmin;
+    font-size: clamp(1.5rem, 5vmin, 2.5rem);
     text-align: center;
     margin-top: 20vmin;
     margin-bottom: 5vmin;
