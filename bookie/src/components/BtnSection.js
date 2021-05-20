@@ -6,7 +6,8 @@ class BtnSection extends Component {
     }
 
     render() {
-        const {leftBtnText, handleOnClickRightBtn} = this.props;
+        const {leftBtnText, rightBtnText, handleOnClickRightBtn} = this.props;
+        const rightBtnText_modified = (rightBtnText && rightBtnText.length > 0) ? rightBtnText : "Next";
         const shouldDisplayLeftBtn = this.checkShouldDisplayLeftBtn(leftBtnText);
         let style = {};
         if (!shouldDisplayLeftBtn) {
@@ -17,7 +18,7 @@ class BtnSection extends Component {
                 <button className="leftBtn"
                     style={style}>{leftBtnText}</button>
                 <button className="rightBtn"
-                    onClick={handleOnClickRightBtn}>Next</button>
+                    onClick={handleOnClickRightBtn}>{rightBtnText_modified}</button>
             </div>
         );
     }

@@ -63,14 +63,6 @@ body {
   padding: 0;
 }
 
-/*.container {
-  margin: 0 auto;
-  width: $width_small;
-  @media only screen and (min-width: $windowSize_small) {
-    width: $width_medium;
-  }
-}*/
-
 @mixin debugBorder() {
   border: solid red 1px;
 }
