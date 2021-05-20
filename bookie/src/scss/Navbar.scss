@@ -2,27 +2,24 @@
 
 .navbar {
     z-index: 99;
-    position: fixed;
-    top: 1.5rem;
+    position: absolute;
+    top: 6vmin;
     left: 50%;
     transform: translateX(-50%);
-    width: $width_small;
-    @media screen and (min-width: $windowSize_small) {
-        width: $width_medium;
-    }
     .contents {
+        width: $width_contents;
         display: flex;
         justify-content: space-between;
         .logo,.menu {
             cursor: pointer;
         }
-        @media screen and (min-width: $windowSize_small) {
-            .logo {
-                width: 110px;
-            }
-            .menu {
-                width: 22px;
-            }
+        .logo {
+            width: 20vmin;
+            max-width: 150px;
+        }
+        .menu {
+            width: 4vmin;
+            max-width: 25px;
         }
     }
 }

@@ -3,15 +3,8 @@
 
 .createAccount {
     @extend %commonSettings;
-    @extend %signInAndAccountSettings;
-
+    @include absoluteHorizontalCenter();
     .contents {
         @include btnSection(128px);
-        .formErrMsg {
-            font-size: $fontSize_small;
-            color: $red;
-            text-align: left;
-            margin-bottom: .8rem;
-        }
     }
 }

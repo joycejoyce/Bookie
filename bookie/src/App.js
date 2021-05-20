@@ -49,8 +49,7 @@ class App extends Component {
             <Route path="/signIn" render={(props) => <SignIn {...props} auth={authProps} />} />
             <Route path="/userProfile" render={(props) => <UserProfile {...props} auth={authProps} />} />
             <Route path="/explore" render={(props) => <Explore {...props} auth={authProps} />} />
-            <Route path="/" render={(props) => <Explore {...props} auth={authProps} />} />
-            {/*<Route path="/verifyCreateAccount" component={VerifyCreateAccount} />*/}
+            <Route path="/" render={(props) => <SignIn {...props} auth={authProps} />} />
           </Switch>
         </div>
       </Router>

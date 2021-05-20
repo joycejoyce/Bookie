@@ -3,17 +3,13 @@
 
 .signIn {
   @extend %commonSettings;
-  @extend %signInAndAccountSettings;
-
+  @include absoluteHorizontalCenter();
   .contents {
-    .forgotPwd {
-      text-align: left;
-      font-size: $fontSize_normal;
-      color: $darkBlue;
-      margin-top: 1rem;
-      margin-left: .3rem;
-      cursor: pointer;
-    }
     @include btnSection(128px);
+  }
+  .forgotPwd {
+    color: $darkBlue;
+    margin-top: .5rem;
+    cursor: pointer;
   }
 }

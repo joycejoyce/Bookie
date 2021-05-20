@@ -1,6 +1,5 @@
 import { Component } from "react";
 import '../scss/Explore.scss';
-import InputText from "./InputText.js";
 import { getClassName_init } from "./InputClassNameGetter.js";
 import BtnSection from "./BtnSection";
 import searchBook from "../model/BookSearcher.js";
@@ -8,7 +7,6 @@ import { Radio, RadioGroup, FormControl, FormControlLabel, TextField } from "@ma
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
     palette: {
@@ -37,10 +35,6 @@ const CssTextField = withStyles({
         '& .MuiOutlinedInput-root': {
             '&:hover fieldset': {
                 borderColor: '#118AB2'
-            },
-            width: '296px',
-            [theme.breakpoints.up('md')]: {
-                width: '466px'
             }
         },
         '& input': {

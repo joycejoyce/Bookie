@@ -4,28 +4,19 @@
 .explore {
     @extend %commonSettings;
     @include absoluteHorizontalCenter();
-    margin-top: 6rem;
-    .checkSection {
-        display: grid;
-        grid-template-columns: 1fr;
-        width: $width_small;
-        margin-top: .5rem;
-    }
-    @media only screen and (min-width: $windowSize_small) {
-        .checkSection,#textInput {
-            width: $width_medium;
-        }
-        width: $width_medium;
-        margin-top: 8rem;
-        .inputText input {
-            width: 100%;
-        }
-    }
     .contents {
         @include btnSection(128px);
         .rightBtn {
             position: absolute; right: 0;
             width: 100px;
+        }
+        input {
+            width: $width_contents;
+        }
+        .checkSection {
+            display: grid;
+            grid-template-columns: 1fr;
+            margin-top: .5rem;
         }
     }
 }

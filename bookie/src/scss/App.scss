@@ -45,12 +45,17 @@ $fontSize_big: 1.25rem;
 $fontSize_bigger: 1.5rem;
 
 /* window size */
-$windowSize_small: 640px;
-$windowSize_medium: 1007px;
+$windowSize_xs: 480px;
+$windowSize_small: 768px;
+$windowSize_medium: 1024px;
+$windowSize_big: 1280px;
 
 /* width */
-$width_small: 296px;
-$width_medium: 466px;
+$width_contents: 80vmin;
+// $width_xs: calc(#{$windowSize_xs} * 0.6);
+// $width_small: calc(#{$windowSize_small} * 0.6);
+// $width_medium: calc(#{$windowSize_medium} * 0.6);
+// $width_big: calc(#{$windowSize_medium} * 0.6);
 
 body {
   font-size: 16px;
@@ -102,14 +107,13 @@ body {
 
 %commonSettings {
   @extend %forCenter_parent;
-  .contents {
-    text-align: center;
-  }
   h1 {
-    margin-bottom: $titleMarginBottom;
-    font-size: $fontSize_big;
     font-family: Montserrat-Regular;
     color: $darkBlue;
+    font-size: 5vmin;
+    text-align: center;
+    margin-top: 20vmin;
+    margin-bottom: 5vmin;
   }
   .btnSection {
     margin-top: 87px;
@@ -121,14 +125,29 @@ body {
     grid-template-columns: 1fr;
     row-gap: 1rem;
   }
+  .contents {
+    width: $width_contents;
+    font-size: $fontSize_normal;
+    // @media only screen and (min-width: $windowSize_xs) {
+    //   width: $width_xs;
+    // }
+    // @media only screen and (min-width: $windowSize_small) {
+    //   width: $width_small;
+    // }
+    // @media only screen and (min-width: $windowSize_medium) {
+    //   width: $width_medium;
+    // }
+    // @media only screen and (min-width: $windowSize_big) {
+    //   width: $width_big;
+    // }
+  }
 }
 
 %signInAndAccountSettings {
-  width: $width_small;
+  width: $width_contents;
   @include absoluteHorizontalCenter();
   margin-top: 6rem;
   @media only screen and (min-width: $windowSize_small) {
-    width: $width_medium;
     @include absoluteCenter();
     height: 600px;
     border: 1px solid $lightGrey;
