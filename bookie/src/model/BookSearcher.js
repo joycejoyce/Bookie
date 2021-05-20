@@ -1,34 +1,42 @@
+import { Msg_UnexpectedSearchCond } from "../components/Message.js";
 import { sendReq_GET } from "./HttpReqSender.js";
+
 const queryParam = {
     author: "inauthor",
     title: "intitle",
     subject: "subject",
     publisher: "inpublisher",
     isbn: "isbn"
-}
+};
 
 export default function search(conditions) {
-    const {keyword, checkAuthor, checkTitle, checkSubject, checkPublisher, checkIsbn} = conditions;
-    const searchResult_author = getSearchResult(keyword, "author", checkAuthor);
-    const searchResult_title = getSearchResult(keyword, "title", checkTitle);
-    const searchResult_subject = getSearchResult(keyword, "subject", checkSubject);
-    const searchResult_publisher = getSearchResult(keyword, "publisher", checkPublisher);
-    const searchResult_isbn = getSearchResult(keyword, "isbn", checkIsbn);
-}
-
-function getSearchResult(keyword, category, shouldCheck) {
-    if (!shouldCheck) {
-        return null;
+    const {keyword, condition} = conditions;
+    console.log({keyword, condition});
+    let searchResult = null;
+    if ((condition === "author" ||
+        condition === "title" ||
+        condition === "subject" ||
+        condition === "publisher" ||
+        condition === "isbn") && 
+        keyword && keyword.length > 0) {
+        searchResult = getSearchResult(keyword, condition);
+    }
+    else {
+        console.error(Msg_UnexpectedSearchCond, {keyword, condition});
     }
 
-    const condStr = getCondStr(keyword, category);
+    return searchResult;
+}
+
+function getSearchResult(keyword, condition) {
+    const condStr = getCondStr(keyword, condition);
     const url = "https://www.googleapis.com/books/v1/volumes?q=" + condStr;
     const ret = sendReq_GET(url);
     return ret;
 }
 
-function getCondStr(keyword, category) {
-    const param = queryParam[category];
+function getCondStr(keyword, condition) {
+    const param = queryParam[condition];
     const condStr = param + ":" + encodeURIComponent(keyword);
-    return getSearchResult(condStr);
+    return condStr;
 }

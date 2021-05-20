@@ -17,16 +17,9 @@ const theme = createMuiTheme({
     overrides: {
         MuiFormControlLabel: {
             label: {
-                /*fontSize: '.875rem',*/
                 color: '#073B4C'
             }
-        }/*,
-        MuiTextField: {
-            root: {
-                '&'
-                outlineColor: '#118AB2'
-            }
-        }*/
+        }
     }
 });
 
@@ -48,7 +41,7 @@ class Explore extends Component {
         super(props);
         this.state = {
             keyword: {
-                name: "keyword",
+                id: "keyword",
                 label: "Keyword",
                 value: "",
                 type: "text",
@@ -58,31 +51,26 @@ class Explore extends Component {
             },
             author: {
                 id: "author",
-                label: "Author",
-                checked: false
+                label: "Author"
             },
             title: {
                 id: "title",
-                label: "Title",
-                checked: false
+                label: "Title"
             },
             subject: {
                 id: "subject",
-                label: "Subject",
-                checked: false
+                label: "Subject"
             },
             publisher: {
                 id: "publisher",
-                label: "Publisher",
-                checked: false
+                label: "Publisher"
             },
             isbn: {
                 id: "isbn",
-                label: "ISBN",
-                checked: false
+                label: "ISBN"
             },
             isFormValid: true,
-            value: "author",
+            condition: "author",
             errMsg: ""
         };
     }
@@ -92,56 +80,46 @@ class Explore extends Component {
         this.setState(prevState => ({
             ...prevState,
             [id]: {
-                ...prevState[id]
+                ...prevState[id],
+                value
             }
         }));
     }
 
     handleOnSelect = (e) => {
         const { value } = e.target;
-        console.log({ value });
         this.setState(prevState => ({
             ...prevState,
-            value,
-            [value]: {
-                ...prevState[value],
-                checked: true
-            }
+            condition: value
         }));
     }
 
     handleOnClickRightBtn = () => {
-        console.log("author checked?", this.state.author.checked);
         const searchConditions = {
             keyword: this.state.keyword.value,
-            checkAuthor: this.state.author.checked,
-            checkTitle: this.state.title.checked,
-            checkDescription: this.state.description.checked,
-            checkPublisher: this.state.publisher.checked,
-            checkIsbn: this.state.isbn.checked
+            condition: this.state.condition
         }
-        const response = searchBook(searchConditions);
-        console.log(response);
+        const searchResult = searchBook(searchConditions);
+        console.log({searchResult});
     }
 
     render() {
-        const name = "category";
         const radioSize = "small";
         return (
             <div className="explore">
                 <div className="contents">
                     <h1>Explore books</h1>
-                    {/*<InputText data={this.state.keyword} handleOnChange={this.handleOnChange} />*/}
                     <ThemeProvider theme={theme}>
-                        <CssTextField id="textInput"
-                            label="Enter keyword"
+                        <CssTextField id={this.state.keyword.id}
+                            label={this.state.keyword.label}
                             type="text"
-                            size="normal"
+                            size="medium"
                             variant="outlined"
                             color="secondary"
+                            value={this.state.keyword.value}
                             onChange={this.handleOnChange} />
                         <FormControl component="fieldset">
-                            <RadioGroup aria-label="gender" value={this.state.value} onChange={this.handleOnSelect}>
+                            <RadioGroup aria-label="gender" value={this.state.condition} onChange={this.handleOnSelect}>
                                 <div className="checkSection">
                                     <FormControlLabel value={this.state.author.id} control={<Radio size={radioSize} />} label={this.state.author.label} />
                                     <FormControlLabel value={this.state.title.id} control={<Radio size={radioSize} />} label={this.state.title.label} />
@@ -149,33 +127,9 @@ class Explore extends Component {
                                     <FormControlLabel value={this.state.publisher.id} control={<Radio size={radioSize} />} label={this.state.publisher.label} />
                                     <FormControlLabel value={this.state.isbn.id} control={<Radio size={radioSize} />} label={this.state.isbn.label} />
                                 </div>
-                                {/*<FormControlLabel control={<Radio />} label="Title" />
-                                <FormControlLabel control={<Radio />} label="Subject" />
-                                <FormControlLabel control={<Radio />} label="Publisher" />
-                                <FormControlLabel control={<Radio />} label="ISBN" />*/}
                             </RadioGroup>
                         </FormControl>
                     </ThemeProvider>
-                    {/*<InputCheckbox id={this.state.author.id}
-                            label={this.state.author.label}
-                            handleOnClick={(e) => this.handleOnCheck(e)}
-                        />
-                        <InputCheckbox id={this.state.title.id}
-                            label={this.state.title.label}
-                            handleOnClick={(e) => this.handleOnCheck(e)}
-                        />
-                        <InputCheckbox id={this.state.description.id}
-                            label={this.state.description.label}
-                            handleOnClick={(e) => this.handleOnCheck(e)}
-                        />
-                        <InputCheckbox id={this.state.publisher.id}
-                            label={this.state.publisher.label}
-                            handleOnClick={(e) => this.handleOnCheck(e)}
-                        />
-                        <InputCheckbox id={this.state.isbn.id}
-                            label={this.state.isbn.label}
-                            handleOnClick={(e) => this.handleOnCheck(e)}
-                        />*/}
                     <BtnSection leftBtnText="" rightBtnText="Search"
                         handleOnClickRightBtn={this.handleOnClickRightBtn}
                     />
