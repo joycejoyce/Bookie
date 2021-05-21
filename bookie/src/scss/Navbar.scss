@@ -10,18 +10,12 @@
         width: $width_contents;
         display: flex;
         justify-content: space-between;
-        .logo,.menu {
+        align-items: center;
+        .logo,#menuIcon {
             cursor: pointer;
         }
         .logo {
             width: clamp(96px, 20vmin, 140px);
-            // width: 20vmin;
-            // max-width: 150px;
-        }
-        .menu {
-            width: clamp(20px, 4vmin, 22px);
-            // width: 4vmin;
-            // max-width: 25px;
         }
     }
 }

@@ -19,7 +19,8 @@ export default function search(conditions) {
         condition === "publisher" ||
         condition === "isbn") && 
         keyword && keyword.length > 0) {
-        searchResult = getSearchResult(keyword, condition);
+        const useAsync = false;
+        searchResult = getSearchResult(keyword, condition, useAsync);
     }
     else {
         console.error(Msg_UnexpectedSearchCond, {keyword, condition});

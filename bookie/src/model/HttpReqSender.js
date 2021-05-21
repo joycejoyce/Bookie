@@ -4,7 +4,7 @@ const Msg_ReqNotNormalEnd = "HTTP request return code not " + StatusCode_NormalE
 
 let globalRet = null;
 
-export function sendReq_GET(url) {
+export function sendReq_GET(url, useAsync) {
     console.log({url});
     let ret = {
         errMsg: "",
@@ -21,7 +21,7 @@ export function sendReq_GET(url) {
 
     httpRequest.onreadystatechange = () => handleOnStateChange(ret, httpRequest);
     
-    httpRequest.open("GET", url, false);
+    httpRequest.open("GET", url, useAsync);
     httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     httpRequest.send();
 
