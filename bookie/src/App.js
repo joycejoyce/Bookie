@@ -51,7 +51,7 @@ class App extends Component {
             <Route path="/userProfile" render={(props) => <UserProfile {...props} auth={authProps} />} />
             <Route path="/explore" render={(props) => <Explore {...props} auth={authProps} />} />
             <Route path="/exploreResult" render={(props) => <ExploreResult {...props} auth={authProps} />} />
-            <Route path="/" render={(props) => <Explore {...props} auth={authProps} />} />
+            <Route path="/" render={(props) => <ExploreResult {...props} auth={authProps} />} />
           </Switch>
         </div>
       </Router>

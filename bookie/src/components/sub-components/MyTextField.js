@@ -26,13 +26,16 @@ const CssTextField = withStyles({
 
 class MyTextField extends Component {
     render() {
-        const { id, label, value, handleOnChange } = this.props;
+        let { id, label, value, handleOnChange, size } = this.props;
+        if (!size) {
+            size = "medium";
+        }
         return (
             <ThemeProvider theme={theme}>
                 <CssTextField id={id}
                     label={label}
                     type="text"
-                    size="medium"
+                    size={size}
                     variant="outlined"
                     color="primary"
                     value={value}

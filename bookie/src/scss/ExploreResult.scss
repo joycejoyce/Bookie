@@ -1,5 +1,23 @@
 @import "App";
 
 .exploreResult {
-
+    @extend %commonSettings;
+    .contents {
+        margin-top: 18vmin;
+    }
+    .searchSection {
+        display: grid;
+        grid-template-columns: 45% 45% 5%;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #dropdown {
+        .MuiInput-underline:hover:before {
+            border-bottom-color: $blue1;
+        }
+        transform: translateY(-8px);
+    }
+    #searchIcon {
+        cursor: pointer;
+    }
 }
