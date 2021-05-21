@@ -3,7 +3,6 @@
 
 .explore {
     @extend %commonSettings;
-    @include absoluteHorizontalCenter();
     .contents {
         @include btnSection(128px);
         .rightBtn {

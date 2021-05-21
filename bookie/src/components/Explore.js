@@ -3,10 +3,10 @@ import '../scss/Explore.scss';
 import { getClassName_init } from "./InputClassNameGetter.js";
 import BtnSection from "./BtnSection";
 import searchBook from "../model/BookSearcher.js";
-import { Radio, RadioGroup, FormControl, FormControlLabel, TextField } from "@material-ui/core";
+import { Radio, RadioGroup, FormControl, FormControlLabel } from "@material-ui/core";
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
+import MyTextField from './sub-components/MyTextField.js';
 
 const theme = createMuiTheme({
     palette: {
@@ -22,19 +22,6 @@ const theme = createMuiTheme({
         }
     }
 });
-
-const CssTextField = withStyles({
-    root: {
-        '& .MuiOutlinedInput-root': {
-            '&:hover fieldset': {
-                borderColor: '#118AB2'
-            }
-        },
-        '& input': {
-            color: '#073B4C'
-        }
-    }
-})(TextField);
 
 class Explore extends Component {
     constructor(props) {
@@ -109,15 +96,12 @@ class Explore extends Component {
             <div className="explore">
                 <div className="contents">
                     <h1>Explore books</h1>
+                    <MyTextField id={this.state.keyword.id}
+                        label={this.state.keyword.label}
+                        value={this.state.keyword.value}
+                        handleOnChange={this.handleOnChange}
+                    />
                     <ThemeProvider theme={theme}>
-                        <CssTextField id={this.state.keyword.id}
-                            label={this.state.keyword.label}
-                            type="text"
-                            size="medium"
-                            variant="outlined"
-                            color="secondary"
-                            value={this.state.keyword.value}
-                            onChange={this.handleOnChange} />
                         <FormControl component="fieldset">
                             <RadioGroup aria-label="gender" value={this.state.condition} onChange={this.handleOnSelect}>
                                 <div className="checkSection">

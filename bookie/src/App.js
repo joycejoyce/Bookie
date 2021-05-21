@@ -7,6 +7,7 @@ import SignIn from "./components/SignIn.js";
 import Welcome from "./components/Welcome.js";
 import UserProfile from "./components/UserProfile.js";
 import Explore from "./components/Explore.js";
+import ExploreResult from "./components/ExploreResult.js";
 //import VerifyCreateAccount from "./components/VerifyCreateAccount.js";
 import {
   BrowserRouter as Router,
@@ -49,6 +50,7 @@ class App extends Component {
             <Route path="/signIn" render={(props) => <SignIn {...props} auth={authProps} />} />
             <Route path="/userProfile" render={(props) => <UserProfile {...props} auth={authProps} />} />
             <Route path="/explore" render={(props) => <Explore {...props} auth={authProps} />} />
+            <Route path="/exploreResult" render={(props) => <ExploreResult {...props} auth={authProps} />} />
             <Route path="/" render={(props) => <Explore {...props} auth={authProps} />} />
           </Switch>
         </div>

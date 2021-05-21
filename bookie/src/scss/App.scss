@@ -107,6 +107,7 @@ body {
 
 %commonSettings {
   @extend %forCenter_parent;
+  @include absoluteHorizontalCenter();
   h1 {
     font-family: Montserrat-Regular;
     color: $darkBlue;
@@ -128,32 +129,5 @@ body {
   .contents {
     width: $width_contents;
     font-size: $fontSize_normal;
-    // @media only screen and (min-width: $windowSize_xs) {
-    //   width: $width_xs;
-    // }
-    // @media only screen and (min-width: $windowSize_small) {
-    //   width: $width_small;
-    // }
-    // @media only screen and (min-width: $windowSize_medium) {
-    //   width: $width_medium;
-    // }
-    // @media only screen and (min-width: $windowSize_big) {
-    //   width: $width_big;
-    // }
-  }
-}
-
-%signInAndAccountSettings {
-  width: $width_contents;
-  @include absoluteHorizontalCenter();
-  margin-top: 6rem;
-  @media only screen and (min-width: $windowSize_small) {
-    @include absoluteCenter();
-    height: 600px;
-    border: 1px solid $lightGrey;
-    border-radius: $btnBorderRadius;
-    .contents {
-      @include absoluteCenter();
-    }
   }
 }
