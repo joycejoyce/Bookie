@@ -1,8 +1,14 @@
 import { Component } from "react";
 import { TableRow, TableCell } from '@material-ui/core';
+import NoImg from "../../assets/noImg.svg";
 
 const Thumbnail = (props) => {
-    const { thumbnail } = this.props.data.imageLinks;
+    console.log("Thumbnail", props);
+    const { imageLinks } = props.data;
+    let thumbnail = NoImg;
+    if (imageLinks) {
+        thumbnail = imageLinks.thumbnail;
+    }
 
     return (
         <div className="thumbnail">
@@ -12,7 +18,12 @@ const Thumbnail = (props) => {
 }
 
 const BriefBookInfo = (props) => {
-    const { title, authors, publisher, publishedDate } = this.props.data;
+    console.log("BriefBookInfo", props);
+    let { title, authors, publisher, publishedDate } = props.data;
+    title = title ? title : "";
+    authors = authors ? authors : [];
+    publisher = publisher ? publisher : "";
+    publishedDate = publishedDate ? publishedDate : "";
 
     return (
         <div className="briefBookInfo">
@@ -26,13 +37,14 @@ const BriefBookInfo = (props) => {
 
 class ExploreTableRow extends Component {
     render() {
-        const { data } = this.props.volumeInfo;
+        console.log("ExploreTableRow", this.props);
+        const { volumeInfo } = this.props.data;
 
         return (
             <div className="exploreTableRow">
                 <TableRow>
-                    <TableCell><Thumbnail data={data} /></TableCell>
-                    <TableCell><BriefBookInfo data={data} /></TableCell>
+                    <TableCell><Thumbnail data={volumeInfo} /></TableCell>
+                    <TableCell><BriefBookInfo data={volumeInfo} /></TableCell>
                 </TableRow>
             </div>
         );

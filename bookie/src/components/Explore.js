@@ -84,8 +84,8 @@ class Explore extends Component {
 
     handleOnClickRightBtn = () => {
         const searchConditions = {
-            keyword: this.state.keyword.value,
-            condition: this.state.condition
+            searchKeyword: this.state.keyword.value,
+            searchCondition: this.state.condition
         }
         const exploreResult = searchBook(searchConditions);
         console.log({exploreResult});

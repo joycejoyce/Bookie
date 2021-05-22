@@ -1,0 +1,32 @@
+@import "App";
+
+.exploreResultTable {
+    .MuiTableRow-root {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+    }
+    .thumbnail img {
+        width: 128px;
+    }
+    .briefBookInfo {
+        display: grid;
+        grid-template-columns: 1fr;
+        .title {
+            letter-spacing: 1px;
+            font-size: $fontSize_orig;
+            font-weight: 600;
+            color: $blue;
+        }
+        .author {
+            line-height: 1.8;
+            color: $orange;
+            font-size: $fontSize_orig;
+        }
+        .publisher {
+            color: $darkBlue;
+        }
+        .publishedDate {
+            color: $darkBlue;
+        }
+    }
+}

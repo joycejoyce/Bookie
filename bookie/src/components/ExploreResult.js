@@ -32,11 +32,14 @@ class ExploreResult extends Component {
     }
 
     render() {
-        const { exploreResult, searchConditions } = this.props;
+        const { exploreResult, searchConditions } = this.props.location.state;
+        const { searchKeyword, searchCondition } = searchConditions;
         const isExploreNormalEnd = checkIsNormalEnd(exploreResult);
         let exploreData = null;
+        let totalItems = 0;
         if (isExploreNormalEnd) {
             exploreData = getResponse(exploreResult);
+            totalItems = exploreData.totalItems;
         }
 
         return (
@@ -53,9 +56,9 @@ class ExploreResult extends Component {
                         <SearchIcon className="searchIcon" />
                     </div>
                     <div className="summary">
-                        Keyword (Author) : <span className="assignedKeyword">艾爾文</span>
+                        Keyword ({searchCondition}) : <span className="assignedKeyword">{searchKeyword}</span>
                         <br />
-                        Total : <span className="totalNum">9</span>
+                        Total : <span className="totalItems">{totalItems}</span>
                     </div>
                     <div className="filterAndSort">
                         <FilterIcon className="filter" />

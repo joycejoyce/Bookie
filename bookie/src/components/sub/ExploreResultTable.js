@@ -14,7 +14,7 @@ class ExploreResultTable extends Component {
                     <TableContainer>
                         <Table>
                             <TableBody>
-                                { items.map(item => <ExploreTableRow data={item} />) }
+                                { items.map(item => <ExploreTableRow key={item.id} data={item} />) }
                             </TableBody>
                         </Table>
                     </TableContainer>

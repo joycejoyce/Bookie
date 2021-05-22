@@ -10,20 +10,20 @@ const queryParam = {
 };
 
 export default function search(conditions) {
-    const {keyword, condition} = conditions;
-    console.log({keyword, condition});
+    const { searchKeyword, searchCondition } = conditions;
+    console.log({searchKeyword, searchCondition});
     let searchResult = null;
-    if ((condition === "author" ||
-        condition === "title" ||
-        condition === "subject" ||
-        condition === "publisher" ||
-        condition === "isbn") && 
-        keyword && keyword.length > 0) {
+    if ((searchCondition === "author" ||
+        searchCondition === "title" ||
+        searchCondition === "subject" ||
+        searchCondition === "publisher" ||
+        searchCondition === "isbn") && 
+        searchKeyword && searchKeyword.length > 0) {
         const useAsync = false;
-        searchResult = getSearchResult(keyword, condition, useAsync);
+        searchResult = getSearchResult(searchKeyword, searchCondition, useAsync);
     }
     else {
-        console.error(Msg_UnexpectedSearchCond, {keyword, condition});
+        console.error(Msg_UnexpectedSearchCond, {keyword: searchKeyword, condition: searchCondition});
     }
 
     return searchResult;
