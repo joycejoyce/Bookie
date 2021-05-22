@@ -39,10 +39,11 @@ $btnHeight: 40px;
 }
 
 /* font-family */
-$fontSize_small: 0.5rem;
-$fontSize_normal: 0.875rem;
-$fontSize_big: 1.25rem;
-$fontSize_bigger: 1.5rem;
+$fontSize_small: 0.5rem; //8px
+$fontSize_normal: 0.875rem; //14px
+$fontSize_orig: 1rem; //16px
+$fontSize_big: 1.25rem; //20px
+$fontSize_bigger: 1.5rem; //24px
 
 /* window size */
 $windowSize_xs: 480px;

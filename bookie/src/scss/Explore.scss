@@ -9,13 +9,14 @@
             position: absolute; right: 0;
             width: 100px;
         }
-        input {
-            width: $width_contents;
-        }
-        .checkSection {
-            display: grid;
-            grid-template-columns: 1fr;
-            margin-top: .5rem;
+        .searchCondSection {
+            display: flex;
+            flex-direction: column;
+            .checkSection {
+                display: grid;
+                grid-template-columns: 1fr;
+                margin-top: .5rem;
+            }
         }
     }
 }

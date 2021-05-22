@@ -6,7 +6,7 @@ import searchBook from "../model/BookSearcher.js";
 import { Radio, RadioGroup, FormControl, FormControlLabel } from "@material-ui/core";
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import MyTextField from './sub-components/MyTextField.js';
+import MyTextField from './sub/MyTextField.js';
 
 const theme = createMuiTheme({
     palette: {
@@ -27,6 +27,7 @@ class Explore extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            exploreResult: null,
             keyword: {
                 id: "keyword",
                 label: "Keyword",
@@ -86,8 +87,14 @@ class Explore extends Component {
             keyword: this.state.keyword.value,
             condition: this.state.condition
         }
-        const searchResult = searchBook(searchConditions);
-        console.log({searchResult});
+        const exploreResult = searchBook(searchConditions);
+        console.log({exploreResult});
+
+        this.setState({exploreResult});
+        this.props.history.push({
+            pathname: '/exploreResult',
+            state: { exploreResult, searchConditions }
+        });
     }
 
     render() {
@@ -96,24 +103,26 @@ class Explore extends Component {
             <div className="explore">
                 <div className="contents">
                     <h1>Explore books</h1>
-                    <MyTextField id={this.state.keyword.id}
-                        label={this.state.keyword.label}
-                        value={this.state.keyword.value}
-                        handleOnChange={this.handleOnChange}
-                    />
-                    <ThemeProvider theme={theme}>
-                        <FormControl component="fieldset">
-                            <RadioGroup aria-label="gender" value={this.state.condition} onChange={this.handleOnSelect}>
-                                <div className="checkSection">
-                                    <FormControlLabel value={this.state.author.id} control={<Radio size={radioSize} />} label={this.state.author.label} />
-                                    <FormControlLabel value={this.state.title.id} control={<Radio size={radioSize} />} label={this.state.title.label} />
-                                    <FormControlLabel value={this.state.subject.id} control={<Radio size={radioSize} />} label={this.state.subject.label} />
-                                    <FormControlLabel value={this.state.publisher.id} control={<Radio size={radioSize} />} label={this.state.publisher.label} />
-                                    <FormControlLabel value={this.state.isbn.id} control={<Radio size={radioSize} />} label={this.state.isbn.label} />
-                                </div>
-                            </RadioGroup>
-                        </FormControl>
-                    </ThemeProvider>
+                    <div className="searchCondSection">
+                        <MyTextField id={this.state.keyword.id}
+                            label={this.state.keyword.label}
+                            value={this.state.keyword.value}
+                            handleOnChange={this.handleOnChange}
+                        />
+                        <ThemeProvider theme={theme}>
+                            <FormControl component="fieldset">
+                                <RadioGroup aria-label="gender" value={this.state.condition} onChange={this.handleOnSelect}>
+                                    <div className="checkSection">
+                                        <FormControlLabel value={this.state.author.id} control={<Radio size={radioSize} />} label={this.state.author.label} />
+                                        <FormControlLabel value={this.state.title.id} control={<Radio size={radioSize} />} label={this.state.title.label} />
+                                        <FormControlLabel value={this.state.subject.id} control={<Radio size={radioSize} />} label={this.state.subject.label} />
+                                        <FormControlLabel value={this.state.publisher.id} control={<Radio size={radioSize} />} label={this.state.publisher.label} />
+                                        <FormControlLabel value={this.state.isbn.id} control={<Radio size={radioSize} />} label={this.state.isbn.label} />
+                                    </div>
+                                </RadioGroup>
+                            </FormControl>
+                        </ThemeProvider>
+                    </div>
                     <BtnSection leftBtnText="" rightBtnText="Search"
                         handleOnClickRightBtn={this.handleOnClickRightBtn}
                     />

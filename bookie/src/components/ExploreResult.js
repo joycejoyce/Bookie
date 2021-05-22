@@ -1,13 +1,12 @@
 import { Component } from "react";
 import '../scss/ExploreResult.scss';
-import MyTextField from './sub-components/MyTextField.js';
-import MyDropdown from './sub-components/MyDropdown.js';
-import SearchIcon from '@material-ui/icons/Search';
-
-const iconStyle = {
-    fontSize: "clamp(24px, 4vmin, 32px)",
-    fill: "#118ab2"
-};
+import MyTextField from './sub/MyTextField.js';
+import MyDropdown from './sub/MyDropdown.js';
+import SearchIcon from './icon/Search.js';
+import ExploreResultTable from './sub/ExploreResultTable.js';
+import ExploreErrorMsg from './sub/ExploreErrorMsg.js';
+import { ReactComponent as FilterIcon } from '../assets/filter.svg';
+import { checkIsNormalEnd, getResponse } from "../model/HttpReqSender.js";
 
 class ExploreResult extends Component {
     constructor(props) {
@@ -33,6 +32,13 @@ class ExploreResult extends Component {
     }
 
     render() {
+        const { exploreResult, searchConditions } = this.props;
+        const isExploreNormalEnd = checkIsNormalEnd(exploreResult);
+        let exploreData = null;
+        if (isExploreNormalEnd) {
+            exploreData = getResponse(exploreResult);
+        }
+
         return (
             <div className="exploreResult">
                 <div className="contents">
@@ -43,9 +49,22 @@ class ExploreResult extends Component {
                             size="small"
                             handleOnChange={this.handleOnChange}
                         />
-                        <MyDropdown id="dropdown" />
-                        <SearchIcon id="searchIcon" style={iconStyle} />
+                        <MyDropdown id="searchCondDropdown" />
+                        <SearchIcon className="searchIcon" />
                     </div>
+                    <div className="summary">
+                        Keyword (Author) : <span className="assignedKeyword">艾爾文</span>
+                        <br />
+                        Total : <span className="totalNum">9</span>
+                    </div>
+                    <div className="filterAndSort">
+                        <FilterIcon className="filter" />
+                        <div className="sort">
+                            <div className="sortLabel">Sort by:&ensp;</div>
+                            <MyDropdown id="sortDropdown" />
+                        </div>
+                    </div>
+                    {isExploreNormalEnd ? <ExploreResultTable data={exploreData} /> : <ExploreErrorMsg />}
                 </div>
             </div>
         );

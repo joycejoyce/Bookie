@@ -4,20 +4,46 @@
     @extend %commonSettings;
     .contents {
         margin-top: 18vmin;
-    }
-    .searchSection {
-        display: grid;
-        grid-template-columns: 45% 45% 5%;
-        justify-content: space-between;
-        align-items: center;
-    }
-    #dropdown {
-        .MuiInput-underline:hover:before {
-            border-bottom-color: $blue1;
+        .searchSection {
+            display: grid;
+            grid-template-columns: 45% 35% 10%;
+            justify-content: space-between;
+            align-items: center;
+            .searchIcon {
+                cursor: pointer;
+                width: clamp(52px, 8vmin, 72px);
+                justify-self: flex-end;
+            }
         }
-        transform: translateY(-8px);
-    }
-    #searchIcon {
-        cursor: pointer;
+        .summary,.filterAndSort {
+            font-size: 1rem;
+            color: $darkBlue;
+        }
+        .summary {
+            width: 100%;
+            margin: .5rem 0;
+            line-height: 1.6;
+            .assignedKeyword,.totalNum {
+                color: $red;
+            }
+        }
+        .filterAndSort {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            .filter {
+                cursor: pointer;
+            }
+            .sort {
+                display: flex;
+                .sortLabel {
+                    font-family: Roboto-Medium;
+                    line-height: 3;
+                }
+                #sortDropdown {
+                    width: 130px;
+                }
+            }
+        }
     }
 }

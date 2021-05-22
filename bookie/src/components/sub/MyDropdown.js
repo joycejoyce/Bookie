@@ -1,16 +1,8 @@
 import React from "react";
-import { makeStyles, createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
+import '../../scss/MyDropdown.scss';
+import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 
-/*const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2)
-    }
-}));*/
 const theme = createMuiTheme({
     palette: {
         primary: {
@@ -33,7 +25,7 @@ const MyDropdown = (props) => {
     };
     const { id } = props;
     return (
-        <div id={id}>
+        <div id={id} className="myDropdown">
             <ThemeProvider theme={theme}>
                 <StyledFormControl>
                     <InputLabel id="demo-simple-select-label">Age</InputLabel>

@@ -4,6 +4,14 @@ const Msg_ReqNotNormalEnd = "HTTP request return code not " + StatusCode_NormalE
 
 let globalRet = null;
 
+export function checkIsNormalEnd(ret) {
+    return ret.errMsg.length === 0 && ret.statusCode === StatusCode_NormalEnd;
+}
+
+export function getResponse(ret) {
+    return ret.response;
+}
+
 export function sendReq_GET(url, useAsync) {
     console.log({url});
     let ret = {

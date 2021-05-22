@@ -1,5 +1,5 @@
 import { Component } from "react";
-import Logo from "./Logo.js";
+import Logo from "./icon/Logo.js";
 import '../scss/Welcome.scss';
 
 class Welcome extends Component {
