@@ -12,15 +12,16 @@
         display: grid;
         grid-template-columns: 1fr;
         .title {
-            letter-spacing: 1px;
+            letter-spacing: .5px;
             font-size: $fontSize_orig;
-            font-weight: 600;
+            font-family: Montserrat-SemiBold;
             color: $blue;
         }
         .author {
             line-height: 1.8;
             color: $orange;
-            font-size: $fontSize_orig;
+            font-size: $fontSize_normal;
+            font-family: Montserrat-SemiBold;
         }
         .publisher {
             color: $darkBlue;
