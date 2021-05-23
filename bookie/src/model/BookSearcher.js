@@ -38,8 +38,8 @@ function getSearchResult(conditions, useAsync) {
 }
 
 function getCondStr(conditions) {
-    const { keyword, condition, startIndex, maxResults } = conditions;
-    const param = queryParam[condition];
-    const condStr = `q=${param}:${encodeURIComponent(keyword)}&startIndex=${startIndex}&maxResults=${maxResults}`;
+    const { searchKeyword, searchCondition, startIndex, maxResults } = conditions;
+    const param = queryParam[searchCondition];
+    const condStr = `q=${param}:${encodeURIComponent(searchKeyword)}&startIndex=${startIndex}&maxResults=${maxResults}`;
     return condStr;
 }
