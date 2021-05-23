@@ -8,6 +8,7 @@ import Welcome from "./components/Welcome.js";
 import UserProfile from "./components/UserProfile.js";
 import Explore from "./components/Explore.js";
 import ExploreResult from "./components/ExploreResult.js";
+import FilterList from "./components/sub/FilterList.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -50,7 +51,7 @@ class App extends Component {
             <Route path="/userProfile" render={(props) => <UserProfile {...props} auth={authProps} />} />
             <Route path="/explore" render={(props) => <Explore {...props} auth={authProps} />} />
             <Route path="/exploreResult" render={(props) => <ExploreResult {...props} auth={authProps} />} />
-            <Route path="/" render={(props) => <Explore {...props} auth={authProps} />} />
+            <Route path="/" render={(props) => <FilterList {...props} auth={authProps} />} />
           </Switch>
         </div>
       </Router>
