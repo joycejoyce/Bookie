@@ -2,11 +2,12 @@ import { Component } from "react";
 import "../../scss/ExploreResultTable.scss";
 import { Paper, TableContainer, Table, TableBody } from '@material-ui/core';
 import ExploreTableRow from "./ExploreTableRow.js";
+import ExploreTablePagination from "./ExploreTablePagination.js";
 
 class ExploreResultTable extends Component {
     render() {
-        const { data } = this.props;
-        const { items } = data;
+        const { searchResult, displayInfo } = this.props;
+        const { items, totalItems } = searchResult;
 
         return (
             <div className="exploreResultTable">
@@ -18,6 +19,7 @@ class ExploreResultTable extends Component {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                    <ExploreTablePagination totalItems={totalItems} displayInfo={displayInfo} />
                 </Paper>
             </div>
         );

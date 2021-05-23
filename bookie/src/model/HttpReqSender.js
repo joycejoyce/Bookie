@@ -15,14 +15,15 @@ export function getResponse(ret) {
 export function sendReq_GET(url, useAsync) {
     console.log({url});
     let ret = {
+        isNormalEnd: true,
         errMsg: "",
-        statusCode: -1,
         response: null
     };
 
     let httpRequest = new XMLHttpRequest();
     if (!httpRequest) {
         console.error(Msg_CreateReqFail);
+        ret.isNormalEnd = false;
         ret.errMsg = Msg_CreateReqFail;
         return ret;
     }
@@ -38,13 +39,13 @@ export function sendReq_GET(url, useAsync) {
 
 function handleOnStateChange(ret, req) {
     if (req.readyState === XMLHttpRequest.DONE) {
-        ret.statusCode = req.status;
         if (req.status === StatusCode_NormalEnd) {
             ret.response = JSON.parse(req.responseText);
             
         } else {
             console.error(Msg_ReqNotNormalEnd);
-            ret.errMsg = Msg_ReqNotNormalEnd;
+            ret.isNormalEnd = false;
+            ret.errMsg = Msg_ReqNotNormalEnd + ` (statusCode = ${req.status.toString()})`;
         }
     }
 

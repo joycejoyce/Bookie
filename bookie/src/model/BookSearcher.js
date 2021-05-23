@@ -1,3 +1,4 @@
+import { lighten } from "@material-ui/core";
 import { Msg_UnexpectedSearchCond } from "../components/Message.js";
 import { sendReq_GET } from "./HttpReqSender.js";
 
@@ -10,8 +11,8 @@ const queryParam = {
 };
 
 export default function search(conditions) {
-    const { searchKeyword, searchCondition } = conditions;
-    console.log({searchKeyword, searchCondition});
+    console.log("BookSearcher", conditions);
+    let { searchKeyword, searchCondition } = conditions;
     let searchResult = null;
     if ((searchCondition === "author" ||
         searchCondition === "title" ||
@@ -20,7 +21,7 @@ export default function search(conditions) {
         searchCondition === "isbn") && 
         searchKeyword && searchKeyword.length > 0) {
         const useAsync = false;
-        searchResult = getSearchResult(searchKeyword, searchCondition, useAsync);
+        searchResult = getSearchResult(conditions, useAsync);
     }
     else {
         console.error(Msg_UnexpectedSearchCond, {keyword: searchKeyword, condition: searchCondition});
@@ -29,15 +30,16 @@ export default function search(conditions) {
     return searchResult;
 }
 
-function getSearchResult(keyword, condition) {
-    const condStr = getCondStr(keyword, condition);
-    const url = "https://www.googleapis.com/books/v1/volumes?q=" + condStr;
+function getSearchResult(conditions, useAsync) {
+    const condStr = getCondStr(conditions);
+    const url = "https://www.googleapis.com/books/v1/volumes?" + condStr;
     const ret = sendReq_GET(url);
     return ret;
 }
 
-function getCondStr(keyword, condition) {
+function getCondStr(conditions) {
+    const { keyword, condition, startIndex, maxResults } = conditions;
     const param = queryParam[condition];
-    const condStr = param + ":" + encodeURIComponent(keyword);
+    const condStr = `q=${param}:${encodeURIComponent(keyword)}&startIndex=${startIndex}&maxResults=${maxResults}`;
     return condStr;
 }

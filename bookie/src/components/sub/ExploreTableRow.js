@@ -3,7 +3,6 @@ import { TableRow, TableCell } from '@material-ui/core';
 import NoImg from "../../assets/noImg.svg";
 
 const Thumbnail = (props) => {
-    console.log("Thumbnail", props);
     const { imageLinks } = props.data;
     let thumbnail = NoImg;
     if (imageLinks) {
@@ -18,7 +17,6 @@ const Thumbnail = (props) => {
 }
 
 const BriefBookInfo = (props) => {
-    console.log("BriefBookInfo", props);
     let { title, authors, publisher, publishedDate } = props.data;
     title = title ? title : "";
     authors = authors ? authors : [];
@@ -37,16 +35,13 @@ const BriefBookInfo = (props) => {
 
 class ExploreTableRow extends Component {
     render() {
-        console.log("ExploreTableRow", this.props);
         const { volumeInfo } = this.props.data;
 
         return (
-            <div className="exploreTableRow">
-                <TableRow>
-                    <TableCell><Thumbnail data={volumeInfo} /></TableCell>
-                    <TableCell><BriefBookInfo data={volumeInfo} /></TableCell>
-                </TableRow>
-            </div>
+            <TableRow>
+                <TableCell><Thumbnail data={volumeInfo} /></TableCell>
+                <TableCell><BriefBookInfo data={volumeInfo} /></TableCell>
+            </TableRow>
         );
     }
 }
