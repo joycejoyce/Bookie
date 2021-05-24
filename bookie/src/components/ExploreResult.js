@@ -45,12 +45,6 @@ class ExploreResult extends Component {
         this.setNestedState(id, "value", value);
     }
 
-    // setSearchConditions = (searchConditions) => {
-    //     const { keyword, condition } = searchConditions;
-    //     this.setNestedState("searchConditions", "keyword", keyword);
-    //     this.setNestedState("searchConditions", "condition", condition);
-    // }
-
     setNestedState = (parentName, childName, value) => {
         this.setState(prevState => ({
             ...prevState,

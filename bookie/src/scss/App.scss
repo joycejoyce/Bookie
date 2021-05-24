@@ -116,7 +116,6 @@ body {
     color: $darkBlue;
     font-size: clamp(1.5rem, 5vmin, 2.5rem);
     text-align: center;
-    margin-top: 20vmin;
     margin-bottom: 5vmin;
   }
   .btnSection {
@@ -132,5 +131,6 @@ body {
   .contents {
     width: $width_contents;
     font-size: $fontSize_normal;
+    margin-top: 20vmin;
   }
 }

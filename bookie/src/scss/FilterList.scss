@@ -1,3 +1,16 @@
+@import "App";
+
 .filterList {
-    margin-top: 20vmin;
+    @include absoluteHorizontalCenter();
+    .contents {
+        margin-top: 20vmin;
+        width: $width_contents;
+        font-size: $fontSize_normal;
+    }
+    .category * {
+        font-family: Montserrat-SemiBold;
+    }
+    .categoryItems * {
+        font-family: Montserrat-Regular;
+    }
 }
