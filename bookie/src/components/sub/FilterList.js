@@ -3,8 +3,6 @@ import '../../scss/FilterList.scss';
 import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import { Paper, List, ListItem, ListItemText, ListItemIcon, Checkbox, Collapse } from "@material-ui/core";
 import { Add as AddIcon, Remove as MinusIcon } from '@material-ui/icons';
-import { pink } from '@material-ui/core/colors';
-import Font_MontserratRegular from '../../fonts/Montserrat/Montserrat-Regular.ttf';
 
 const theme = createMuiTheme({
     palette: {

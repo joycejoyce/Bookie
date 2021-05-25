@@ -46,5 +46,13 @@
                 }
             }
         }
+        .MuiButton-root {
+            width: 128px;
+            height: 40px;
+            border-radius: 20px;
+        }
+        .filterIcon {
+            width: 20px;
+        }
     }
 }

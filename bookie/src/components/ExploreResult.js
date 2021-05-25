@@ -7,6 +7,16 @@ import ExploreResultTable from './sub/ExploreResultTable.js';
 import ExploreErrorMsg from './sub/ExploreErrorMsg.js';
 import { ReactComponent as FilterIcon } from '../assets/filter.svg';
 import searchBook from "../model/BookSearcher.js";
+import { Button } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const filterTheme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#073B4C'
+        }
+    }
+});
 
 const displayRowsPerPage = 3;
 
@@ -113,7 +123,7 @@ class ExploreResult extends Component {
         return (
             <div className="exploreResult">
                 <div className="contents">
-                    <div className="searchSection">
+                    {/* <div className="searchSection">
                         <MyTextField id={this.state.keyword.id}
                             label={this.state.keyword.label}
                             value={this.state.keyword.value}
@@ -122,19 +132,24 @@ class ExploreResult extends Component {
                         />
                         <MyDropdown id="searchCondDropdown" />
                         <SearchIcon className="searchIcon" />
-                    </div>
+                    </div> */}
                     <div className="summary">
                         Keyword ({searchCondition}) : <span className="assignedKeyword">{searchKeyword}</span>
                         <br />
                         Total : <span className="totalItems">{totalItems}</span>
                     </div>
-                    <div className="filterAndSort">
+                    <ThemeProvider theme={filterTheme}>
+                        <Button variant="outlined" color="primary">
+                            <FilterIcon className="filterIcon" />
+                        </Button>
+                    </ThemeProvider>
+                    {/* <div className="filterAndSort">
                         <FilterIcon className="filter" />
                         <div className="sort">
                             <div className="sortLabel">Sort by:&ensp;</div>
                             <MyDropdown id="sortDropdown" />
                         </div>
-                    </div>
+                    </div> */}
                     {isNormalEnd ?
                         <ExploreResultTable searchResult={searchResult} displayInfo={displayInfo} />
                         :
