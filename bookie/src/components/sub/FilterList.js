@@ -26,12 +26,12 @@ class FilterList extends Component {
             author: {
                 label: "Author",
                 isOpen: true,
-                items: ["Charles Babbage", "David Baddiel"]
+                items: ["Charles Babbage", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel"]
             },
             publisher: {
                 label: "Publisher",
                 isOpen: false,
-                items: ["A & C Black", "Taunton Press", "Vintage Books"]
+                items: ["A & C Black", "Taunton Press", "Vintage Books", "Vintage Books", "Vintage Books", "Vintage Books", "Vintage Books", "Vintage Books"]
             },
             subject: {
                 label: "Subject",
@@ -98,7 +98,7 @@ class FilterList extends Component {
                                                         <ListItem>
                                                             <ListItemIcon>
                                                                 <ThemeProvider theme={theme}>
-                                                                    <Checkbox size="small" disableRipple onChange={(e) => this.handleOnChangeCheckbox(e, category, item)} />
+                                                                    <Checkbox disableRipple onChange={(e) => this.handleOnChangeCheckbox(e, category, item)} />
                                                                 </ThemeProvider>
                                                             </ListItemIcon>
                                                             <ListItemText primary={item} />
