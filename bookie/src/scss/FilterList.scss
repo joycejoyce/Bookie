@@ -18,8 +18,11 @@
             width: 2vmin;
         }
         &::-webkit-scrollbar-thumb {
-            background: $blue2; 
+            background:grey;
             border-radius: 1vmin;
         }
+    }
+    .MuiListItemText-primary {
+        color: $blue1;
     }
 }

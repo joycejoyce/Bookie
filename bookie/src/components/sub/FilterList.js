@@ -9,7 +9,7 @@ import Font_MontserratRegular from '../../fonts/Montserrat/Montserrat-Regular.tt
 const theme = createMuiTheme({
     palette: {
         secondary: {
-            main: pink[500]
+            main: '#118AB2'
         }
     }
 });
