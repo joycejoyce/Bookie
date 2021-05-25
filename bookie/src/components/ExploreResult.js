@@ -138,11 +138,17 @@ class ExploreResult extends Component {
                         <br />
                         Total : <span className="totalItems">{totalItems}</span>
                     </div>
-                    <ThemeProvider theme={filterTheme}>
-                        <Button variant="outlined" color="primary">
-                            <FilterIcon className="filterIcon" />
-                        </Button>
-                    </ThemeProvider>
+                    <div className="filterAndSort">
+                        <ThemeProvider theme={filterTheme}>
+                            <Button variant="outlined" color="primary">
+                                <FilterIcon className="filterIcon" />
+                            </Button>
+                            <div className="sort">
+                                <div className="sortLabel">Sort by:&ensp;</div>
+                                <MyDropdown id="sortDropdown" />
+                            </div>
+                        </ThemeProvider>
+                    </div>
                     {/* <div className="filterAndSort">
                         <FilterIcon className="filter" />
                         <div className="sort">

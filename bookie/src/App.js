@@ -14,6 +14,18 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#118AB2'
+    },
+    secondary: {
+      main: '#073B4C'
+    }
+  }
+});
 
 class App extends Component {
   constructor(props) {
@@ -41,20 +53,22 @@ class App extends Component {
     };
 
     return (
-      <Router>
-        <div className="container">
-          <Navbar auth={authProps} />
-          <Switch>
-            <Route path="/createAccount" component={CreateAccount} />
-            <Route path="/welcome" component={Welcome} />
-            <Route path="/signIn" render={(props) => <SignIn {...props} auth={authProps} />} />
-            <Route path="/userProfile" render={(props) => <UserProfile {...props} auth={authProps} />} />
-            <Route path="/explore" render={(props) => <Explore {...props} auth={authProps} />} />
-            <Route path="/exploreResult" render={(props) => <ExploreResult {...props} auth={authProps} />} />
-            <Route path="/" render={(props) => <Explore {...props} auth={authProps} />} />
-          </Switch>
-        </div>
-      </Router>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <div className="container">
+            <Navbar auth={authProps} />
+            <Switch>
+              <Route path="/createAccount" component={CreateAccount} />
+              <Route path="/welcome" component={Welcome} />
+              <Route path="/signIn" render={(props) => <SignIn {...props} auth={authProps} />} />
+              <Route path="/userProfile" render={(props) => <UserProfile {...props} auth={authProps} />} />
+              <Route path="/explore" render={(props) => <Explore {...props} auth={authProps} />} />
+              <Route path="/exploreResult" render={(props) => <ExploreResult {...props} auth={authProps} />} />
+              <Route path="/" render={(props) => <Explore {...props} auth={authProps} />} />
+            </Switch>
+          </div>
+        </Router>
+      </ThemeProvider>
     );
   }
 }

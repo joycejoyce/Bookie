@@ -3,22 +3,21 @@ import '../scss/Explore.scss';
 import { getClassName_init } from "./InputClassNameGetter.js";
 import BtnSection from "./BtnSection";
 import searchBook from "../model/BookSearcher.js";
-import { Radio, RadioGroup, FormControl, FormControlLabel } from "@material-ui/core";
-import { ThemeProvider } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-import MyTextField from './sub/MyTextField.js';
+import { TextField, Radio, RadioGroup, FormControl, FormControlLabel } from "@material-ui/core";
+import { withStyles } from '@material-ui/core/styles';
 
-const theme = createMuiTheme({
-    palette: {
-        secondary: {
-            main: '#118AB2'
-        }
+const styles = theme => ({
+    label: {
+        color: theme.palette.secondary.main
     },
-    overrides: {
-        MuiFormControlLabel: {
-            label: {
-                color: '#073B4C'
+    textField: {
+        '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+                borderColor: theme.palette.primary.main
             }
+        },
+        '& input': {
+            color: theme.palette.secondary.main
         }
     }
 });
@@ -98,30 +97,38 @@ class Explore extends Component {
     }
 
     render() {
+        const { classes } = this.props;
+        const options = ["author", "title", "subject", "publisher", "isbn"];
         const radioSize = "small";
         return (
             <div className="explore">
                 <div className="contents">
                     <h1>Explore books</h1>
                     <div className="searchCondSection">
-                        <MyTextField id={this.state.keyword.id}
+                        <TextField
+                            classes={{root: classes.textField}}
+                            id={this.state.keyword.id}
                             label={this.state.keyword.label}
                             value={this.state.keyword.value}
-                            handleOnChange={this.handleOnChange}
+                            variant="outlined"
+                            onChange={this.handleOnChange}
                         />
-                        <ThemeProvider theme={theme}>
-                            <FormControl component="fieldset">
-                                <RadioGroup aria-label="gender" value={this.state.condition} onChange={this.handleOnSelect}>
-                                    <div className="checkSection">
-                                        <FormControlLabel value={this.state.author.id} control={<Radio size={radioSize} />} label={this.state.author.label} />
-                                        <FormControlLabel value={this.state.title.id} control={<Radio size={radioSize} />} label={this.state.title.label} />
-                                        <FormControlLabel value={this.state.subject.id} control={<Radio size={radioSize} />} label={this.state.subject.label} />
-                                        <FormControlLabel value={this.state.publisher.id} control={<Radio size={radioSize} />} label={this.state.publisher.label} />
-                                        <FormControlLabel value={this.state.isbn.id} control={<Radio size={radioSize} />} label={this.state.isbn.label} />
-                                    </div>
-                                </RadioGroup>
-                            </FormControl>
-                        </ThemeProvider>
+                        <FormControl component="fieldset" >
+                            <RadioGroup aria-label="gender" value={this.state.condition} onChange={this.handleOnSelect}>
+                                <div className="checkSection">
+                                    {
+                                        options.map(opt => (
+                                            <FormControlLabel
+                                                classes={{label: classes.label}}
+                                                value={this.state[opt].id}
+                                                control={<Radio size={radioSize} color="primary" />}
+                                                label={this.state[opt].label}
+                                            />
+                                        ))
+                                    }
+                                </div>
+                            </RadioGroup>
+                        </FormControl>
                     </div>
                     <BtnSection leftBtnText="" rightBtnText="Search"
                         handleOnClickRightBtn={this.handleOnClickRightBtn}
@@ -132,4 +139,4 @@ class Explore extends Component {
     }
 }
 
-export default Explore;
+export default withStyles(styles)(Explore);

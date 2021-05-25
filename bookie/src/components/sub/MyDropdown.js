@@ -18,7 +18,6 @@ const StyledFormControl = withStyles({
 })(FormControl);
 
 const MyDropdown = (props) => {
-    //const classes = useStyles();
     const [age, setAge] = React.useState('');
     const handleChange = (event) => {
         setAge(event.target.value);
