@@ -5,25 +5,71 @@ import MyDropdown from './sub/MyDropdown.js';
 import SearchIcon from './icon/Search.js';
 import ExploreResultTable from './sub/ExploreResultTable.js';
 import ExploreErrorMsg from './sub/ExploreErrorMsg.js';
-import { ReactComponent as FilterIcon } from '../assets/filter.svg';
+import { ReactComponent as OrigFilterIcon } from '../assets/filter.svg';
 import searchBook from "../model/BookSearcher.js";
-import { Button } from "@material-ui/core";
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { Button, Select, FormControl, MenuItem, FormHelperText } from "@material-ui/core";
+import styled from "@emotion/styled";
+import { withStyles } from '@material-ui/core/styles';
 
-const filterTheme = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#073B4C'
-        }
+const FilterIcon = styled(OrigFilterIcon)`
+    fill: #073B4C;
+    width: 20px;
+`;
+
+const styles = theme => ({
+    filterBtn: {
+        width: '128px',
+        height: '40px',
+        borderRadius: '20px'
+    },
+    sortByDropdown: {
+        width: '200px',
+        color: theme.palette.secondary.main
+    },
+    sortByDropdownItem: {
+        color: theme.palette.secondary.main
+    },
+    formControl: {
+        margin: theme.spacing(1)
     }
 });
 
-const displayRowsPerPage = 3;
+const displayRowsPerPage = 10;
+
+function SortByDropdown(props) {
+    const { name, value, handleOnChange, options, placeholder, classes } = props;
+
+    return (
+        <FormControl classes={{root: classes.formControl}}>
+            <FormHelperText>{placeholder}</FormHelperText>
+            <Select
+                name={name}
+                value={value}
+                onChange={handleOnChange}
+                displayEmpty
+                classes={{root: classes.sortByDropdown}}
+                inputProps={{ 'aria-label': 'Without label' }}
+            >
+                {
+                    options.map(opt => (
+                        <MenuItem classes={{root: classes.sortByDropdownItem}} key={opt} value={opt}>{opt}</MenuItem>
+                    ))
+                }
+            </Select>
+        </FormControl>
+    );
+}
 
 class ExploreResult extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            sortBy: {
+                name: "sortBy",
+                value: "",
+                placeholder: "Sort by",
+                options: ["Published Date (new > old)", "Published Date (old > new)"]
+            },
             keyword: {
                 id: "keyword",
                 label: "Keyword",
@@ -51,7 +97,11 @@ class ExploreResult extends Component {
     }
 
     handleOnChange = (e) => {
-        const { value, id } = e.target;
+        console.log("target", e.target);
+        let { value, id } = e.target;
+        if (!id) {
+            id = e.target.name;
+        }
         this.setNestedState(id, "value", value);
     }
 
@@ -116,6 +166,7 @@ class ExploreResult extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         const { searchKeyword, searchCondition } = this.props.location.state.searchConditions;
         const { searchResult, displayInfo } = this.state;
         const { isNormalEnd, errMsg, totalItems } = searchResult;
@@ -139,15 +190,21 @@ class ExploreResult extends Component {
                         Total : <span className="totalItems">{totalItems}</span>
                     </div>
                     <div className="filterAndSort">
-                        <ThemeProvider theme={filterTheme}>
-                            <Button variant="outlined" color="primary">
-                                <FilterIcon className="filterIcon" />
-                            </Button>
-                            <div className="sort">
-                                <div className="sortLabel">Sort by:&ensp;</div>
-                                <MyDropdown id="sortDropdown" />
-                            </div>
-                        </ThemeProvider>
+                        <Button classes={{ root: classes.filterBtn }} variant="outlined" color="secondary">
+                            <FilterIcon />
+                        </Button>
+                        <SortByDropdown
+                            classes={classes}
+                            name={this.state.sortBy.name}
+                            value={this.state.sortBy.value}
+                            handleOnChange={this.handleOnChange}
+                            options={this.state.sortBy.options}
+                            placeholder={this.state.sortBy.placeholder}
+                        />
+                        {/* <div className="sort">
+                            <div className="sortLabel">Sort by:&ensp;</div>
+                            <MyDropdown id="sortDropdown" />
+                        </div> */}
                     </div>
                     {/* <div className="filterAndSort">
                         <FilterIcon className="filter" />
@@ -167,4 +224,5 @@ class ExploreResult extends Component {
     }
 }
 
-export default ExploreResult;
+// export default ExploreResult;
+export default withStyles(styles)(ExploreResult);
