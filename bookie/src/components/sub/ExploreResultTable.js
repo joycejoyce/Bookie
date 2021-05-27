@@ -6,8 +6,8 @@ import ExploreTablePagination from "./ExploreTablePagination.js";
 
 class ExploreResultTable extends Component {
     render() {
-        const { searchResult, displayInfo } = this.props;
-        const { items, totalItems } = searchResult;
+        const { displayedItems: items, displayInfo } = this.props;
+        const totalItems = items;
 
         return (
             <div className="exploreResultTable">

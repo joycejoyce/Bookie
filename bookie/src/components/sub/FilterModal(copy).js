@@ -61,14 +61,13 @@ const FilterIcon = styled(OrigFilterIcon)`
 `;
 
 function FilterList(props) {
-    function SelectAllCheckbox(props) {
-        const { filter, handleOnChangeSelectAll } = props;
-        const { isSelectAll } = filter;
+    function SelectAllCheckbox() {
+        const { selectAll, handleOnChangeSelectAll } = props;
         return (
             <ListItem>
                 <ListItemIcon>
                     <ThemeProvider theme={checkboxTheme}>
-                        <Checkbox checked={isSelectAll} disableRipple onChange={handleOnChangeSelectAll} />
+                        <Checkbox checked={selectAll} disableRipple onChange={handleOnChangeSelectAll} />
                     </ThemeProvider>
                 </ListItemIcon>
                 <ListItemText className={classes.selectAll} primary="Select all" />
@@ -77,38 +76,34 @@ function FilterList(props) {
     }
 
     function CategoryItem(props) {
-        const { classes, handleOnClickCategory, category, filter } = props;
+        const { classes, handleOnClickCategory, category, categoryState, checkedItems } = props;
 
         return (
-            <ListItem button onClick={() => handleOnClickCategory(category)}>
+            <ListItem button onClick={(e) => handleOnClickCategory(e, category)}>
                 <ListItemText className={classes.listItemText}
-                    primary={`${filter[category].label} (${filter[category].checkedItems.length} / ${filter[category].items.length})`}
+                    primary={`${categoryState[category].label} (${checkedItems[category].length} / ${categoryState[category].items.length})`}
                 />
-                {filter[category].isOpen ? <MinusIcon /> : <AddIcon />}
+                {categoryState[category].isOpen ? <MinusIcon /> : <AddIcon />}
             </ListItem>
         );
     }
 
     function CategoryCollapse(props) {
-        const { classes, category, filter, handleOnChangeCheckbox } = props;
+        const { classes, categoryState, checkedItems, category, handleOnChangeCheckbox } = props;
 
         return (
             <Collapse
-                in={filter[category].isOpen}
+                in={categoryState[category].isOpen}
                 timeout="auto"
                 unmountOnExit
             >
                 <List component="div" dense={true} disablePadding>
                     {
-                        filter[category].items.map(item => (
+                        categoryState[category].items.map(item => (
                             <ListItem>
                                 <ListItemIcon>
                                     <ThemeProvider theme={checkboxTheme}>
-                                        <Checkbox
-                                            checked={filter[category].checkedItems.includes(item)}
-                                            disableRipple
-                                            onChange={(e) => handleOnChangeCheckbox(e, category, item)}
-                                        />
+                                        <Checkbox checked={checkedItems[category].includes(item)} disableRipple onChange={(e) => handleOnChangeCheckbox(e, category, item)} />
                                     </ThemeProvider>
                                 </ListItemIcon>
                                 <ListItemText className={classes.listItemText} primary={item} />
@@ -129,13 +124,10 @@ function FilterList(props) {
         )
     }
 
-    const { classes, filter } = props;
-    console.log({ filter });
-    const { categories } = filter;
-    console.log({ categories });
+    const { classes, categories } = props;
     return (
         <List component={Paper} className={classes.paper}>
-            <SelectAllCheckbox {...props} />
+            <SelectAllCheckbox />
             {
                 categories.map(category => <CategoryList category={category} {...props}/>)
             }
@@ -147,7 +139,29 @@ class FilterModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isModalOpen: false
+            isModalOpen: false,
+            selectAll: false,
+            // categories: ["author", "publisher", "subject"],
+            // checkedItems: {
+            //     author: [],
+            //     publisher: [],
+            //     subject: []
+            // },
+            // author: {
+            //     label: "Author",
+            //     isOpen: false,
+            //     items: ["Charles Babbage", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel"]
+            // },
+            // publisher: {
+            //     label: "Publisher",
+            //     isOpen: false,
+            //     items: ["A & C Black", "Taunton Press", "Vintage Books", "Vintage Books", "Vintage Books", "Vintage Books", "Vintage Books", "Vintage Books"]
+            // },
+            // subject: {
+            //     label: "Subject",
+            //     isOpen: false,
+            //     items: ["Self-Help", "Juvenile Nonfiction"]
+            // }
         }
     }
 
@@ -161,69 +175,60 @@ class FilterModal extends Component {
         }));
     }
 
-    handleOnClickCategory = (category) => {
-        const { filter, setParentState } = this.props;
-        const { isOpen } = filter[category];
-        setParentState("filter", category, {
-            ...filter[category],
-            isOpen: !isOpen
-        });
+    handleOnClickCategory = (e, category) => {
+        const isOpen = this.state[category].isOpen;
+        this.setNestedState(category, "isOpen", !isOpen);
     }
 
     handleOnChangeCheckbox = (e, category, name) => {
         const { checked } = e.target;
-        const { filter, setParentState } = this.props;
-
-        let { checkedItems } = filter[category];
+        let checkedItems = this.state.checkedItems[category];
         if (checked) {
             checkedItems = [...checkedItems, name];
         }
         else {
             checkedItems = checkedItems.filter(item => item !== name);
         }
-        setParentState("filter", category, {
-            ...filter[category],
-            checkedItems
-        });
+        this.setState(prevState => ({
+            ...prevState,
+            checkedItems: {
+                ...prevState.checkedItems,
+                [category]: checkedItems
+            }
+        }));
     }
 
     handleOnClickFilter = () => {
-        this.setState({ isModalOpen: true });
+        this.setState({ isOpen: true });
     }
 
     handleOnCloseModal = () => {
-        this.setState({ isModalOpen: false });
+        this.setState({ isOpen: false });
     }
 
     handleOnChangeSelectAll = (e) => {
         const { checked } = e.target;
-        const { filter, setParentState } = this.props;
-        const { categories } = filter;
-        const parentName = "filter";
-        setParentState(parentName, "isSelectAll", checked);
-        let displayedItems = [];
-        categories.forEach(category => {
-            let checkedItems = [];
-            if (checked) {
-                checkedItems = filter[category].items;
-            }
-            setParentState(parentName, category, {...filter[category], checkedItems});
-            const addedItems = this.getDisplayedItemsByFilter(category, checkedItems);
-            displayedItems = this.addDisplayeditems(displayedItems, addedItems);
-        });
-        
-    }
-
-    getDisplayedItemsByFilter = (category, checkedItems) => {
-
-    }
-
-    addDisplayeditems = (origItems, addedItems) => {
-
+        if (checked) {
+            this.setState({ selectAll: true });
+            this.state.categories.forEach(category => {
+                this.setNestedState("checkedItems", category, this.state[category].items);
+            });
+        }
+        else {
+            this.setState({ selectAll: false });
+            this.state.categories.forEach(category => {
+                this.setNestedState("checkedItems", category, []);
+            });
+        }
     }
 
     render() {
-        const { classes, filter } = this.props;
+        const categoryState = {
+            author: this.state.author,
+            publisher: this.state.publisher,
+            subject: this.state.subject
+        };
+        const { classes } = this.props;
 
         return (
             <>
@@ -241,7 +246,10 @@ class FilterModal extends Component {
                 >
                     <FilterList
                         classes={classes}
-                        filter={filter}
+                        checkedItems={this.state.checkedItems}
+                        selectAll={this.state.selectAll}
+                        categories={this.state.categories}
+                        categoryState={categoryState}
                         handleOnClickCategory={this.handleOnClickCategory}
                         handleOnChangeCheckbox={this.handleOnChangeCheckbox}
                         handleOnChangeSelectAll={this.handleOnChangeSelectAll}

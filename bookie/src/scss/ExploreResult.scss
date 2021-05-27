@@ -3,7 +3,7 @@
 .exploreResult {
     @extend %commonSettings;
     .contents {
-        margin-top: 18vmin;
+        margin-top: clamp(3rem, 15vmin, 7rem);
         // .searchSection {
         //     display: grid;
         //     grid-template-columns: 45% 35% 10%;

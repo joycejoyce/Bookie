@@ -81,6 +81,29 @@ class ExploreResult extends Component {
                 errMsg: "",
                 totalItems: 0,
                 items: []
+            },
+            filter:{
+                isSelectAll: true,
+                categories: ["author", "publisher", "subject"],
+                author: {
+                    label: "Author",
+                    isOpen: false,
+                    items: [],
+                    checkedItems: []
+                },
+                publisher: {
+                    label: "Publisher",
+                    isOpen: false,
+                    items: [],
+                    checkedItems: []
+                },
+                subject: {
+                    label: "Subject",
+                    isOpen: false,
+                    items: [],
+                    checkedItems: []
+                },
+                displayedItems: []
             }
         };
     }
@@ -137,7 +160,60 @@ class ExploreResult extends Component {
         this.setState({ searchConditions });
 
         const searchResult = this.getSearchResult(searchConditions);
+        console.log({searchResult});
         this.setSearchResult(searchResult);
+
+        this.setFilter(searchResult);
+    }
+
+    setFilter = (searchResult) => {
+        const { items } = searchResult.response;
+        const data = {
+            author: this.getSearchResultField("author", items),
+            publisher: this.getSearchResultField("publisher", items),
+            subject: this.getSearchResultField("subject", items)
+        }
+        const parentName = "filter";
+        Object.keys(data).forEach(key => {
+            const value = data[key];
+            this.setNestedState(parentName, key, {
+                ...this.state[parentName][key],
+                items: value,
+                checkedItems: value
+            });
+        });
+        this.setNestedState(parentName, "displayedItems", items);
+        
+    }
+
+    getSearchResultField = (field, items) => {
+        const mapping = {
+            author: "authors",
+            publisher: "publisher",
+            subject: "categories"
+        };
+        let ary = items.reduce((accumulater, item) => {
+            const { volumeInfo } = item;
+            const fieldName = mapping[field];
+            let values = volumeInfo[fieldName];
+            if (!Array.isArray(values)) {
+                values = [values];
+            }
+            values = values.filter(x => {
+                if (x) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+            accumulater.push(...values);
+            return accumulater;
+        }, []);
+        ary = ary.sort();
+        
+        const distinctAry = [...new Set(ary)];
+        return distinctAry;
     }
 
     handleOnChangePage = (e, page) => {
@@ -160,6 +236,8 @@ class ExploreResult extends Component {
         const { searchResult, displayInfo } = this.state;
         const { isNormalEnd, errMsg, totalItems } = searchResult;
 
+        console.log("filter", this.state.filter);
+
         return (
             <div className="exploreResult">
                 <div className="contents">
@@ -179,7 +257,10 @@ class ExploreResult extends Component {
                         Total : <span className="totalItems">{totalItems}</span>
                     </div>
                     <div className="filterAndSort">
-                        <FilterModal />
+                        <FilterModal
+                            filter={this.state.filter}
+                            setParentState={this.setNestedState}
+                        />
                         <SortByDropdown
                             classes={classes}
                             name={this.state.sortBy.name}
@@ -190,7 +271,7 @@ class ExploreResult extends Component {
                         />
                     </div>
                     {isNormalEnd ?
-                        <ExploreResultTable searchResult={searchResult} displayInfo={displayInfo} />
+                        <ExploreResultTable displayedItems={this.state.filter.displayedItems} displayInfo={displayInfo} />
                         :
                         <ExploreErrorMsg errMsg={errMsg} />
                     }
