@@ -5,23 +5,12 @@ import MyDropdown from './sub/MyDropdown.js';
 import SearchIcon from './icon/Search.js';
 import ExploreResultTable from './sub/ExploreResultTable.js';
 import ExploreErrorMsg from './sub/ExploreErrorMsg.js';
-import { ReactComponent as OrigFilterIcon } from '../assets/filter.svg';
+import FilterModal from './sub/FilterModal.js';
 import searchBook from "../model/BookSearcher.js";
-import { Button, Select, FormControl, MenuItem, FormHelperText } from "@material-ui/core";
-import styled from "@emotion/styled";
+import { Button, Select, FormControl, MenuItem, FormHelperText } from "@material-ui/core"
 import { withStyles } from '@material-ui/core/styles';
 
-const FilterIcon = styled(OrigFilterIcon)`
-    fill: #073B4C;
-    width: 20px;
-`;
-
 const styles = theme => ({
-    filterBtn: {
-        width: '128px',
-        height: '40px',
-        borderRadius: '20px'
-    },
     sortByDropdown: {
         width: '200px',
         color: theme.palette.secondary.main
@@ -190,9 +179,7 @@ class ExploreResult extends Component {
                         Total : <span className="totalItems">{totalItems}</span>
                     </div>
                     <div className="filterAndSort">
-                        <Button classes={{ root: classes.filterBtn }} variant="outlined" color="secondary">
-                            <FilterIcon />
-                        </Button>
+                        <FilterModal />
                         <SortByDropdown
                             classes={classes}
                             name={this.state.sortBy.name}
@@ -201,18 +188,7 @@ class ExploreResult extends Component {
                             options={this.state.sortBy.options}
                             placeholder={this.state.sortBy.placeholder}
                         />
-                        {/* <div className="sort">
-                            <div className="sortLabel">Sort by:&ensp;</div>
-                            <MyDropdown id="sortDropdown" />
-                        </div> */}
                     </div>
-                    {/* <div className="filterAndSort">
-                        <FilterIcon className="filter" />
-                        <div className="sort">
-                            <div className="sortLabel">Sort by:&ensp;</div>
-                            <MyDropdown id="sortDropdown" />
-                        </div>
-                    </div> */}
                     {isNormalEnd ?
                         <ExploreResultTable searchResult={searchResult} displayInfo={displayInfo} />
                         :
@@ -224,5 +200,4 @@ class ExploreResult extends Component {
     }
 }
 
-// export default ExploreResult;
 export default withStyles(styles)(ExploreResult);

@@ -8,7 +8,7 @@ import Welcome from "./components/Welcome.js";
 import UserProfile from "./components/UserProfile.js";
 import Explore from "./components/Explore.js";
 import ExploreResult from "./components/ExploreResult.js";
-import FilterList from "./components/sub/FilterList.js";
+import FilterModal from "./components/sub/FilterModal.js";
 import {
   BrowserRouter as Router,
   Switch,
