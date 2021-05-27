@@ -1,15 +1,16 @@
 import { Component } from "react";
-import '../../scss/FilterModal.scss';
+// import '../../scss/FilterModal.scss';
+// import '../../scss/App.scss';
 import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Paper, List, ListItem, ListItemText, ListItemIcon, Checkbox, Collapse } from "@material-ui/core";
 import { Add as AddIcon, Remove as MinusIcon } from '@material-ui/icons';
 import { ReactComponent as OrigFilterIcon } from '../../assets/filter.svg';
 import styled from "@emotion/styled";
 
-const theme = createMuiTheme({
+const checkboxTheme = createMuiTheme({
     palette: {
         secondary: {
-            main: '#118AB2'
+            main: '#EF476F'
         }
     }
 });
@@ -20,30 +21,37 @@ const styles = theme => ({
         height: '40px',
         borderRadius: '20px'
     },
-    modal: {
-        // outline: 0,
-    },
     paper: {
         position: 'absolute',
-        width: 400,
+        width: 'clamp(290px, 80vmin, 500px)',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        height: 'fit-content',
-        maxHeight: '80vmin',
+        height: '80vmin',
         overflowY: 'scroll',
         '&::-webkit-scrollbar': {
-            width: '2vmin'
+            width: '1vmin'
         },
         '&::-webkit-scrollbar-thumb': {
             background: theme.palette.secondary.main,
-            borderRadius: '1vmin'
+            borderRadius: '.5vmin'
         }
     },
-    collapse: {
+    listItemText: {
+        '& .MuiListItemText-primary': {
+            fontFamily: 'Montserrat-SemiBold',
+            color: theme.palette.secondary.main
+        }
+    },
+    selectAll: {
+        '& .MuiListItemText-primary': {
+            fontFamily: 'Montserrat-SemiBold',
+            fontSize: '0.875rem',
+            color: theme.palette.secondary.main
+        }
     }
 });
 
@@ -53,47 +61,75 @@ const FilterIcon = styled(OrigFilterIcon)`
 `;
 
 function FilterList(props) {
-    const { classes, categoryState, handleOnClickCategory, handleOnChangeCheckbox } = props;
-    const categories = ["subject", "author", "publisher"];
-    console.log({classes});
-    console.log("classes.paper", classes.paper);
+    function SelectAllCheckbox() {
+        const { selectAll, handleOnChangeSelectAll } = props;
+        return (
+            <ListItem>
+                <ListItemIcon>
+                    <ThemeProvider theme={checkboxTheme}>
+                        <Checkbox checked={selectAll} disableRipple onChange={handleOnChangeSelectAll} />
+                    </ThemeProvider>
+                </ListItemIcon>
+                <ListItemText className={classes.selectAll} primary="Select all" />
+            </ListItem>
+        );
+    }
 
+    function CategoryItem(props) {
+        const { classes, handleOnClickCategory, category, categoryState, checkedItems } = props;
+
+        return (
+            <ListItem button onClick={(e) => handleOnClickCategory(e, category)}>
+                <ListItemText className={classes.listItemText}
+                    primary={`${categoryState[category].label} (${checkedItems[category].length} / ${categoryState[category].items.length})`}
+                />
+                {categoryState[category].isOpen ? <MinusIcon /> : <AddIcon />}
+            </ListItem>
+        );
+    }
+
+    function CategoryCollapse(props) {
+        const { classes, categoryState, checkedItems, category, handleOnChangeCheckbox } = props;
+
+        return (
+            <Collapse
+                in={categoryState[category].isOpen}
+                timeout="auto"
+                unmountOnExit
+            >
+                <List component="div" dense={true} disablePadding>
+                    {
+                        categoryState[category].items.map(item => (
+                            <ListItem>
+                                <ListItemIcon>
+                                    <ThemeProvider theme={checkboxTheme}>
+                                        <Checkbox checked={checkedItems[category].includes(item)} disableRipple onChange={(e) => handleOnChangeCheckbox(e, category, item)} />
+                                    </ThemeProvider>
+                                </ListItemIcon>
+                                <ListItemText className={classes.listItemText} primary={item} />
+                            </ListItem>
+                        ))
+                    }
+                </List>
+            </Collapse>
+        );
+    }
+
+    function CategoryList(props) {
+        return (
+            <>
+                <CategoryItem {...props} />
+                <CategoryCollapse {...props} />
+            </>
+        )
+    }
+
+    const { classes, categories } = props;
     return (
         <List component={Paper} className={classes.paper}>
+            <SelectAllCheckbox />
             {
-                categories.map(category => (
-                    <div className="listItem">
-                        <div className="category">
-                            <ListItem button onClick={(e) => handleOnClickCategory(e, category)}>
-                                <ListItemText primary={categoryState[category].label} />
-                                {categoryState[category].isOpen ? <MinusIcon /> : <AddIcon />}
-                            </ListItem>
-                        </div>
-                        <Collapse
-                            classes={classes.collapse}
-                            in={categoryState[category].isOpen}
-                            timeout="auto"
-                            unmountOnExit
-                        >
-                            <div className="categoryItems">
-                                <List component="div" dense={true} disablePadding>
-                                    {
-                                        categoryState[category].items.map(item => (
-                                            <ListItem>
-                                                <ListItemIcon>
-                                                    <ThemeProvider theme={theme}>
-                                                        <Checkbox disableRipple onChange={(e) => handleOnChangeCheckbox(e, category, item)} />
-                                                    </ThemeProvider>
-                                                </ListItemIcon>
-                                                <ListItemText primary={item} />
-                                            </ListItem>
-                                        ))
-                                    }
-                                </List>
-                            </div>
-                        </Collapse>
-                    </div>)
-                )
+                categories.map(category => <CategoryList category={category} {...props}/>)
             }
         </List>
     )
@@ -104,6 +140,8 @@ class FilterModal extends Component {
         super(props);
         this.state = {
             isOpen: false,
+            selectAll: false,
+            categories: ["author", "publisher", "subject"],
             checkedItems: {
                 author: [],
                 publisher: [],
@@ -111,7 +149,7 @@ class FilterModal extends Component {
             },
             author: {
                 label: "Author",
-                isOpen: true,
+                isOpen: false,
                 items: ["Charles Babbage", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel", "David Baddiel"]
             },
             publisher: {
@@ -161,7 +199,6 @@ class FilterModal extends Component {
     }
 
     handleOnClickFilter = () => {
-        console.log("handleOnClickFilter");
         this.setState({ isOpen: true });
     }
 
@@ -169,8 +206,23 @@ class FilterModal extends Component {
         this.setState({ isOpen: false });
     }
 
+    handleOnChangeSelectAll = (e) => {
+        const { checked } = e.target;
+        if (checked) {
+            this.setState({ selectAll: true });
+            this.state.categories.forEach(category => {
+                this.setNestedState("checkedItems", category, this.state[category].items);
+            });
+        }
+        else {
+            this.setState({ selectAll: false });
+            this.state.categories.forEach(category => {
+                this.setNestedState("checkedItems", category, []);
+            });
+        }
+    }
+
     render() {
-        console.log("checkedItems", this.state.checkedItems);
         const categoryState = {
             author: this.state.author,
             publisher: this.state.publisher,
@@ -179,7 +231,7 @@ class FilterModal extends Component {
         const { classes } = this.props;
 
         return (
-            <div className="filterModal">
+            <>
                 <Button
                     classes={{ root: classes.filterBtn }}
                     variant="outlined"
@@ -189,18 +241,21 @@ class FilterModal extends Component {
                     <FilterIcon />
                 </Button>
                 <Modal
-                    classes={{ root: classes.modal }}
                     open={this.state.isOpen}
                     onClose={this.handleOnCloseModal}
                 >
                     <FilterList
                         classes={classes}
+                        checkedItems={this.state.checkedItems}
+                        selectAll={this.state.selectAll}
+                        categories={this.state.categories}
+                        categoryState={categoryState}
                         handleOnClickCategory={this.handleOnClickCategory}
                         handleOnChangeCheckbox={this.handleOnChangeCheckbox}
-                        categoryState={categoryState}
+                        handleOnChangeSelectAll={this.handleOnChangeSelectAll}
                     />
                 </Modal>
-            </div>
+            </>
         );
     }
 }

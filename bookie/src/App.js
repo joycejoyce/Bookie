@@ -16,6 +16,11 @@ import {
 } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
+// const montserrat_semiBold = {
+//   fontFamily: 'Montserrat-SemiBold',
+//   src: 'url("./fonts/Montserrat/Montserrat-SemiBold.ttf")'
+// };
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -24,6 +29,14 @@ const theme = createMuiTheme({
     secondary: {
       main: '#073B4C'
     }
+  },
+  typography: {
+    fontFamily: '"Roboto-Regular", "Montserrat-SemiBold"',
+    // MuiListItemText: {
+    //   primary: {
+    //     fontFamily: '"Montserrat-SemiBold", "sans-serif"'
+    //   }
+    // }
   }
 });
 
