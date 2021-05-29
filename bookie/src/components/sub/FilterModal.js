@@ -1,10 +1,10 @@
 import { Component } from "react";
 // import '../../scss/FilterModal.scss';
-// import '../../scss/App.scss';
 import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Paper, List, ListItem, ListItemText, ListItemIcon, Checkbox, Collapse } from "@material-ui/core";
 import { Add as AddIcon, Remove as MinusIcon } from '@material-ui/icons';
 import { ReactComponent as OrigFilterIcon } from '../../assets/filter.svg';
+import { categories, getDisplayedItems_add, getDisplayedItems_remove } from '../../model/BookFilter.js';
 import styled from "@emotion/styled";
 
 const checkboxTheme = createMuiTheme({
@@ -82,7 +82,7 @@ function FilterList(props) {
         return (
             <ListItem button onClick={() => handleOnClickCategory(category)}>
                 <ListItemText className={classes.listItemText}
-                    primary={`${filter[category].label} (${filter[category].checkedItems.length} / ${filter[category].items.length})`}
+                    primary={`${filter[category].label} (${filter[category].checkedValues.length} / ${filter[category].values.length})`}
                 />
                 {filter[category].isOpen ? <MinusIcon /> : <AddIcon />}
             </ListItem>
@@ -100,18 +100,18 @@ function FilterList(props) {
             >
                 <List component="div" dense={true} disablePadding>
                     {
-                        filter[category].items.map(item => (
+                        filter[category].values.map(value => (
                             <ListItem>
                                 <ListItemIcon>
                                     <ThemeProvider theme={checkboxTheme}>
                                         <Checkbox
-                                            checked={filter[category].checkedItems.includes(item)}
+                                            checked={filter[category].checkedValues.includes(value)}
                                             disableRipple
-                                            onChange={(e) => handleOnChangeCheckbox(e, category, item)}
+                                            onChange={(e) => handleOnChangeCheckbox(e, category, value)}
                                         />
                                     </ThemeProvider>
                                 </ListItemIcon>
-                                <ListItemText className={classes.listItemText} primary={item} />
+                                <ListItemText className={classes.listItemText} primary={value} />
                             </ListItem>
                         ))
                     }
@@ -130,9 +130,6 @@ function FilterList(props) {
     }
 
     const { classes, filter } = props;
-    console.log({ filter });
-    const { categories } = filter;
-    console.log({ categories });
     return (
         <List component={Paper} className={classes.paper}>
             <SelectAllCheckbox {...props} />
@@ -170,21 +167,38 @@ class FilterModal extends Component {
         });
     }
 
-    handleOnChangeCheckbox = (e, category, name) => {
+    handleOnChangeCheckbox = (e, category, value) => {
         const { checked } = e.target;
-        const { filter, setParentState } = this.props;
+        this.setCheckedValues_onChangeCheckbox(checked, category, value);
+        this.setDisplayedItems_onChangeCheckbox(checked, category, value);
+    }
 
-        let { checkedItems } = filter[category];
+    setCheckedValues_onChangeCheckbox = (checked, category, value) => {
+        const { filter, setParentState } = this.props;
+        let { checkedValues } = filter[category];
         if (checked) {
-            checkedItems = [...checkedItems, name];
+            checkedValues = [...checkedValues, value];
         }
         else {
-            checkedItems = checkedItems.filter(item => item !== name);
+            checkedValues = checkedValues.filter(checkedValue => checkedValue !== value);
         }
         setParentState("filter", category, {
             ...filter[category],
-            checkedItems
+            checkedValues
         });
+    }
+
+    setDisplayedItems_onChangeCheckbox = (checked, category, value) => {
+        const { filter, allItems, setParentState } = this.props;
+        const { displayedItems } = filter;
+        let displayedItems_modified = [];
+        if (checked) {
+            displayedItems_modified = getDisplayedItems_add(displayedItems, allItems, category, value);
+        }
+        else {
+            displayedItems_modified = getDisplayedItems_remove(displayedItems, category, value);
+        }
+        setParentState("filter", "displayedItems", displayedItems_modified);
     }
 
     handleOnClickFilter = () => {
@@ -197,33 +211,31 @@ class FilterModal extends Component {
 
     handleOnChangeSelectAll = (e) => {
         const { checked } = e.target;
-        const { filter, setParentState } = this.props;
-        const { categories } = filter;
+        const { filter, allItems, setParentState } = this.props;
         const parentName = "filter";
         setParentState(parentName, "isSelectAll", checked);
-        let displayedItems = [];
         categories.forEach(category => {
-            let checkedItems = [];
+            let checkedValues = [];
             if (checked) {
-                checkedItems = filter[category].items;
+                checkedValues = filter[category].values;
             }
-            setParentState(parentName, category, {...filter[category], checkedItems});
-            const addedItems = this.getDisplayedItemsByFilter(category, checkedItems);
-            displayedItems = this.addDisplayeditems(displayedItems, addedItems);
+            setParentState(parentName, category, {...filter[category], checkedValues});
         });
-        
+        this.setDisplayedItems_onChangeSelectAll(checked, allItems, parentName, setParentState);
     }
 
-    getDisplayedItemsByFilter = (category, checkedItems) => {
-
-    }
-
-    addDisplayeditems = (origItems, addedItems) => {
-
+    setDisplayedItems_onChangeSelectAll = (checked, allItems, parentName, setParentState) => {
+        if (checked) {
+            setParentState(parentName, "displayedItems", allItems);
+        }
+        else {
+            setParentState(parentName, "displayedItems", []);
+        }
     }
 
     render() {
-        const { classes, filter } = this.props;
+        const { classes } = this.props;
+        console.log("filter", this.props.filter);
 
         return (
             <>
@@ -241,7 +253,7 @@ class FilterModal extends Component {
                 >
                     <FilterList
                         classes={classes}
-                        filter={filter}
+                        {...this.props}
                         handleOnClickCategory={this.handleOnClickCategory}
                         handleOnChangeCheckbox={this.handleOnChangeCheckbox}
                         handleOnChangeSelectAll={this.handleOnChangeSelectAll}

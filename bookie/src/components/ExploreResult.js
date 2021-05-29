@@ -9,6 +9,7 @@ import FilterModal from './sub/FilterModal.js';
 import searchBook from "../model/BookSearcher.js";
 import { Button, Select, FormControl, MenuItem, FormHelperText } from "@material-ui/core"
 import { withStyles } from '@material-ui/core/styles';
+import { getFilterBySearchResult } from '../model/BookFilter.js';
 
 const styles = theme => ({
     sortByDropdown: {
@@ -84,24 +85,23 @@ class ExploreResult extends Component {
             },
             filter:{
                 isSelectAll: true,
-                categories: ["author", "publisher", "subject"],
                 author: {
                     label: "Author",
                     isOpen: false,
-                    items: [],
-                    checkedItems: []
+                    values: [],
+                    checkedValues: []
                 },
                 publisher: {
                     label: "Publisher",
                     isOpen: false,
-                    items: [],
-                    checkedItems: []
+                    values: [],
+                    checkedValues: []
                 },
                 subject: {
                     label: "Subject",
                     isOpen: false,
-                    items: [],
-                    checkedItems: []
+                    values: [],
+                    checkedValues: []
                 },
                 displayedItems: []
             }
@@ -109,7 +109,6 @@ class ExploreResult extends Component {
     }
 
     handleOnChange = (e) => {
-        console.log("target", e.target);
         let { value, id } = e.target;
         if (!id) {
             id = e.target.name;
@@ -160,60 +159,18 @@ class ExploreResult extends Component {
         this.setState({ searchConditions });
 
         const searchResult = this.getSearchResult(searchConditions);
-        console.log({searchResult});
         this.setSearchResult(searchResult);
 
         this.setFilter(searchResult);
     }
 
     setFilter = (searchResult) => {
-        const { items } = searchResult.response;
-        const data = {
-            author: this.getSearchResultField("author", items),
-            publisher: this.getSearchResultField("publisher", items),
-            subject: this.getSearchResultField("subject", items)
-        }
-        const parentName = "filter";
-        Object.keys(data).forEach(key => {
-            const value = data[key];
-            this.setNestedState(parentName, key, {
-                ...this.state[parentName][key],
-                items: value,
-                checkedItems: value
-            });
-        });
-        this.setNestedState(parentName, "displayedItems", items);
-        
-    }
-
-    getSearchResultField = (field, items) => {
-        const mapping = {
-            author: "authors",
-            publisher: "publisher",
-            subject: "categories"
+        const origFilter = getFilterBySearchResult(searchResult);
+        const filter = {
+            ...this.state.filter,
+            ...origFilter
         };
-        let ary = items.reduce((accumulater, item) => {
-            const { volumeInfo } = item;
-            const fieldName = mapping[field];
-            let values = volumeInfo[fieldName];
-            if (!Array.isArray(values)) {
-                values = [values];
-            }
-            values = values.filter(x => {
-                if (x) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            });
-            accumulater.push(...values);
-            return accumulater;
-        }, []);
-        ary = ary.sort();
-        
-        const distinctAry = [...new Set(ary)];
-        return distinctAry;
+        this.setState({ filter });
     }
 
     handleOnChangePage = (e, page) => {
@@ -235,8 +192,7 @@ class ExploreResult extends Component {
         const { searchKeyword, searchCondition } = this.props.location.state.searchConditions;
         const { searchResult, displayInfo } = this.state;
         const { isNormalEnd, errMsg, totalItems } = searchResult;
-
-        console.log("filter", this.state.filter);
+        const filteredItems = totalItems - this.state.filter.displayedItems.length;
 
         return (
             <div className="exploreResult">
@@ -252,13 +208,16 @@ class ExploreResult extends Component {
                         <SearchIcon className="searchIcon" />
                     </div> */}
                     <div className="summary">
-                        Keyword ({searchCondition}) : <span className="assignedKeyword">{searchKeyword}</span>
+                        Keyword ({searchCondition}) : <span className="summaryPoint">{searchKeyword}</span>
                         <br />
-                        Total : <span className="totalItems">{totalItems}</span>
+                        Total : <span className="summaryPoint">{totalItems}</span>
+                        <br />
+                        Filtered out : <span className="summaryPoint">{filteredItems}</span>
                     </div>
                     <div className="filterAndSort">
                         <FilterModal
                             filter={this.state.filter}
+                            allItems={this.state.searchResult.items}
                             setParentState={this.setNestedState}
                         />
                         <SortByDropdown
@@ -271,7 +230,9 @@ class ExploreResult extends Component {
                         />
                     </div>
                     {isNormalEnd ?
-                        <ExploreResultTable displayedItems={this.state.filter.displayedItems} displayInfo={displayInfo} />
+                        <ExploreResultTable
+                            displayedItems={this.state.filter.displayedItems}
+                            displayInfo={displayInfo} />
                         :
                         <ExploreErrorMsg errMsg={errMsg} />
                     }
