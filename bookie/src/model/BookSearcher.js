@@ -10,7 +10,51 @@ const queryParam = {
     isbn: "isbn"
 };
 
-export default function search(conditions) {
+export default function searchAll(conditions) {
+    console.log("BookSearcher(all)", conditions);
+    // searchConditions: {
+    //     keyword: "",
+    //     condition: "",
+    //     startIndex: 0,
+    //     maxResults: displayRowsPerPage
+    // }
+    // ret = {
+    //     isNormalEnd: true,
+    //     errMsg: "",
+    //     response: null
+    // }
+    const modifiedConditions = {
+        ...conditions,
+        startIndex: 0,
+        maxResults: 40
+    };
+    const searchResult = {
+        isNormalEnd: true,
+        errMsg: "",
+        response: { items: [] }
+    };
+    while (true) {
+        let tmpSearchResult = search(modifiedConditions);
+        console.log({tmpSearchResult});
+        if (!tmpSearchResult.isNormalEnd) {
+            break;
+        }
+        const { items } = tmpSearchResult.response;
+        if (!items) {
+            break;
+        }
+        if (modifiedConditions.startIndex === 0) {
+            searchResult.response.totalItems = tmpSearchResult.response.totalItems;
+        }
+        searchResult.response.items = [...searchResult.response.items, ...items];
+        modifiedConditions.startIndex = modifiedConditions.startIndex + modifiedConditions.maxResults;
+    }
+    console.log({searchResult});
+
+    return searchResult;
+}
+
+export function search(conditions) {
     console.log("BookSearcher", conditions);
     let { searchKeyword, searchCondition } = conditions;
     let searchResult = null;

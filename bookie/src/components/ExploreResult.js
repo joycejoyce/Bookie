@@ -1,13 +1,10 @@
 import { Component } from "react";
 import '../scss/ExploreResult.scss';
-import MyTextField from './sub/MyTextField.js';
-import MyDropdown from './sub/MyDropdown.js';
-import SearchIcon from './icon/Search.js';
 import ExploreResultTable from './sub/ExploreResultTable.js';
 import ExploreErrorMsg from './sub/ExploreErrorMsg.js';
 import FilterModal from './sub/FilterModal.js';
 import searchBook from "../model/BookSearcher.js";
-import { Button, Select, FormControl, MenuItem, FormHelperText } from "@material-ui/core"
+import { Select, FormControl, MenuItem, FormHelperText } from "@material-ui/core"
 import { withStyles } from '@material-ui/core/styles';
 import { getFilterBySearchResult } from '../model/BookFilter.js';
 
@@ -47,6 +44,26 @@ function SortByDropdown(props) {
                 }
             </Select>
         </FormControl>
+    );
+}
+
+function SearchSummary(props) {
+    const { searchConditions, searchResult, filter } = props;
+    const { searchCondition, searchKeyword } = searchConditions;
+    const totalItemNum = searchResult.items.length;
+    const displayedItemNum = filter.displayedItems.length;
+    const filteredItemNum = totalItemNum - displayedItemNum;
+    return (
+        <div className="summary searchSummary">
+            Keyword : <strong className="summaryPoint">{searchKeyword}</strong>
+            &nbsp;
+            (<span className="summaryPoint">{searchCondition}</span>)
+            <br />
+            Total : <span className="summaryPoint">{totalItemNum}</span>
+            <br />
+            Filtered out : <span className="summaryPoint">{filteredItemNum}</span>
+            <br />
+        </div>
     );
 }
 
@@ -158,6 +175,7 @@ class ExploreResult extends Component {
         searchConditions.maxResults = this.state.searchConditions.maxResults;
         this.setState({ searchConditions });
 
+        console.log({searchConditions});
         const searchResult = this.getSearchResult(searchConditions);
         this.setSearchResult(searchResult);
 
@@ -174,12 +192,8 @@ class ExploreResult extends Component {
     }
 
     handleOnChangePage = (e, page) => {
-        const startIndex = this.getStartIndex(page);
-        const { searchConditions } = this.state;
-        searchConditions.startIndex = startIndex;
-        const searchResult = this.getSearchResult(searchConditions);
+        console.log({ page });
         this.setNestedState("displayInfo", "page", page);
-        this.setSearchResult(searchResult);
     }
 
     getStartIndex = (page) => {
@@ -189,37 +203,25 @@ class ExploreResult extends Component {
 
     render() {
         const { classes } = this.props;
-        const { searchKeyword, searchCondition } = this.props.location.state.searchConditions;
-        const { searchResult, displayInfo } = this.state;
-        const { isNormalEnd, errMsg, totalItems } = searchResult;
-        const filteredItems = totalItems - this.state.filter.displayedItems.length;
+        const { searchConditions } = this.props.location.state;
+        const { searchResult, displayInfo, filter } = this.state;
+        const { isNormalEnd, errMsg } = searchResult;
 
         return (
             <div className="exploreResult">
                 <div className="contents">
-                    {/* <div className="searchSection">
-                        <MyTextField id={this.state.keyword.id}
-                            label={this.state.keyword.label}
-                            value={this.state.keyword.value}
-                            size="small"
-                            handleOnChange={this.handleOnChange}
-                        />
-                        <MyDropdown id="searchCondDropdown" />
-                        <SearchIcon className="searchIcon" />
-                    </div> */}
-                    <div className="summary">
-                        Keyword ({searchCondition}) : <span className="summaryPoint">{searchKeyword}</span>
-                        <br />
-                        Total : <span className="summaryPoint">{totalItems}</span>
-                        <br />
-                        Filtered out : <span className="summaryPoint">{filteredItems}</span>
-                    </div>
+                    <SearchSummary
+                        searchConditions={searchConditions}
+                        searchResult={searchResult}
+                        filter={filter}
+                    />
                     <div className="filterAndSort">
                         <FilterModal
                             filter={this.state.filter}
+                            displayRowsPerPage={displayRowsPerPage}
                             allItems={this.state.searchResult.items}
                             setParentState={this.setNestedState}
-                        />
+                        />                        
                         <SortByDropdown
                             classes={classes}
                             name={this.state.sortBy.name}

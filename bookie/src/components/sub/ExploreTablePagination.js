@@ -3,14 +3,15 @@ import TablePagination from '@material-ui/core/TablePagination';
 
 class ExploreTablePagination extends Component {
     render() {
-        const { totalItems, displayInfo } = this.props;
+        const { displayedItems, displayInfo } = this.props;
         const { page, rowsPerPage, rowsPerPageOptions, onChangePage } = displayInfo;
+        const totalItemNum = displayedItems.length;
 
         return (
             <TablePagination
                 rowsPerPageOptions={rowsPerPageOptions}
                 component="div"
-                count={totalItems}
+                count={totalItemNum}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={onChangePage}

@@ -171,6 +171,7 @@ class FilterModal extends Component {
         const { checked } = e.target;
         this.setCheckedValues_onChangeCheckbox(checked, category, value);
         this.setDisplayedItems_onChangeCheckbox(checked, category, value);
+        this.resetPage();
     }
 
     setCheckedValues_onChangeCheckbox = (checked, category, value) => {
@@ -222,6 +223,7 @@ class FilterModal extends Component {
             setParentState(parentName, category, {...filter[category], checkedValues});
         });
         this.setDisplayedItems_onChangeSelectAll(checked, allItems, parentName, setParentState);
+        this.resetPage();
     }
 
     setDisplayedItems_onChangeSelectAll = (checked, allItems, parentName, setParentState) => {
@@ -231,6 +233,11 @@ class FilterModal extends Component {
         else {
             setParentState(parentName, "displayedItems", []);
         }
+    }
+
+    resetPage = () => {
+        const { setParentState } = this.props;
+        setParentState("displayInfo", "page", 0);
     }
 
     render() {
