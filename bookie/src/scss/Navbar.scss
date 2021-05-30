@@ -17,5 +17,8 @@
         .logo {
             width: clamp(96px, 20vmin, 140px);
         }
+        .MuiListItemText-primary {
+            font-family: Montserrat-SemiBold;
+        }
     }
 }
