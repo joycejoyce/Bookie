@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Paper, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { Clear as CloseIcon, Menu as MenuIcon, Explore as ExploreIcon, ImportContacts as BookIcon, ExitToApp as SignOutIcon, Info as AboutIcon } from '@material-ui/icons';
 import '../scss/Navbar.scss';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
     navbar: {
@@ -42,12 +43,20 @@ function MenuBtn(props) {
 }
 
 function MenuList(props) {
-    const { classes } = props;
+    const { classes, closeMenuList } = props;
+
+    function handleOnClickExploreIcon() {
+        console.log("handleOnClickExploreIcon()");
+        closeMenuList();
+        props.history.push({
+            pathname: '/explore'
+        });
+    }
 
     return (
         <div className={classes.menuList + " menuList"}>
             <List component={Paper}>
-                <ListItem button>
+                <ListItem button onClick={handleOnClickExploreIcon}>
                     <ListItemIcon><ExploreIcon style={iconStyle} /></ListItemIcon>
                     <ListItemText primary="Explore Books" />
                 </ListItem>
@@ -89,10 +98,12 @@ class Navbar extends Component {
 
     closeMenuList = () => {
         document.querySelector(".menuList").style.opacity = "0";
+        this.setState({ isListOpen: false });
     }
-
+    
     openMenuList = () => {
         document.querySelector(".menuList").style.opacity = "1";
+        this.setState({ isListOpen: true });
     }
 
     render() {
@@ -107,11 +118,13 @@ class Navbar extends Component {
                         isListOpen={this.state.isListOpen}
                         handleOnClickMenuBtn={this.handleOnClickMenuBtn}
                     />
-                    <MenuList classes={classes} />
+                    <MenuList classes={classes} history={this.props.history} closeMenuList={this.closeMenuList} />
                 </div>
             </div>
         );
     }
 }
 
-export default withStyles(styles)(Navbar);
+const StyledNavbar = withStyles(styles)(Navbar);
+const RoutedNavbar = withRouter(StyledNavbar);
+export default RoutedNavbar;
