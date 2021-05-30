@@ -241,6 +241,7 @@ class FilterModal extends Component {
     }
 
     render() {
+        console.log("render FilterModal");
         const { classes } = this.props;
         console.log("filter", this.props.filter);
 

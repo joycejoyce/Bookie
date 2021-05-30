@@ -12,7 +12,7 @@ export function getResponse(ret) {
     return ret.response;
 }
 
-export function sendReq_GET(url, useAsync) {
+export async function sendReq_GET(url, useAsync) {
     console.log({url});
     let ret = {
         isNormalEnd: true,

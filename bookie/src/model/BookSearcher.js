@@ -10,7 +10,7 @@ const queryParam = {
     isbn: "isbn"
 };
 
-export default function searchAll(conditions) {
+export default async function searchAll(conditions) {
     console.log("BookSearcher(all)", conditions);
     // searchConditions: {
     //     keyword: "",
@@ -34,7 +34,7 @@ export default function searchAll(conditions) {
         response: { items: [] }
     };
     while (true) {
-        let tmpSearchResult = search(modifiedConditions);
+        let tmpSearchResult = await search(modifiedConditions);
         console.log({tmpSearchResult});
         if (!tmpSearchResult.isNormalEnd) {
             break;
@@ -54,7 +54,7 @@ export default function searchAll(conditions) {
     return searchResult;
 }
 
-export function search(conditions) {
+export async function search(conditions) {
     console.log("BookSearcher", conditions);
     let { searchKeyword, searchCondition } = conditions;
     let searchResult = null;
@@ -65,7 +65,7 @@ export function search(conditions) {
         searchCondition === "isbn") && 
         searchKeyword && searchKeyword.length > 0) {
         const useAsync = false;
-        searchResult = getSearchResult(conditions, useAsync);
+        searchResult = await getSearchResult(conditions, useAsync);
     }
     else {
         console.error(Msg_UnexpectedSearchCond, {keyword: searchKeyword, condition: searchCondition});
@@ -74,10 +74,10 @@ export function search(conditions) {
     return searchResult;
 }
 
-function getSearchResult(conditions, useAsync) {
+async function getSearchResult(conditions, useAsync) {
     const condStr = getCondStr(conditions);
     const url = "https://www.googleapis.com/books/v1/volumes?" + condStr;
-    const ret = sendReq_GET(url);
+    const ret = await sendReq_GET(url, useAsync);
     return ret;
 }
 

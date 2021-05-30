@@ -8,7 +8,7 @@ import Welcome from "./components/Welcome.js";
 import UserProfile from "./components/UserProfile.js";
 import Explore from "./components/Explore.js";
 import ExploreResult from "./components/ExploreResult.js";
-import FilterModal from "./components/sub/FilterModal.js";
+import LoadingIcon from "./components/sub/LoadingIcon.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -70,6 +70,7 @@ class App extends Component {
         <Router>
           <div className="container">
             <Navbar auth={authProps} />
+            <LoadingIcon />
             <Switch>
               <Route path="/createAccount" component={CreateAccount} />
               <Route path="/welcome" component={Welcome} />

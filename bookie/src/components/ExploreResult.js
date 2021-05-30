@@ -24,6 +24,7 @@ const styles = theme => ({
 const displayRowsPerPage = 10;
 
 function SortByDropdown(props) {
+    console.log("render SortByDropdown");
     const { name, value, handleOnChange, options, placeholder, classes } = props;
 
     return (
@@ -48,6 +49,7 @@ function SortByDropdown(props) {
 }
 
 function SearchSummary(props) {
+    console.log("render SearchSummary");
     const { searchConditions, searchResult, filter } = props;
     const { searchCondition, searchKeyword } = searchConditions;
     const totalItemNum = searchResult.items.length;
@@ -133,14 +135,14 @@ class ExploreResult extends Component {
         this.setNestedState(id, "value", value);
     }
 
-    setNestedState = (parentName, childName, value) => {
+    setNestedState = (parentName, childName, value, callback) => {
         this.setState(prevState => ({
             ...prevState,
             [parentName]: {
                 ...prevState[parentName],
                 [childName]: value
             }
-        }));
+        }), callback ? callback : () => {});
     }
 
     getSearchResult = (searchConditions) => {
@@ -169,14 +171,51 @@ class ExploreResult extends Component {
         }
     }
 
-    componentDidMount() {
+    //Not OK
+    demoAsyncCall = () => {
+        return new Promise((resolve) => setTimeout(() => resolve(), 2500));
+    }
+
+    //Not OK
+    demoAsyncCall2 = () => {
+        return new Promise((resolve) => {
+            let j = 0;
+            for (let i=0; i<100; i++) {
+                console.log({i});
+            }
+            resolve(0);
+        });
+    }
+
+    //OK
+    demoAsyncCall3 = async () => {
+        return new Promise(async resolve => {
+            await new Promise(r => setTimeout(r, 2000));
+            console.log("slept 2 seconds");
+            await new Promise(r => setTimeout(r, 1000));
+            console.log("slept 1 seconds");
+            resolve(0);
+        });
+    }
+
+    async componentDidMount() {
+        document.getElementById("loadingIcon").style.display = "block";
+        document.querySelector(".exploreResult").style.display = "none";
+
+        await new Promise(r => setTimeout(r, 1));
+        await this.setInitStates();
+
+        document.getElementById("loadingIcon").style.display = "none";
+        document.querySelector(".exploreResult").style.display = "block";
+    }
+
+    async setInitStates() {
         const { searchConditions } = this.props.location.state;
         searchConditions.startIndex = this.state.searchConditions.startIndex;
         searchConditions.maxResults = this.state.searchConditions.maxResults;
-        this.setState({ searchConditions });
-
-        console.log({searchConditions});
-        const searchResult = this.getSearchResult(searchConditions);
+        this.setState({ searchConditions }, () => console.log("searchConditions", this.state.searchConditions));
+        
+        const searchResult = await this.getSearchResult(searchConditions);
         this.setSearchResult(searchResult);
 
         this.setFilter(searchResult);
@@ -202,6 +241,7 @@ class ExploreResult extends Component {
     }
 
     render() {
+        console.log("render ExploreResult");
         const { classes } = this.props;
         const { searchConditions } = this.props.location.state;
         const { searchResult, displayInfo, filter } = this.state;
