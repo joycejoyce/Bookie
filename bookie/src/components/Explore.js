@@ -2,7 +2,6 @@ import { Component } from "react";
 import '../scss/Explore.scss';
 import { getClassName_init } from "./InputClassNameGetter.js";
 import BtnSection from "./BtnSection";
-import searchBook from "../model/BookSearcher.js";
 import { TextField, Radio, RadioGroup, FormControl, FormControlLabel } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 
@@ -86,13 +85,9 @@ class Explore extends Component {
             searchKeyword: this.state.keyword.value,
             searchCondition: this.state.condition
         }
-        const exploreResult = searchBook(searchConditions);
-        console.log({exploreResult});
-
-        this.setState({exploreResult});
         this.props.history.push({
             pathname: '/exploreResult',
-            state: { exploreResult, searchConditions }
+            state: { searchConditions }
         });
     }
 
