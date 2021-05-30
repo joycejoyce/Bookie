@@ -16,11 +16,6 @@ import {
 } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-// const montserrat_semiBold = {
-//   fontFamily: 'Montserrat-SemiBold',
-//   src: 'url("./fonts/Montserrat/Montserrat-SemiBold.ttf")'
-// };
-
 const theme = createMuiTheme({
   palette: {
     primary: {
