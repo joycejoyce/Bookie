@@ -10,14 +10,15 @@ const styles = theme => ({
         position: 'relative'
     },
     menuList: {
-        display: 'none',
         position: 'absolute',
         right: 'clamp(28px, 6vmin, 36px)',
         top: '1vmin',
         '& .MuiListItemText-primary': {
             fontSize: "clamp(16px, 2vmin, 20px)",
             color: theme.palette.secondary.main
-        }
+        },
+        opacity: 0,
+        transition: 'opacity .1s ease-in'
     }
 });
 
@@ -78,10 +79,10 @@ class Navbar extends Component {
     handleOnClickMenuBtn = () => {
         const {isListOpen} = this.state;
         if (isListOpen) {
-            document.querySelector(".menuList").style.display = "none";
+            document.querySelector(".menuList").style.opacity = "0";
         }
         else {
-            document.querySelector(".menuList").style.display = "block";
+            document.querySelector(".menuList").style.opacity = "1";
         }
         this.setState({ isListOpen: !isListOpen });
     }
