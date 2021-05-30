@@ -14,7 +14,7 @@ const styles = theme => ({
         right: 'clamp(28px, 6vmin, 36px)',
         top: '1vmin',
         '& .MuiListItemText-primary': {
-            fontSize: "clamp(16px, 2vmin, 20px)",
+            fontSize: "clamp(14px, 2vmin, 18px)",
             color: theme.palette.secondary.main
         },
         opacity: 0,
@@ -23,7 +23,7 @@ const styles = theme => ({
 });
 
 const iconStyle = {
-    fontSize: "clamp(24px, 4vmin, 30px)",
+    fontSize: "clamp(20px, 4vmin, 28px)",
     color: "#073B4C",
     cursor: 'pointer'
 };
@@ -79,12 +79,20 @@ class Navbar extends Component {
     handleOnClickMenuBtn = () => {
         const {isListOpen} = this.state;
         if (isListOpen) {
-            document.querySelector(".menuList").style.opacity = "0";
+            this.closeMenuList();
         }
         else {
-            document.querySelector(".menuList").style.opacity = "1";
+            this.openMenuList();
         }
         this.setState({ isListOpen: !isListOpen });
+    }
+
+    closeMenuList = () => {
+        document.querySelector(".menuList").style.opacity = "0";
+    }
+
+    openMenuList = () => {
+        document.querySelector(".menuList").style.opacity = "1";
     }
 
     render() {
