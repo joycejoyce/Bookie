@@ -26,12 +26,7 @@ const theme = createMuiTheme({
     }
   },
   typography: {
-    fontFamily: '"Roboto-Regular", "Montserrat-SemiBold"',
-    // MuiListItemText: {
-    //   primary: {
-    //     fontFamily: '"Montserrat-SemiBold", "sans-serif"'
-    //   }
-    // }
+    fontFamily: '"Roboto-Regular", "Montserrat-SemiBold"'
   }
 });
 
@@ -53,7 +48,7 @@ class App extends Component {
   }
 
   render() {
-    const authProps = {
+    const auth = {
       isAuthenticated: this.state.isAuthenticated,
       user: this.state.user,
       setIsAuthenticated: this.setIsAuthenticated,
@@ -64,16 +59,16 @@ class App extends Component {
       <ThemeProvider theme={theme}>
         <Router>
           <div className="container">
-            <Navbar auth={authProps} />
+            <Navbar auth={auth} />
             <LoadingIcon />
             <Switch>
               <Route path="/createAccount" component={CreateAccount} />
               <Route path="/welcome" component={Welcome} />
-              <Route path="/signIn" render={(props) => <SignIn {...props} auth={authProps} />} />
-              <Route path="/userProfile" render={(props) => <UserProfile {...props} auth={authProps} />} />
-              <Route path="/explore" render={(props) => <Explore {...props} auth={authProps} />} />
-              <Route path="/exploreResult" render={(props) => <ExploreResult {...props} auth={authProps} />} />
-              <Route path="/" render={(props) => <SignIn {...props} auth={authProps} />} />
+              <Route path="/signIn" render={(props) => <SignIn {...props} auth={auth} /> } />
+              <Route path="/userProfile" render={(props) => <UserProfile auth={auth} />} />
+              <Route path="/explore" component={Explore} />
+              <Route path="/exploreResult" component={ExploreResult} />
+              <Route path="/" render={(props) => <SignIn {...props} auth={auth} /> } />
             </Switch>
           </div>
         </Router>

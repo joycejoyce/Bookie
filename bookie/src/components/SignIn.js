@@ -56,13 +56,16 @@ class SignIn extends Component {
             const password = this.state.password.value;
             console.log(username, password);
             
-            const response = await Auth.signIn({
+            const user = await Auth.signIn({
                 username,
                 password
             });
-            console.log({response});
+            console.log({user});
 
-            this.props.history.push("/userProfile");
+            const { history, auth } = this.props;
+            auth.setUser(user);
+            auth.setIsAuthenticated(true);
+            history.push("/userProfile");
         } catch(error) {
             console.error(error);
             let err = null;
@@ -116,6 +119,9 @@ class SignIn extends Component {
     }
 
     render() {
+        // console.log("render SignIn");
+        // console.log("props", this.props);
+
         return (
             <div className="signIn">
                 <div className="contents">

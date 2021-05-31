@@ -6,7 +6,7 @@ class Home extends Component {
         return(
             <div className="home">
                 <div className="contents">
-
+                    Home
                 </div>
             </div>
         );

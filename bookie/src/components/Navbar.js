@@ -2,9 +2,19 @@ import { Component } from "react";
 import Logo from "./icon/Logo.js";
 import { withStyles } from '@material-ui/core/styles';
 import { Paper, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { Clear as CloseIcon, Menu as MenuIcon, Explore as ExploreIcon, ImportContacts as BookIcon, ExitToApp as SignOutIcon, Info as AboutIcon } from '@material-ui/icons';
+import { 
+    Clear as CloseIcon,
+    Menu as MenuIcon,
+    Explore as ExploreIcon,
+    ImportContacts as BookIcon,
+    AccountCircleSharp as SignInIcon,
+    ExitToApp as SignOutIcon,
+    Info as AboutIcon
+} from '@material-ui/icons';
 import '../scss/Navbar.scss';
 import { withRouter } from 'react-router-dom';
+import SignOutModal from './sub/SignOutModal.js';
+import { Auth } from "aws-amplify";
 
 const styles = theme => ({
     navbar: {
@@ -42,13 +52,61 @@ function MenuBtn(props) {
     );
 }
 
+function AuthItems(props) {
+    const { closeMenuList, signOutModalCtrl } = props;
+    const { onOpen } = signOutModalCtrl;
+
+    const handleOnClickSignOutBtn = () => {
+        closeMenuList();
+        onOpen();
+    }
+
+    return (
+        <>
+            <ListItem button>
+                <ListItemIcon><BookIcon style={iconStyle} /></ListItemIcon>
+                <ListItemText primary="My Library" />
+            </ListItem>
+            <ListItem button onClick={handleOnClickSignOutBtn}>
+                <ListItemIcon>
+                    <SignOutIcon
+                        style={iconStyle}
+                        signOutModalCtrl={signOutModalCtrl}
+                    />
+                </ListItemIcon>
+                <ListItemText primary="Sign Out" />
+            </ListItem>
+        </>
+    )
+}
+
+function NonAuthItems(props) {
+    const { closeMenuList, history } = props;
+
+    function handleOnClickSignInIcon() {
+        closeMenuList();
+        history.push({
+            pathname: '/signIn'
+        });
+    }
+
+    return (
+        <>
+            <ListItem button onClick={handleOnClickSignInIcon}>
+                <ListItemIcon><SignInIcon style={iconStyle} /></ListItemIcon>
+                <ListItemText primary="Sign In" />
+            </ListItem>
+        </>
+    )
+}
+
 function MenuList(props) {
-    const { classes, closeMenuList } = props;
+    const { classes, closeMenuList, auth, history } = props;
+    const { isAuthenticated } = auth;
 
     function handleOnClickExploreIcon() {
-        console.log("handleOnClickExploreIcon()");
         closeMenuList();
-        props.history.push({
+        history.push({
             pathname: '/explore'
         });
     }
@@ -60,14 +118,7 @@ function MenuList(props) {
                     <ListItemIcon><ExploreIcon style={iconStyle} /></ListItemIcon>
                     <ListItemText primary="Explore Books" />
                 </ListItem>
-                <ListItem button>
-                    <ListItemIcon><BookIcon style={iconStyle} /></ListItemIcon>
-                    <ListItemText primary="My Library" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon><SignOutIcon style={iconStyle} /></ListItemIcon>
-                    <ListItemText primary="Sign Out" />
-                </ListItem>
+                { isAuthenticated ? <AuthItems {...props} /> : <NonAuthItems {...props} /> }
                 <ListItem button>
                     <ListItemIcon><AboutIcon style={iconStyle} /></ListItemIcon>
                     <ListItemText primary="About Bookie" />
@@ -81,12 +132,37 @@ class Navbar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isListOpen: false
+            isListOpen: false,
+            signOutModalCtrl: {
+                isOpen: false,
+                onOpen: this.handleOnOpenSignOutModal,
+                onClose: this.handleOnCloseSignOutModal,
+                doSignOut: this.doSignOut
+            }
         }
     }
 
+    async doSignOut() {
+        const { auth, history } = this.props;
+        try {
+            await Auth.signOut();
+            auth.setIsAuthenticated(false);
+            auth.setUser(null);
+        } catch (error) {
+            console.log('error signing out: ', error);
+        }
+    }
+
+    handleOnOpenSignOutModal = () => {
+        this.setNestedState("signOutModalCtrl", "isOpen", true);
+    }
+
+    handleOnCloseSignOutModal = () => {
+        this.setNestedState("signOutModalCtrl", "isOpen", false);
+    }
+
     handleOnClickMenuBtn = () => {
-        const {isListOpen} = this.state;
+        const { isListOpen } = this.state;
         if (isListOpen) {
             this.closeMenuList();
         }
@@ -100,14 +176,24 @@ class Navbar extends Component {
         document.querySelector(".menuList").style.opacity = "0";
         this.setState({ isListOpen: false });
     }
-    
+
     openMenuList = () => {
         document.querySelector(".menuList").style.opacity = "1";
         this.setState({ isListOpen: true });
     }
 
+    setNestedState = (parentName, childName, value) => {
+        this.setState(prevState => ({
+            ...prevState,
+            [parentName]: {
+                ...prevState[parentName],
+                [childName]: value
+            }
+        }));
+    }
+
     render() {
-        const { classes } = this.props;
+        const { classes, auth, history } = this.props;
 
         return (
             <div className="navbar" classes={classes.navbar}>
@@ -118,7 +204,14 @@ class Navbar extends Component {
                         isListOpen={this.state.isListOpen}
                         handleOnClickMenuBtn={this.handleOnClickMenuBtn}
                     />
-                    <MenuList classes={classes} history={this.props.history} closeMenuList={this.closeMenuList} />
+                    <MenuList
+                        classes={classes}
+                        closeMenuList={this.closeMenuList}
+                        auth={auth}
+                        history={history}
+                        signOutModalCtrl={this.state.signOutModalCtrl}
+                    />
+                    <SignOutModal signOutModalCtrl={this.state.signOutModalCtrl} />
                 </div>
             </div>
         );

@@ -114,6 +114,7 @@ class Explore extends Component {
                                     {
                                         options.map(opt => (
                                             <FormControlLabel
+                                                key={opt}
                                                 classes={{label: classes.label}}
                                                 value={this.state[opt].id}
                                                 control={<Radio size={radioSize} color="primary" />}
