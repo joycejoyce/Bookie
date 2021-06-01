@@ -21,6 +21,7 @@ const styles = theme => ({
         position: 'relative'
     },
     menuList: {
+        display: 'none',
         position: 'absolute',
         right: 'clamp(28px, 6vmin, 36px)',
         top: '1vmin',
@@ -143,7 +144,7 @@ class Navbar extends Component {
     }
 
     async doSignOut() {
-        const { auth, history } = this.props;
+        const { auth } = this.props;
         try {
             await Auth.signOut();
             auth.setIsAuthenticated(false);
@@ -174,11 +175,13 @@ class Navbar extends Component {
 
     closeMenuList = () => {
         document.querySelector(".menuList").style.opacity = "0";
+        document.querySelector(".menuList").style.display = "none";
         this.setState({ isListOpen: false });
     }
 
     openMenuList = () => {
         document.querySelector(".menuList").style.opacity = "1";
+        document.querySelector(".menuList").style.display = "block";
         this.setState({ isListOpen: true });
     }
 
