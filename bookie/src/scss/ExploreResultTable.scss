@@ -8,14 +8,23 @@
     .thumbnail img {
         width: 128px;
     }
-    .briefBookInfo {
+    .bookSummary {
+        position: relative;
+        height: 100%;
+    }
+    .bookInfo {
         display: grid;
         grid-template-columns: 1fr;
+        * {
+            letter-spacing: 1px;
+        }
         .title {
-            letter-spacing: .5px;
             font-size: $fontSize_orig;
             font-family: Montserrat-SemiBold;
             color: $blue;
+            // text-overflow: ellipsis;
+            // overflow: hidden;
+            // white-space: nowrap;
         }
         .author {
             line-height: 1.8;
@@ -28,6 +37,7 @@
         }
         .publishedDate {
             color: $darkBlue;
+            letter-spacing: .5px;
         }
     }
 }
