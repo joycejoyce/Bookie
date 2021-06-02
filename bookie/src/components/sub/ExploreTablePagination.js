@@ -2,9 +2,15 @@ import { Component } from "react";
 import TablePagination from '@material-ui/core/TablePagination';
 
 class ExploreTablePagination extends Component {
+    handleOnChangePage = (e, page) => {
+        const { setParentState } = this.props;
+        console.log({ page });
+        setParentState("displayInfo", "page", page);
+    }
+
     render() {
         const { displayedItems, displayInfo } = this.props;
-        const { page, rowsPerPage, rowsPerPageOptions, onChangePage } = displayInfo;
+        const { page, rowsPerPage, rowsPerPageOptions } = displayInfo;
         const totalItemNum = displayedItems.length;
 
         return (
@@ -14,7 +20,7 @@ class ExploreTablePagination extends Component {
                 count={totalItemNum}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onChangePage={onChangePage}
+                onChangePage={this.handleOnChangePage}
             />
         );
     }

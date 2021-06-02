@@ -61,6 +61,8 @@ const FilterIcon = styled(OrigFilterIcon)`
 `;
 
 function FilterList(props) {
+    console.log("render FilterList");
+
     function SelectAllCheckbox(props) {
         const { filter, handleOnChangeSelectAll } = props;
         const { isSelectAll } = filter;
@@ -77,6 +79,7 @@ function FilterList(props) {
     }
 
     function CategoryItem(props) {
+        console.log("render CategoryItem");
         const { classes, handleOnClickCategory, category, filter } = props;
 
         return (
@@ -90,6 +93,7 @@ function FilterList(props) {
     }
 
     function CategoryCollapse(props) {
+        console.log("render CategoryCollapse");
         const { classes, category, filter, handleOnChangeCheckbox } = props;
 
         return (
@@ -100,7 +104,9 @@ function FilterList(props) {
             >
                 <List component="div" dense={true} disablePadding>
                     {
-                        filter[category].values.map(value => (
+                        filter[category].values.map((value, idx) => {
+                            // console.log({idx});
+                            return (
                             <ListItem>
                                 <ListItemIcon>
                                     <ThemeProvider theme={checkboxTheme}>
@@ -113,7 +119,7 @@ function FilterList(props) {
                                 </ListItemIcon>
                                 <ListItemText className={classes.listItemText} primary={value} />
                             </ListItem>
-                        ))
+                        )})
                     }
                 </List>
             </Collapse>
@@ -168,9 +174,12 @@ class FilterModal extends Component {
     }
 
     handleOnChangeCheckbox = (e, category, value) => {
-        const { checked } = e.target;
+        console.log("handleOnChangeCheckbox()");
+        const { checked } = e.target;        
         this.setCheckedValues_onChangeCheckbox(checked, category, value);
+        console.log("setCheckedValues_onChangeCheckbox done");
         this.setDisplayedItems_onChangeCheckbox(checked, category, value);
+        console.log("setDisplayedItems_onChangeCheckbox done");
         this.resetPage();
     }
 

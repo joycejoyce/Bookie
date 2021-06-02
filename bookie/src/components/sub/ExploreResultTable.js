@@ -5,16 +5,16 @@ import ExploreTableRow from "./ExploreTableRow.js";
 import ExploreTablePagination from "./ExploreTablePagination.js";
 
 class ExploreResultTable extends Component {
-    getItems = (allItems, displayInfo) => {
+    getItems = (items, displayInfo) => {
         const { page, rowsPerPage } = displayInfo;
-        const totalItems = allItems.length;
+        const totalItems = items.length;
 
         const startInd = page * rowsPerPage;
         const endInd = Math.min(startInd + rowsPerPage, totalItems);
 
-        const items = allItems.slice(startInd, endInd);
+        const items_sliced = items.slice(startInd, endInd);
 
-        return items;
+        return items_sliced;
     }
 
     render() {
@@ -24,8 +24,7 @@ class ExploreResultTable extends Component {
         // displayInfo: {
         //     page: 0,
         //     rowsPerPage: displayRowsPerPage,
-        //     rowsPerPageOptions: [displayRowsPerPage],
-        //     onChangePage: this.handleOnChangePage
+        //     rowsPerPageOptions: [displayRowsPerPage]
         // }
 
         return (
@@ -35,7 +34,7 @@ class ExploreResultTable extends Component {
                     <TableContainer>
                         <Table>
                             <TableBody>
-                                { items.map(item => <ExploreTableRow key={item.id} data={item} />) }
+                                { items.map((item, idx) => <ExploreTableRow key={idx} data={item} />) }
                             </TableBody>
                         </Table>
                     </TableContainer>

@@ -37,8 +37,8 @@ function BookStatus(props) {
 
     const nameToValue = {
         toRead: false,
-        reviewed: true,
-        haveRead: true
+        reviewed: false,
+        haveRead: false
     }
     
     function getIconWrapperStyle(name) {
@@ -77,7 +77,7 @@ function BookStatus(props) {
     return (
         <div className={classes.bookStatus}>
             {
-                Object.keys(nameToValue).map(name => <MyIconBtn name={name} />)
+                Object.keys(nameToValue).map(name => <MyIconBtn key={name} name={name} />)
             }
         </div>
     );
