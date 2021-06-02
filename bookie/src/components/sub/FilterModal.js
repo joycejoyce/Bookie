@@ -1,5 +1,4 @@
 import { Component } from "react";
-// import '../../scss/FilterModal.scss';
 import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Paper, List, ListItem, ListItemText, ListItemIcon, Checkbox, Collapse } from "@material-ui/core";
 import { Add as AddIcon, Remove as MinusIcon } from '@material-ui/icons';
@@ -104,22 +103,21 @@ function FilterList(props) {
             >
                 <List component="div" dense={true} disablePadding>
                     {
-                        filter[category].values.map((value, idx) => {
-                            // console.log({idx});
-                            return (
-                            <ListItem>
+                        filter[category].values.map((value, idx) => (
+                            <ListItem key={idx}>
                                 <ListItemIcon>
-                                    <ThemeProvider theme={checkboxTheme}>
+                                    {/* <ThemeProvider theme={checkboxTheme}> */}
                                         <Checkbox
                                             checked={filter[category].checkedValues.includes(value)}
                                             disableRipple
+                                            color="primary"
                                             onChange={(e) => handleOnChangeCheckbox(e, category, value)}
                                         />
-                                    </ThemeProvider>
+                                    {/* </ThemeProvider> */}
                                 </ListItemIcon>
                                 <ListItemText className={classes.listItemText} primary={value} />
                             </ListItem>
-                        )})
+                        ))
                     }
                 </List>
             </Collapse>
@@ -135,12 +133,12 @@ function FilterList(props) {
         )
     }
 
-    const { classes, filter } = props;
+    const { classes } = props;
     return (
         <List component={Paper} className={classes.paper}>
             <SelectAllCheckbox {...props} />
             {
-                categories.map(category => <CategoryList category={category} {...props}/>)
+                categories.map(category => <CategoryList key={category} category={category} {...props}/>)
             }
         </List>
     )

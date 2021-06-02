@@ -16,7 +16,7 @@
         display: grid;
         grid-template-columns: 1fr;
         * {
-            letter-spacing: 1px;
+            letter-spacing: .5px;
         }
         .title {
             font-size: $fontSize_orig;
@@ -37,7 +37,6 @@
         }
         .publishedDate {
             color: $darkBlue;
-            letter-spacing: .5px;
         }
     }
 }

@@ -1,7 +1,7 @@
 import { Component } from "react";
 import '../scss/SignIn.scss';
 import InputText from "./InputText.js";
-import BtnSection from "./BtnSection.js";
+import BtnSection from "./sub/BtnSection.js";
 import { Auth } from "aws-amplify";
 import { Msg_UsernameBlank, Msg_PasswordBlank } from "./Message.js";
 import { getClassName_init, getClassName_onSubmit } from "./InputClassNameGetter.js";

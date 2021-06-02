@@ -9,6 +9,7 @@ import UserProfile from "./components/UserProfile.js";
 import Explore from "./components/Explore.js";
 import ExploreResult from "./components/ExploreResult.js";
 import LoadingIcon from "./components/sub/LoadingIcon.js";
+import Library from "./components/Library.js";
 import {
   BrowserRouter as Router,
   Switch,
@@ -68,7 +69,8 @@ class App extends Component {
               <Route path="/userProfile" render={(props) => <UserProfile auth={auth} />} />
               <Route path="/explore" component={Explore} />
               <Route path="/exploreResult" component={ExploreResult} />
-              <Route path="/" render={(props) => <SignIn {...props} auth={auth} /> } />
+              <Route path="/library" render={(props) => <Library {...props} auth={auth} /> } />
+              <Route path="/" render={(props) => <Library {...props} auth={auth} /> } />
             </Switch>
           </div>
         </Router>

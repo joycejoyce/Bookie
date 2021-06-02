@@ -1,7 +1,7 @@
 import { Component } from "react";
 import '../scss/Explore.scss';
 import { getClassName_init } from "./InputClassNameGetter.js";
-import BtnSection from "./BtnSection";
+import BtnSection from "./sub/BtnSection";
 import { TextField, Radio, RadioGroup, FormControl, FormControlLabel } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 
@@ -98,7 +98,7 @@ class Explore extends Component {
         return (
             <div className="explore">
                 <div className="contents">
-                    <h1>Explore books</h1>
+                    <h1>Explore Books</h1>
                     <div className="searchCondSection">
                         <TextField
                             classes={{root: classes.textField}}

@@ -2,7 +2,7 @@ import { Component } from "react";
 import "../scss/CreateAccount.scss";
 import InputText from "./InputText.js";
 import InputCheckbox from "./InputCheckbox.js";
-import BtnSection from "./BtnSection.js";
+import BtnSection from "./sub/BtnSection.js";
 import { Auth } from "aws-amplify";
 import { Msg_UsernameBlank, Msg_InvalidEmail, Msg_Password8Chars, Msg_PasswordNotMatch } from "./Message.js";
 import { getClassName_init, getClassName_onSubmit } from "./InputClassNameGetter.js";
