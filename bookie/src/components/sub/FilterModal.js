@@ -1,18 +1,11 @@
 import { Component } from "react";
-import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
+import { ThemeProvider, withStyles } from '@material-ui/core/styles';
 import { Button, Modal, Paper, List, ListItem, ListItemText, ListItemIcon, Checkbox, Collapse } from "@material-ui/core";
 import { Add as AddIcon, Remove as MinusIcon } from '@material-ui/icons';
 import { ReactComponent as OrigFilterIcon } from '../../assets/filter.svg';
 import { categories, getDisplayedItems_add, getDisplayedItems_remove } from '../../model/BookFilter.js';
 import styled from "@emotion/styled";
-
-const checkboxTheme = createMuiTheme({
-    palette: {
-        secondary: {
-            main: '#EF476F'
-        }
-    }
-});
+import { checkboxTheme } from '../Theme.js';
 
 const styles = theme => ({
     filterBtn: {
@@ -106,14 +99,14 @@ function FilterList(props) {
                         filter[category].values.map((value, idx) => (
                             <ListItem key={idx}>
                                 <ListItemIcon>
-                                    {/* <ThemeProvider theme={checkboxTheme}> */}
+                                    <ThemeProvider theme={checkboxTheme}>
                                         <Checkbox
                                             checked={filter[category].checkedValues.includes(value)}
                                             disableRipple
                                             color="primary"
                                             onChange={(e) => handleOnChangeCheckbox(e, category, value)}
                                         />
-                                    {/* </ThemeProvider> */}
+                                    </ThemeProvider>
                                 </ListItemIcon>
                                 <ListItemText className={classes.listItemText} primary={value} />
                             </ListItem>
