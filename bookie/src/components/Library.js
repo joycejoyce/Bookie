@@ -1,6 +1,7 @@
 import "../scss/Library.scss";
 import { Component } from "react";
-import LibraryTabs from './sub/LibraryTabs.js';
+import LibraryTabs from './library/LibraryTabs.js';
+import LibraryTabPanels from './library/LibraryTabPanels.js';
 import { Paper } from '@material-ui/core';
 
 class Library extends Component {
@@ -33,6 +34,9 @@ class Library extends Component {
                         <LibraryTabs
                             tabs={this.state.tabs}
                             setParentState={this.setNestedState}
+                        />
+                        <LibraryTabPanels
+                            tabs={this.state.tabs}
                         />
                     </Paper>
                 </div>

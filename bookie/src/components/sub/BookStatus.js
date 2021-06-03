@@ -37,7 +37,6 @@ function BookStatus(props) {
 
     const nameToValue = {
         toRead: false,
-        reviewed: false,
         haveRead: false
     }
     
@@ -54,8 +53,6 @@ function BookStatus(props) {
         switch(name) {
             case 'toRead':
                 return (<FavoriteIcon className={classes.icon} />)
-            case 'reviewed':
-                return (<EditIcon className={classes.icon} />)
             case 'haveRead':
                 return (<BookmarkIcon className={classes.icon} />)
             default:
