@@ -56,7 +56,8 @@ class ToRead extends Component {
     state = {
         hidden: true,
         items: {},
-        allChecked: false
+        allChecked: false,
+        numSelected: 0
     }
 
     getFakeData = () => {
@@ -92,6 +93,7 @@ class ToRead extends Component {
         const { items } = this.state;
         items[id].checked = checked;
         this.setState({ items });
+        this.setNumSelected();
     }
 
     handleOnChangeSelecetAll = (e) => {
@@ -103,10 +105,24 @@ class ToRead extends Component {
             item.checked = checked;
         });
         this.setState({ items });
+        this.setNumSelected();
+    }
+
+    setNumSelected = () => {
+        const { items } = this.state;
+        const numSelected = Object.keys(items).reduce((accu, key) => {
+            const { checked } = items[key];
+            if (checked) {
+                accu = accu + 1;
+            }
+            return accu;
+        }, 0);
+        console.log({ numSelected });
+        this.setState({ numSelected });
     }
 
     render() {
-        const { items, hidden, allChecked } = this.state;
+        const { items, hidden, allChecked, numSelected } = this.state;
         const { classes } = this.props;
         return (
             <div
@@ -115,7 +131,9 @@ class ToRead extends Component {
             >
                 {!hidden && (
                     <Paper>
-                        {/* <EnhancedTableToolbar /> */}
+                        <EnhancedTableToolbar
+                            numSelected={numSelected}
+                        />
                         <TableContainer>
                             <Table
                                 className={classes.table}

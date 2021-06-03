@@ -2,7 +2,7 @@
 
 .library {
     @extend %commonSettings;
-    .MuiTableCell-head {
+    .MuiTableCell-head,.toolbarTitle {
         font-family: Montserrat-SemiBold;
     }
 }
