@@ -1,5 +1,5 @@
 import { withStyles } from '@material-ui/core/styles';
-import { Favorite as FavoriteIcon, Edit as EditIcon, Bookmark as BookmarkIcon } from '@material-ui/icons';
+import { Favorite as FavoriteIcon, Bookmark as BookmarkIcon } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 
 const styles = theme => ({
@@ -32,52 +32,42 @@ const styles = theme => ({
     }
 });
 
-function BookStatus(props) {
-    const { classes } = props;
-
-    const nameToValue = {
-        toRead: false,
-        haveRead: false
+function getIconWrapperStyle(name, status) {
+    let background = "white";
+    if (status) {
+        background = "#FFD166"; 
     }
-    
-    function getIconWrapperStyle(name) {
-        const value = nameToValue[name];
-        let background = "white";
-        if (value) {
-            background = "#FFD166"; 
-        }
-        return { background };
+    return { background };
+}
+
+function getIcon(name, classes) {
+    switch(name) {
+        case 'toRead':
+            return (<FavoriteIcon className={classes.icon} />)
+        case 'haveRead':
+            return (<BookmarkIcon className={classes.icon} />)
+        default:
+            return (<></>)
     }
+}
 
-    function getIcon(name) {
-        switch(name) {
-            case 'toRead':
-                return (<FavoriteIcon className={classes.icon} />)
-            case 'haveRead':
-                return (<BookmarkIcon className={classes.icon} />)
-            default:
-                return (<></>)
-        }
-    }
+const MyIconBtn = ({ name, status, classes }) => {
+    return (
+        <div className={classes.iconWrapper} style={getIconWrapperStyle(name, status)}>
+            <IconButton
+                className={classes.iconBtn}
+            >
+                {getIcon(name, classes)}
+            </IconButton>
+        </div>
+    );
+};
 
-    const MyIconBtn = (props) => {
-        const { name, onClick } = props;
-        return (
-            <div className={classes.iconWrapper} style={getIconWrapperStyle(name)}>
-                <IconButton
-                    className={classes.iconBtn}
-                >
-                    {getIcon(name)}
-                </IconButton>
-            </div>
-        );
-    };
-
+function BookStatus({toRead, haveRead, classes}) {
     return (
         <div className={classes.bookStatus}>
-            {
-                Object.keys(nameToValue).map(name => <MyIconBtn key={name} name={name} />)
-            }
+            <MyIconBtn name="toRead" status={toRead} classes={classes} />
+            <MyIconBtn name="haveRead" status={haveRead} classes={classes} />
         </div>
     );
 }

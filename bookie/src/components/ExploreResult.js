@@ -76,28 +76,6 @@ class ExploreResult extends Component {
         return searchBook(searchConditions);
     }
 
-    setSearchResult = (searchResult) => {
-        const { isNormalEnd, errMsg, response } = searchResult;
-
-        // searchResult: {
-        //     isNormalEnd: true,
-        //     errMsg: "",
-        //     page: 0,
-        //     startIndex: 0,
-        //     totalItems: 0,
-        //     items: []
-        // }
-        this.setNestedState("searchResult", "isNormalEnd", isNormalEnd);
-        if (isNormalEnd) {
-            const { totalItems, items } = response;
-            this.setNestedState("searchResult", "totalItems", totalItems);
-            this.setNestedState("searchResult", "items", items);
-        }
-        else {
-            this.setNestedState("searchResult", "errMsg", errMsg);
-        }
-    }
-
     async componentDidMount() {
         document.getElementById("loadingIcon").style.display = "block";
         document.querySelector(".exploreResult").style.display = "none";
@@ -121,6 +99,29 @@ class ExploreResult extends Component {
         this.setFilter(searchResult);
     }
 
+    setSearchResult = (searchResult) => {
+        const { isNormalEnd, errMsg, response } = searchResult;
+
+        // searchResult: {
+        //     isNormalEnd: true,
+        //     errMsg: "",
+        //     page: 0,
+        //     startIndex: 0,
+        //     totalItems: 0,
+        //     items: []
+        // }
+        this.setNestedState("searchResult", "isNormalEnd", isNormalEnd);
+        if (isNormalEnd) {
+            const { totalItems, items } = response;
+            this.setBookStatus(items);
+            this.setNestedState("searchResult", "totalItems", totalItems);
+            this.setNestedState("searchResult", "items", items);
+        }
+        else {
+            this.setNestedState("searchResult", "errMsg", errMsg);
+        }
+    }
+
     setFilter = (searchResult) => {
         const origFilter = getFilterBySearchResult(searchResult);
         const filter = {
@@ -130,9 +131,17 @@ class ExploreResult extends Component {
         this.setState({ filter });
     }
 
+    setBookStatus = (items) => {
+        items.forEach((item, idx) => {
+            item.toRead = idx % 2 === 0 ? true : false;
+            item.haveRead = idx % 2 === 0 ? false : true;
+        });
+        console.log("after setBookStatus", items);
+    }
+
     render() {
         const { searchConditions } = this.props.location.state;
-        const { searchResult, displayInfo, filter } = this.state;
+        const { searchResult, displayInfo, filter, bookStatus } = this.state;
         const { isNormalEnd, errMsg } = searchResult;
         const { auth } = this.props;
 
