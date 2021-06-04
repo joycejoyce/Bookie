@@ -2,7 +2,7 @@
 
 .library {
     @extend %commonSettings;
-    .MuiTableSortLabel-root,.toolbarTitle {
+    .MuiTableSortLabel-root *,.toolbarTitle {
         font-family: Montserrat-SemiBold;
     }
 }

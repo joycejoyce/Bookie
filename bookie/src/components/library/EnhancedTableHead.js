@@ -1,7 +1,7 @@
-import { ClassNames } from '@emotion/react';
-import { TableHead, TableRow, TableCell, Checkbox, TableSortLabel } from '@material-ui/core';
+import { TableHead, TableRow, TableCell, Checkbox, TableSortLabel, IconButton } from '@material-ui/core';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { checkboxTheme } from '../Theme.js';
+// import { FilterListSharp as FilterIcon } from '@material-ui/icons';
 
 const useStyle = makeStyles((theme) => ({
     visuallyHidden: {
@@ -14,7 +14,23 @@ const useStyle = makeStyles((theme) => ({
         position: 'absolute',
         top: 20,
         width: 1,
-    }
+    },
+    tableCell: {
+        position: 'relative'
+    },
+    tableHead: {
+        color: theme.palette.secondary.main
+    },
+    // filter: {
+    //     cursor: 'pointer',
+    //     position: 'absolute',
+    //     right: '.3rem',
+    //     top: '50%',
+    //     transform: 'translateY(-50%)'
+    // },
+    // filterIcon: {
+    //     fontSize: '1.25rem'
+    // }
 }));
 
 const headCells = [
@@ -49,28 +65,29 @@ function EnhancedTableHead({ sort, checked, onChange }) {
                             key={cell.id}
                             align='left'
                             sortDirection={sortDirection}
+                            classes={{root: classes.tableCell}}
                         >
                             <TableSortLabel
                                 active={orderBy === cell.id}
                                 direction={direction}
                                 onClick={createSortHandler(cell.id)}
                             >
-                                {cell.label}
+                                <span className={classes.tableHead}>{cell.label}</span>
                                 {isSortByThis ? (
                                     <span className={classes.visuallyHidden}>
                                         {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                                     </span>
                                 ) : null}
                             </TableSortLabel>
+                            {/* <IconButton
+                                disableRipple={true}
+                                className={classes.filter}
+                            >
+                                <FilterIcon className={classes.filterIcon} />
+                            </IconButton> */}
                         </TableCell>
                     );
                 })}
-                {/* <TableCell>
-                    Title
-                </TableCell>
-                <TableCell>
-                    Author
-                </TableCell> */}
             </TableRow>
         </TableHead>
     )
