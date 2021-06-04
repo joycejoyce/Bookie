@@ -13,12 +13,33 @@ function FilterList(props) {
         <List component={Paper} className={classes.paper}>
             <SelectAllCheckbox {...props} />
             {
-                categories.map(category => (
-                    <div key={category}>
-                        <CategoryCollapseBtn category={category}  {...props} />
-                        <CategoryCollapse category={category}  {...props} />
-                    </div>
-                ))
+                categories.map(category => {
+                    const { filter, handleOnClickCategory, handleOnChangeCheckbox } = props;
+                    const { label, checkedValues, values, isOpen } = filter[category];
+                    const checkedValuesNum = checkedValues.length;
+                    const valuesNum = values.length;
+                    return (
+                        <div key={category}>
+                            <CategoryCollapseBtn
+                                category={category}
+                                label={label}
+                                checkedValuesNum={checkedValuesNum}
+                                valuesNum={valuesNum}
+                                isOpen={isOpen}
+                                handleOnClickCategory={handleOnClickCategory}
+                                classes={classes}
+                            />
+                            <CategoryCollapse 
+                                classes={classes}
+                                category={category}
+                                handleOnChangeCheckbox={handleOnChangeCheckbox}
+                                isOpen={isOpen}
+                                values={values}
+                                checkedValues={checkedValues}
+                            />
+                        </div>
+                    );
+                })
             }
         </List>
     )

@@ -1,26 +1,34 @@
+import React from 'react';
 import { List,
     Collapse,
 } from "@material-ui/core";
 import FilterItem from './FilterItem.js';
 
-function CategoryCollapse({ classes, category, filter, handleOnChangeCheckbox }) {
-    console.log("(CategoryCollapse) render [" + category + "]");
+const CategoryCollapse = React.memo(({
+        classes,
+        category,
+        handleOnChangeCheckbox,
+        isOpen,
+        values,
+        checkedValues
+    }) => {
+    // console.log("(CategoryCollapse) render [" + category + "]");
 
     return (
         <Collapse
-            in={filter[category].isOpen}
+            in={isOpen}
             timeout="auto"
             unmountOnExit
         >
             <List component="div" dense={true} disablePadding>
                 {
-                    filter[category].values.map((value, idx) => (
+                    values.map((value, idx) => (
                         <FilterItem
                             classes={classes}
                             key={idx}
                             value={value}
                             category={category}
-                            checked={filter[category].checkedValues.includes(value)}
+                            checked={checkedValues.includes(value)}
                             onChange={handleOnChangeCheckbox}
                         />
                     ))
@@ -28,6 +36,6 @@ function CategoryCollapse({ classes, category, filter, handleOnChangeCheckbox })
             </List>
         </Collapse>
     );
-}
+});
 
 export default CategoryCollapse;

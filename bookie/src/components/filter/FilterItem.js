@@ -8,7 +8,7 @@ import { checkboxTheme } from '../Theme.js';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 const FilterItem = React.memo(({ value, category, checked, onChange, classes }) => {
-    console.log("render FilterItem [" + value + "]");
+    // console.log("render FilterItem [" + value + "]");
     return (
         <ListItem>
             <ListItemIcon>

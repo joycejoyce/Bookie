@@ -76,6 +76,13 @@ class FilterModal extends Component {
             ...filter[category],
             isOpen: !isOpen
         });
+        const otherCategories = categories.filter(key => key !== category);
+        otherCategories.forEach(c => {
+            setParentState("filter", c, {
+                ...filter[c],
+                isOpen: false
+            });
+        });
     }
 
     handleOnChangeCheckbox = (e, category, value) => {

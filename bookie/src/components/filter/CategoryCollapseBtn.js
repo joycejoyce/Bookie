@@ -4,16 +4,22 @@ import { ListItem,
 } from "@material-ui/core";
 import { Add as AddIcon, Remove as MinusIcon } from '@material-ui/icons';
 
-const CategoryCollapseBtn = React.memo((props) => {
-    const { classes, handleOnClickCategory, category, filter } = props;
-    console.log("render [" + filter[category].label + "]");
-
+const CategoryCollapseBtn = React.memo(({ 
+        classes,
+        handleOnClickCategory,
+        category,
+        label,
+        checkedValuesNum,
+        valuesNum,
+        isOpen
+    }) => {
+    // console.log("(CategoryCollapseBtn) render [" + category + "]");
     return (
         <ListItem button onClick={() => handleOnClickCategory(category)}>
             <ListItemText className={classes.listItemText}
-                primary={`${filter[category].label} (${filter[category].checkedValues.length} / ${filter[category].values.length})`}
+                primary={`${label} (${checkedValuesNum} / ${valuesNum})`}
             />
-            {filter[category].isOpen ? <MinusIcon /> : <AddIcon />}
+            {isOpen ? <MinusIcon /> : <AddIcon />}
         </ListItem>
     );
 });
