@@ -17,7 +17,6 @@ const styles = theme => ({
 });
 
 function SortByDropdown(props) {
-    console.log("render SortByDropdown");
     const { sortBy, classes, setParentState } = props;
     const { name, value, placeholder, options } = sortBy;
 

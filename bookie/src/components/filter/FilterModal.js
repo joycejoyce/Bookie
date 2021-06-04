@@ -1,11 +1,10 @@
-import { Component } from "react";
-import { ThemeProvider, withStyles } from '@material-ui/core/styles';
-import { Button, Modal, Paper, List, ListItem, ListItemText, ListItemIcon, Checkbox, Collapse } from "@material-ui/core";
-import { Add as AddIcon, Remove as MinusIcon } from '@material-ui/icons';
+import React, { Component } from "react";
+import { withStyles } from '@material-ui/core/styles';
+import { Button, Modal, ListItem, ListItemText, ListItemIcon, Checkbox } from "@material-ui/core";
 import { ReactComponent as OrigFilterIcon } from '../../assets/filter.svg';
 import { categories, getDisplayedItems_add, getDisplayedItems_remove } from '../../model/BookFilter.js';
 import styled from "@emotion/styled";
-import { checkboxTheme } from '../Theme.js';
+import FilterList from './FilterList.js';
 
 const styles = theme => ({
     filterBtn: {
@@ -52,91 +51,6 @@ const FilterIcon = styled(OrigFilterIcon)`
     width: 20px;
 `;
 
-function FilterList(props) {
-    console.log("render FilterList");
-
-    function SelectAllCheckbox(props) {
-        const { filter, handleOnChangeSelectAll } = props;
-        const { isSelectAll } = filter;
-        return (
-            <ListItem>
-                <ListItemIcon>
-                    <ThemeProvider theme={checkboxTheme}>
-                        <Checkbox checked={isSelectAll} disableRipple onChange={handleOnChangeSelectAll} />
-                    </ThemeProvider>
-                </ListItemIcon>
-                <ListItemText className={classes.selectAll} primary="Select all" />
-            </ListItem>
-        );
-    }
-
-    function CategoryItem(props) {
-        console.log("render CategoryItem");
-        const { classes, handleOnClickCategory, category, filter } = props;
-
-        return (
-            <ListItem button onClick={() => handleOnClickCategory(category)}>
-                <ListItemText className={classes.listItemText}
-                    primary={`${filter[category].label} (${filter[category].checkedValues.length} / ${filter[category].values.length})`}
-                />
-                {filter[category].isOpen ? <MinusIcon /> : <AddIcon />}
-            </ListItem>
-        );
-    }
-
-    function CategoryCollapse(props) {
-        console.log("render CategoryCollapse");
-        const { classes, category, filter, handleOnChangeCheckbox } = props;
-
-        return (
-            <Collapse
-                in={filter[category].isOpen}
-                timeout="auto"
-                unmountOnExit
-            >
-                <List component="div" dense={true} disablePadding>
-                    {
-                        filter[category].values.map((value, idx) => (
-                            <ListItem key={idx}>
-                                <ListItemIcon>
-                                    <ThemeProvider theme={checkboxTheme}>
-                                        <Checkbox
-                                            checked={filter[category].checkedValues.includes(value)}
-                                            disableRipple
-                                            color="primary"
-                                            onChange={(e) => handleOnChangeCheckbox(e, category, value)}
-                                        />
-                                    </ThemeProvider>
-                                </ListItemIcon>
-                                <ListItemText className={classes.listItemText} primary={value} />
-                            </ListItem>
-                        ))
-                    }
-                </List>
-            </Collapse>
-        );
-    }
-
-    function CategoryList(props) {
-        return (
-            <>
-                <CategoryItem {...props} />
-                <CategoryCollapse {...props} />
-            </>
-        )
-    }
-
-    const { classes } = props;
-    return (
-        <List component={Paper} className={classes.paper}>
-            <SelectAllCheckbox {...props} />
-            {
-                categories.map(category => <CategoryList key={category} category={category} {...props}/>)
-            }
-        </List>
-    )
-}
-
 class FilterModal extends Component {
     constructor(props) {
         super(props);
@@ -165,12 +79,9 @@ class FilterModal extends Component {
     }
 
     handleOnChangeCheckbox = (e, category, value) => {
-        console.log("handleOnChangeCheckbox()");
         const { checked } = e.target;        
         this.setCheckedValues_onChangeCheckbox(checked, category, value);
-        console.log("setCheckedValues_onChangeCheckbox done");
         this.setDisplayedItems_onChangeCheckbox(checked, category, value);
-        console.log("setDisplayedItems_onChangeCheckbox done");
         this.resetPage();
     }
 
@@ -241,9 +152,7 @@ class FilterModal extends Component {
     }
 
     render() {
-        console.log("render FilterModal");
         const { classes } = this.props;
-        console.log("filter", this.props.filter);
 
         return (
             <>

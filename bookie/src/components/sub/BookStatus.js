@@ -8,7 +8,7 @@ const styles = theme => ({
         bottom: 0,
         right: 0,
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
+        gridTemplateColumns: 'repeat(2, 1fr)',
         columnGap: '.5rem',
         width: 'fit-content'
     },
@@ -61,10 +61,12 @@ function BookStatus(props) {
     }
 
     const MyIconBtn = (props) => {
-        const { name } = props;
+        const { name, onClick } = props;
         return (
             <div className={classes.iconWrapper} style={getIconWrapperStyle(name)}>
-                <IconButton className={classes.iconBtn}>
+                <IconButton
+                    className={classes.iconBtn}
+                >
                     {getIcon(name)}
                 </IconButton>
             </div>

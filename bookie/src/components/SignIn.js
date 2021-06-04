@@ -65,7 +65,7 @@ class SignIn extends Component {
             const { history, auth } = this.props;
             auth.setUser(user);
             auth.setIsAuthenticated(true);
-            history.push("/userProfile");
+            history.push("/library");
         } catch(error) {
             console.error(error);
             let err = null;

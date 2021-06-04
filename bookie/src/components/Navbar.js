@@ -26,7 +26,7 @@ const styles = theme => ({
         right: 'clamp(28px, 6vmin, 36px)',
         top: '1vmin',
         '& .MuiListItemText-primary': {
-            fontSize: "clamp(14px, 2vmin, 18px)",
+            fontSize: "clamp(0.875rem, 2vmin, 1rem)",
             color: theme.palette.secondary.main
         },
         opacity: 0,

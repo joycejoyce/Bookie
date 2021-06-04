@@ -1,5 +1,4 @@
 export default function SearchSummary(props) {
-    console.log("render SearchSummary");
     const { searchConditions, searchResult, filter } = props;
     const { searchCondition, searchKeyword } = searchConditions;
     const totalItemNum = searchResult.items.length;

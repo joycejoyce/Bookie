@@ -2,7 +2,7 @@ import { Component } from "react";
 import '../scss/ExploreResult.scss';
 import ExploreResultTable from './sub/ExploreResultTable.js';
 import ExploreErrorMsg from './sub/ExploreErrorMsg.js';
-import FilterModal from './sub/FilterModal.js';
+import FilterModal from './filter/FilterModal.js';
 import searchBook from "../model/BookSearcher.js";
 import { getFilterBySearchResult } from '../model/BookFilter.js';
 import SortByDropdown from './sub/SortByDropdown.js';
@@ -131,10 +131,10 @@ class ExploreResult extends Component {
     }
 
     render() {
-        console.log("render ExploreResult");
         const { searchConditions } = this.props.location.state;
         const { searchResult, displayInfo, filter } = this.state;
         const { isNormalEnd, errMsg } = searchResult;
+        const { auth } = this.props;
 
         return (
             <div className="exploreResult">

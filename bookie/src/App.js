@@ -55,6 +55,7 @@ class App extends Component {
       setIsAuthenticated: this.setIsAuthenticated,
       setUser: this.setUser
     };
+    console.log(auth);
 
     return (
       <ThemeProvider theme={theme}>
@@ -68,9 +69,9 @@ class App extends Component {
               <Route path="/signIn" render={(props) => <SignIn {...props} auth={auth} /> } />
               <Route path="/userProfile" render={(props) => <UserProfile auth={auth} />} />
               <Route path="/explore" component={Explore} />
-              <Route path="/exploreResult" component={ExploreResult} />
+              <Route path="/exploreResult" render={(props) => <ExploreResult {...props} auth={auth} /> } />
               <Route path="/library" render={(props) => <Library {...props} auth={auth} /> } />
-              <Route path="/" render={(props) => <Library {...props} auth={auth} /> } />
+              <Route path="/" render={(props) => <SignIn {...props} auth={auth} /> } />
             </Switch>
           </div>
         </Router>

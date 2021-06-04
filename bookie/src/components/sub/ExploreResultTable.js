@@ -18,7 +18,6 @@ class ExploreResultTable extends Component {
     }
 
     render() {
-        console.log("render ExploreResultTable");
         const { displayedItems, displayInfo } = this.props;
         const items = this.getItems(displayedItems, displayInfo);
         // displayInfo: {
