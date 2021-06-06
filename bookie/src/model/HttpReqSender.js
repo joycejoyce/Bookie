@@ -23,7 +23,6 @@ export async function sendReq_GET(url, useAsync) {
     };
 
     try {
-        url="xxx";
         const response = await axios.get(url);
         console.log({ response });
         ret = {
