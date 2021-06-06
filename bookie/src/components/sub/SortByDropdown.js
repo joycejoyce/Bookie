@@ -26,7 +26,6 @@ function SortByDropdown(props) {
     
         const [ newToOld, oldToNew ] = options;
         let { displayedItems } = props;
-        console.log("before", {displayedItems});
 
         let sortedItems = getSortedItems(displayedItems, "publishedDate");
         switch (value) {
@@ -40,7 +39,6 @@ function SortByDropdown(props) {
                 console.error("Unexpected sort choice:", value);
                 break;
         }
-        console.log("after", {displayedItems});
 
         setParentState("filter", "displayedItems", displayedItems);
         setParentState("displayInfo", "page", 0);
