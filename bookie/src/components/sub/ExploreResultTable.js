@@ -18,7 +18,7 @@ class ExploreResultTable extends Component {
     }
 
     render() {
-        const { displayedItems, displayInfo } = this.props;
+        const { displayedItems, displayInfo, handleOnClickBookStatus } = this.props;
         const items = this.getItems(displayedItems, displayInfo);
         // displayInfo: {
         //     page: 0,
@@ -33,7 +33,13 @@ class ExploreResultTable extends Component {
                     <TableContainer>
                         <Table>
                             <TableBody>
-                                { items.map((item, idx) => <ExploreTableRow key={idx} data={item} />) }
+                                { items.map((item, idx) => (
+                                    <ExploreTableRow
+                                        key={idx}
+                                        data={item}
+                                        handleOnClickBookStatus={handleOnClickBookStatus}
+                                    />
+                                )) }
                             </TableBody>
                         </Table>
                     </TableContainer>

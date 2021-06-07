@@ -136,12 +136,24 @@ class ExploreResult extends Component {
             item.toRead = idx % 2 === 0 ? true : false;
             item.haveRead = idx % 2 === 0 ? false : true;
         });
-        console.log("after setBookStatus", items);
+    }
+
+    handleOnClickBookStatus = (inputId, name) => {
+        const { displayedItems } = this.state.filter;
+        for (let i = 0; i < displayedItems.length; i ++) {
+            const { id } = displayedItems[i];
+            if (id === inputId) {
+                const newStatus = !displayedItems[i][name];
+                displayedItems[i][name] = newStatus;
+                break;
+            }
+        }
+        this.setNestedState("filter", "displayedItems", displayedItems);
     }
 
     render() {
         const { searchConditions } = this.props.location.state;
-        const { searchResult, displayInfo, filter, bookStatus } = this.state;
+        const { searchResult, displayInfo, filter } = this.state;
         const { isNormalEnd, errMsg } = searchResult;
         const { auth } = this.props;
 
@@ -170,7 +182,7 @@ class ExploreResult extends Component {
                         <ExploreResultTable
                             displayedItems={this.state.filter.displayedItems}
                             displayInfo={displayInfo}
-                            setParentState={this.setNestedState}
+                            handleOnClickBookStatus={this.handleOnClickBookStatus}
                         />
                         :
                         <ExploreErrorMsg errMsg={errMsg} />

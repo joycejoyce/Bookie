@@ -1,3 +1,4 @@
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Favorite as FavoriteIcon, Bookmark as BookmarkIcon } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
@@ -32,7 +33,7 @@ const styles = theme => ({
     }
 });
 
-function getIconWrapperStyle(name, status) {
+function getIconWrapperStyle(status) {
     let background = "white";
     if (status) {
         background = "#FFD166"; 
@@ -51,11 +52,12 @@ function getIcon(name, classes) {
     }
 }
 
-const MyIconBtn = ({ name, status, classes }) => {
+const MyIconBtn = ({ id, name, status, handleOnClick, classes }) => {
     return (
-        <div className={classes.iconWrapper} style={getIconWrapperStyle(name, status)}>
+        <div className={classes.iconWrapper} style={getIconWrapperStyle(status)}>
             <IconButton
                 className={classes.iconBtn}
+                onClick={() => handleOnClick(id, name)}
             >
                 {getIcon(name, classes)}
             </IconButton>
@@ -63,13 +65,25 @@ const MyIconBtn = ({ name, status, classes }) => {
     );
 };
 
-function BookStatus({toRead, haveRead, classes}) {
+const BookStatus = React.memo(({ id, toRead, haveRead, handleOnClickBookStatus, classes }) => {
     return (
         <div className={classes.bookStatus}>
-            <MyIconBtn name="toRead" status={toRead} classes={classes} />
-            <MyIconBtn name="haveRead" status={haveRead} classes={classes} />
+            <MyIconBtn
+                id={id}
+                name="toRead"
+                status={toRead}
+                handleOnClick={handleOnClickBookStatus}
+                classes={classes}
+            />
+            <MyIconBtn
+                id={id}
+                name="haveRead"
+                status={haveRead}
+                handleOnClick={handleOnClickBookStatus}
+                classes={classes}
+            />
         </div>
     );
-}
+});
 
 export default withStyles(styles)(BookStatus);
