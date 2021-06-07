@@ -7,6 +7,7 @@ import searchBook from "../model/BookSearcher.js";
 import { getFilterBySearchResult } from '../model/BookFilter.js';
 import SortByDropdown from './sub/SortByDropdown.js';
 import SearchSummary from './sub/SearchSummary.js';
+import saveBookInfo from '../model/BookInfoSaver.js';
 
 const displayRowsPerPage = 10;
 
@@ -133,8 +134,10 @@ class ExploreResult extends Component {
 
     setBookStatus = (items) => {
         items.forEach((item, idx) => {
-            item.toRead = idx % 2 === 0 ? true : false;
-            item.haveRead = idx % 2 === 0 ? false : true;
+            item.toRead = false;
+            item.haveRead = false;
+            // item.toRead = idx % 2 === 0 ? true : false;
+            // item.haveRead = idx % 2 === 0 ? false : true;
         });
     }
 
@@ -145,17 +148,20 @@ class ExploreResult extends Component {
             if (id === inputId) {
                 const newStatus = !displayedItems[i][name];
                 displayedItems[i][name] = newStatus;
+                const bookInfo = displayedItems[i];
+                saveBookInfo(this.props.auth, bookInfo);
                 break;
             }
         }
-        this.setNestedState("filter", "displayedItems", displayedItems);
+        this.setNestedState("filter", "displayedItems", displayedItems, () => {
+            console.log("change state done");
+        });
     }
 
     render() {
         const { searchConditions } = this.props.location.state;
         const { searchResult, displayInfo, filter } = this.state;
         const { isNormalEnd, errMsg } = searchResult;
-        const { auth } = this.props;
 
         return (
             <div className="exploreResult">
