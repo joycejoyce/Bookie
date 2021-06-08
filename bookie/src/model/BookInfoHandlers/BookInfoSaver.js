@@ -2,6 +2,7 @@
 import createTable, { getParams as getParams_createTable } from '../DBHandlers/TableCreator.js';
 import updateItem, { getParams as getParams_updateItem } from '../DBHandlers/ItemUpdater.js';
 import getItem, { scan, getParams as getParams_getItem } from '../DBHandlers/ItemGetter.js';
+import { viewResult_User, viewResult_Book } from '../DBHandlers/ItemViewer.js';
 
 export default async function save(auth, bookInfo) {
     console.log("save");
@@ -48,14 +49,14 @@ export default async function save(auth, bookInfo) {
     return result;
 }
 
-async function viewResult_User(auth) {
-    const params = getParams_getItem(auth, "User");
-    const result = await getItem(params);
-    console.log({ result });
-}
+// async function viewResult_User(auth) {
+//     const params = getParams_getItem(auth, "User");
+//     const result = await getItem(params);
+//     console.log({ result });
+// }
 
-async function viewResult_Book() {
-    const params = getParams_getItem({}, "Book");
-    const result = await scan(params);
-    console.log({ result });
-}
+// async function viewResult_Book() {
+//     const params = getParams_getItem({}, "Book");
+//     const result = await scan(params);
+//     console.log({ result });
+// }

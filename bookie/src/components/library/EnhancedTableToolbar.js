@@ -72,10 +72,10 @@ const getStyle_icon = shouldHightlight => {
     };
 }
 
-function EnhancedTableToolbar({ numSelected, ctrl }) {
+function EnhancedTableToolbar({ numSelected, numTotal, ctrl }) {
     const classes = useStyles();
     const shouldHightlight = numSelected > 0;
-    const { onClickDelete } = ctrl;
+    const { onClickDelete, onClickMoveToHaveRead } = ctrl;
     
     return (
         <Toolbar
@@ -86,10 +86,10 @@ function EnhancedTableToolbar({ numSelected, ctrl }) {
                 className={classes.title + " toolbarTitle"}
                 style={highlightStyle(shouldHightlight, 'title')}
             >
-                {numSelected} selected
+                Selected: {numSelected} / {numTotal}
             </p>
             <Tooltip title='Move to "Have Read"'>
-                <IconButton disabled={!shouldHightlight}>
+                <IconButton onClick={onClickMoveToHaveRead} disabled={!shouldHightlight}>
                     <BookmarkIcon style={highlightStyle(shouldHightlight, 'bookmark')} />
                 </IconButton>
             </Tooltip>

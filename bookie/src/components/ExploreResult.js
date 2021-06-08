@@ -190,6 +190,7 @@ class ExploreResult extends Component {
                             displayedItems={this.state.filter.displayedItems}
                             displayInfo={displayInfo}
                             handleOnClickBookStatus={this.handleOnClickBookStatus}
+                            setParentState={this.setNestedState}
                         />
                         :
                         <ExploreErrorMsg errMsg={errMsg} />

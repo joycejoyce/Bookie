@@ -98,7 +98,8 @@ class ToRead extends Component {
                 onClickSort: this.handleOnClickSort
             },
             toolBar: {
-                onClickDelete: this.handleOnClickDelete
+                onClickDelete: this.handleOnClickDelete,
+                onClickMoveToHaveRead: this.handleOnClickMoveToHaveRead
             }
         }
     }
@@ -106,6 +107,7 @@ class ToRead extends Component {
     handleOnClickDelete = async () => {
         const checkedItemIds = this.getCheckedItemIds();
         console.log({ checkedItemIds });
+        // TODO: 
         // const { auth } = this.props;
         // const { username } = auth.user;
         const auth = { username: "test" };
@@ -128,6 +130,21 @@ class ToRead extends Component {
             return accu;
         }, []);
         return ids;
+    }
+
+    handleOnClickMoveToHaveRead = async () => {
+        const checkedItemIds = this.getCheckedItemIds();
+        console.log({ checkedItemIds });
+        // TODO: 
+        // const { auth } = this.props;
+        // const { username } = auth.user;
+        const auth = { username: "test" };
+        const result = await modifyBookInfo_toRead({auth, checkedItemIds}, "moveToHaveRead");
+        console.log(result);
+        const { items } = this.state;
+        checkedItemIds.forEach(id => delete items[id]);
+        this.setState({ items });
+        this.setState({ numSelected: 0 });
     }
 
     handleOnClickSort = (e, newOrderBy) => {
@@ -218,6 +235,7 @@ class ToRead extends Component {
 
     render() {
         const { items, hidden, allChecked, numSelected, sort, toolBar } = this.state;
+        const numTotal = Object.keys(items).length;
         const { classes } = this.props;
         return (
             <div
@@ -228,6 +246,7 @@ class ToRead extends Component {
                     <Paper>
                         <EnhancedTableToolbar
                             numSelected={numSelected}
+                            numTotal={numTotal}
                             ctrl={toolBar}
                         />
                         <TableContainer>

@@ -58,21 +58,13 @@ function getThumbnailSrc(volumeInfo) {
 }
 
 class ExploreTableRow extends Component {
-    state = {
-        thumbnailSrc: NoImg
-    }
-
-    componentDidMount() {
-        const thumbnailSrc = getThumbnailSrc(this.props.data.volumeInfo)
-        this.setState({ thumbnailSrc });
-    }
-
     render() {
         const { handleOnClickBookStatus, data } = this.props;
+        const thumbnail = getThumbnailSrc(data.volumeInfo);
 
         return (
             <TableRow>
-                <TableCell><Thumbnail src={this.state.thumbnailSrc} /></TableCell>
+                <TableCell><Thumbnail src={thumbnail} /></TableCell>
                 <TableCell>
                     <BookSummary
                         data={data}

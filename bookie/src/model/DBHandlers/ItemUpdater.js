@@ -80,7 +80,8 @@ function getParams_User(auth, bookInfo) {
 
 function getParams_Book(bookInfo) {
     const { toRead, haveRead } = bookInfo;
-    const action = toRead||haveRead ? "SET" : "REMOVE";
+    // const action = toRead||haveRead ? "SET" : "REMOVE";
+    const action = "SET";
     const params = action === "SET" ? getParams_Book_SET(bookInfo) : getParams_Book_REMOVE(bookInfo);
     return params;
 }
