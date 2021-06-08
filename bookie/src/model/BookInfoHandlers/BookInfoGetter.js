@@ -47,7 +47,7 @@ function getItems_byQueryResult(results) {
         const msgObj = JSON.parse(msg);
         const bookInfoStr = msgObj.Item.BookInfo.S;
         const bookInfo = JSON.parse(bookInfoStr);
-        console.log({ bookInfo });
+        // console.log({ bookInfo });
         const key = bookInfo.id;
         const value = {
             id: bookInfo.id,

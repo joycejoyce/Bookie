@@ -20,8 +20,8 @@ async function modifyBookInfo_delete({ auth, checkedItemIds, classification }) {
     // console.log({ auth, checkedItemIds });
     const resultList_User = [];
     const index = {
-        'ToRead': 0,
-        'HaveRead': 1
+        'toRead': 0,
+        'haveRead': 1
     };
     const theIndex = index[classification];
     for (let i in checkedItemIds) {

@@ -39,8 +39,8 @@ class LibraryPanels extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ToRead: {
-                id: "ToRead",
+            toRead: {
+                id: "toRead",
                 index: 0,
                 items: {},
                 sort: {
@@ -51,8 +51,8 @@ class LibraryPanels extends Component {
                 numSelected: 0,
                 allChecked: false
             },
-            HaveRead: {
-                id: "HaveRead",
+            haveRead: {
+                id: "haveRead",
                 index: 1,
                 items: {},
                 sort: {
@@ -74,20 +74,31 @@ class LibraryPanels extends Component {
     async componentDidMount() {
         // const { auth } = this.props;
         const auth = { username: "test" };
-        const { ToRead, HaveRead } = this.state;
-        const result_getItems_toRead = getBookInfo(ToRead.id, auth);
-        const result_getItems_haveRead = getBookInfo(HaveRead.id, auth);
+        const { toRead, haveRead } = this.state;
+        const result_getItems_toRead = getBookInfo(toRead.id, auth);
+        const result_getItems_haveRead = getBookInfo(haveRead.id, auth);
 
-        await Promise.all([result_getItems_toRead, result_getItems_haveRead])
-            .then(([result_getItems_toRead, result_getItems_haveRead]) => {
-                const { items: items_toRead } = result_getItems_toRead;
-                console.log({ items_toRead });
-                this.setNestedState(ToRead.id, "items", items_toRead, () => console.log("toRead", this.state.ToRead.items));
+        try {
+            await Promise.all([result_getItems_toRead, result_getItems_haveRead])
+                .then(([result_getItems_toRead, result_getItems_haveRead]) => {
+                    console.log({ result_getItems_toRead });
+                    console.log({ result_getItems_haveRead });
 
-                const { items: items_haveRead } = result_getItems_haveRead;
-                console.log({ items_haveRead });
-                this.setNestedState(HaveRead.id, "items", items_haveRead);
-            });
+                    if (result_getItems_toRead && result_getItems_toRead.items) {
+                        const { items: items_toRead } = result_getItems_toRead;
+                        // console.log({ items_toRead });
+                        this.setNestedState(toRead.id, "items", items_toRead);
+                    }
+                    
+                    if (result_getItems_haveRead && result_getItems_haveRead.items) {
+                        const { items: items_haveRead } = result_getItems_haveRead;
+                        // console.log({ items_haveRead });
+                        this.setNestedState(haveRead.id, "items", items_haveRead);
+                    }
+                });
+        } catch(err) {
+            console.error(err);
+        }
     }
 
     setNestedState = (parentName, childName, value, callback) => {
@@ -123,13 +134,13 @@ class LibraryPanels extends Component {
     }
 
     getClassification = () => {
-        const { ToRead, HaveRead } = this.state;
+        const { toRead, haveRead } = this.state;
         const { value: tabIdx } = this.props.tabs;
-        if (tabIdx === ToRead.index) {
-            return ToRead.id;
+        if (tabIdx === toRead.index) {
+            return toRead.id;
         }
         else {
-            return HaveRead.id;
+            return haveRead.id;
         }
     }
 
@@ -207,7 +218,7 @@ class LibraryPanels extends Component {
     render() {
         const { auth, theme, tabs } = this.props;
         const { value: tabIdx } = tabs;
-        const { ToRead, HaveRead, ctrl } = this.state;
+        const { toRead, haveRead, ctrl } = this.state;
         
         return (
             <SwipeableViews
@@ -219,14 +230,14 @@ class LibraryPanels extends Component {
                     dir={theme.direction}
                     auth={auth}
                     tabIndex={tabIdx}
-                    data={ToRead}
+                    data={toRead}
                     ctrl={ctrl}
                 />
                 <PanelContents
                     dir={theme.direction}
                     auth={auth}
                     tabIndex={tabIdx}
-                    data={HaveRead}
+                    data={haveRead}
                     ctrl={ctrl}
                 />
             </SwipeableViews>

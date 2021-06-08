@@ -41,7 +41,7 @@ const headCells = [
 
 function EnhancedTableHead({ sort, checked, onChange }) {
     const { orderBy, order, onClickSort } = sort;
-    console.log({ sort });
+    // console.log({ sort });
     const classes = useStyle();
     const createSortHandler = (sortByProp) => (e) => {
         onClickSort(e, sortByProp);

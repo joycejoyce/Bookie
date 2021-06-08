@@ -36,10 +36,10 @@ export function getParams(auth, bookInfo, tableName) {
 function getParams_User(auth, bookInfo) {
     const ID = auth.username;
     const bookId = bookInfo.id;
-    const { ToRead, HaveRead } = bookInfo;
+    const { toRead, haveRead } = bookInfo;
     const action = {
-        ToRead: ToRead ? "ADD" : "DELETE",
-        HaveRead: HaveRead ? "ADD" : "DELETE"
+        toRead: toRead ? "ADD" : "DELETE",
+        haveRead: haveRead ? "ADD" : "DELETE"
     };
     const commonParams = {
         TableName: "User",
@@ -54,26 +54,26 @@ function getParams_User(auth, bookInfo) {
         {
             ...commonParams,
             ExpressionAttributeNames: {
-                "#ToRead": "ToRead",
+                "#toRead": "toRead",
             },
             ExpressionAttributeValues: {
-                ":ToRead": {
+                ":toRead": {
                     SS: [bookId]
                 }
             },
-            UpdateExpression: `${action.ToRead} #ToRead :ToRead`
+            UpdateExpression: `${action.toRead} #toRead :toRead`
         },
         {
             ...commonParams,
             ExpressionAttributeNames: {
-                "#HaveRead": "HaveRead"
+                "#haveRead": "haveRead"
             },
             ExpressionAttributeValues: {
-                ":HaveRead": {
+                ":haveRead": {
                     SS: [bookId]
                 }
             },
-            UpdateExpression: `${action.HaveRead} #HaveRead :HaveRead`
+            UpdateExpression: `${action.haveRead} #haveRead :haveRead`
         }
     ]
     return params;

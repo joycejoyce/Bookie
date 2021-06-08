@@ -61,10 +61,10 @@ function getParams_User({ username }) {
         },
         ExpressionAttributeNames: {
             "#ID": "ID",
-            "#ToRead": "ToRead",
-            "#HaveRead": "HaveRead"
+            "#toRead": "toRead",
+            "#haveRead": "haveRead"
         },
-        ProjectionExpression: '#ID, #ToRead, #HaveRead'
+        ProjectionExpression: '#ID, #toRead, #haveRead'
     };
 
     return params;
