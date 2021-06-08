@@ -22,7 +22,8 @@ const styles = theme => ({
         '&::-webkit-scrollbar-thumb': {
             background: '#8E9699',
             borderRadius: '1vmin'
-        }
+        },
+        marginBottom: '5vmin'
     },
     table: {
         minWidth: '480px'
