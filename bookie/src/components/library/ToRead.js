@@ -17,8 +17,7 @@ const styles = theme => ({
     tableContainer: {
         '&::-webkit-scrollbar': {
             height: '2vmin',
-            width: '2vmin',
-            cursor: 'pointer'
+            width: '2vmin'
         },
         '&::-webkit-scrollbar-thumb': {
             background: '#8E9699',
