@@ -1,4 +1,5 @@
 import getDBApi from './DBApiGetter.js';
+import { NoImgPath } from '../../config.json';
 
 const dbApi = getDBApi();
 
@@ -112,8 +113,7 @@ function getParams_Book_SET(bookInfo) {
 function getBookInfo(bookInfo) {
     const { id, volumeInfo } = bookInfo;
     const { authors, categories, imageLinks, title } = volumeInfo;
-    let { thumbnail } = imageLinks;
-    thumbnail = thumbnail ? thumbnail : "NoImg";
+    let thumbnail = imageLinks ? imageLinks.thumbnail : NoImgPath;
     const bookInfoStr = JSON.stringify({
         id,
         title,

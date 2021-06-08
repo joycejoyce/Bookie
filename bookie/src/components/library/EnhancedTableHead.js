@@ -34,8 +34,9 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const headCells = [
+    { id: 'thumbnail', label: 'Cover' },
     { id: 'title', label: 'Title' },
-    { id: 'author', label: 'Author' }
+    { id: 'author', label: 'Author' }    
 ];
 
 function EnhancedTableHead({ sort, checked, onChange }) {

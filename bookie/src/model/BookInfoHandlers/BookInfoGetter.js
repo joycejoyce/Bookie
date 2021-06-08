@@ -47,12 +47,14 @@ function getItems_byQueryResult(results) {
         const msgObj = JSON.parse(msg);
         const bookInfoStr = msgObj.Item.BookInfo.S;
         const bookInfo = JSON.parse(bookInfoStr);
+        console.log({ bookInfo });
         const key = bookInfo.id;
         const value = {
             id: bookInfo.id,
             checked: false,
             title: bookInfo.title,
-            author: bookInfo.authors.join(', ')
+            author: bookInfo.authors.join(', '),
+            thumbnail: bookInfo.thumbnail
         };
         accu = {
             ...accu,

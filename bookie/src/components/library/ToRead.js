@@ -23,12 +23,27 @@ const styles = theme => ({
     },
     tableRow: {
         letterSpacing: '.5px'
+    },
+    tableCell: {
+        maxWidth: '250px'
+    },
+    thumbnail: {
+        width: '128px'
     }
 });
 
+const Thumbnail = React.memo(({ src, classes }) => {
+    return (
+        <div>
+            <img src={src} className={classes.thumbnail} />
+        </div>
+    );
+});
+
 const MyTableRow = React.memo(
-    ({ classes, id, title, author, onChange, checked }) => {
+    ({ classes, id, title, author, thumbnail, onChange, checked }) => {
     console.log(`${id} rendered`);
+    console.log({ thumbnail });
 
     return (
         <TableRow
@@ -44,10 +59,13 @@ const MyTableRow = React.memo(
                     />
                 </TableCell>
             </ThemeProvider>
-            <TableCell component="th">
+            <TableCell className={classes.tableCell}>
+                <Thumbnail src={thumbnail} classes={classes} />
+            </TableCell>
+            <TableCell component="th" className={classes.tableCell}>
                 {title}
             </TableCell>
-            <TableCell>
+            <TableCell className={classes.tableCell}>
                 {author}
             </TableCell>
         </TableRow>
@@ -104,6 +122,11 @@ class ToRead extends Component {
         }
     }
 
+    resetSelectItems = () => {
+        this.setState({ numSelected: 0 });
+        this.setState({ allChecked: false });
+    }
+
     handleOnClickDelete = async () => {
         const checkedItemIds = this.getCheckedItemIds();
         console.log({ checkedItemIds });
@@ -116,7 +139,7 @@ class ToRead extends Component {
         const { items } = this.state;
         checkedItemIds.forEach(id => delete items[id]);
         this.setState({ items });
-        this.setState({ numSelected: 0 });
+        this.resetSelectItems();
     }
 
     getCheckedItemIds = () => {
@@ -144,7 +167,7 @@ class ToRead extends Component {
         const { items } = this.state;
         checkedItemIds.forEach(id => delete items[id]);
         this.setState({ items });
-        this.setState({ numSelected: 0 });
+        this.resetSelectItems();
     }
 
     handleOnClickSort = (e, newOrderBy) => {
@@ -171,7 +194,8 @@ class ToRead extends Component {
             const value = {
                 checked: false,
                 title: 'Title'.concat(' ', getRandomInt(100)),
-                author: 'Author'.concat(' ', getRandomInt(100))
+                author: 'Author'.concat(' ', getRandomInt(100)),
+                thumbnail: ''
             };
             accu = {
                 ...accu,
@@ -237,6 +261,7 @@ class ToRead extends Component {
         const { items, hidden, allChecked, numSelected, sort, toolBar } = this.state;
         const numTotal = Object.keys(items).length;
         const { classes } = this.props;
+        
         return (
             <div
                 id="toRead"
@@ -269,6 +294,7 @@ class ToRead extends Component {
                                                     id={itemId}
                                                     title={items[itemId].title}
                                                     author={items[itemId].author}
+                                                    thumbnail={items[itemId].thumbnail}
                                                     checked={items[itemId].checked}
                                                 />
                                             );

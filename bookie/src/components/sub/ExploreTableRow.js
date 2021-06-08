@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { TableRow, TableCell } from '@material-ui/core';
-import NoImg from "../../assets/noImg.svg";
+// import NoImg from "../../assets/noImg.svg";
+import { NoImgPath } from '../../config.json';
 import BookStatus from "./BookStatus.js";
 
 const Thumbnail = React.memo(({ src }) => {
@@ -50,7 +51,7 @@ const BookSummary = ({ handleOnClickBookStatus, data }) => {
 
 function getThumbnailSrc(volumeInfo) {
     const { imageLinks } = volumeInfo;
-    let thumbnail = NoImg;
+    let thumbnail = NoImgPath;
     if (imageLinks) {
         thumbnail = imageLinks.thumbnail;
     }
