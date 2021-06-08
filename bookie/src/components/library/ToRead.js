@@ -14,12 +14,19 @@ const styles = theme => ({
             color: theme.palette.secondary.main
         }
     },
-    paper: {
-        width: '100%',
-        marginBottom: theme.spacing(2)
+    tableContainer: {
+        '&::-webkit-scrollbar': {
+            height: '2vmin',
+            width: '2vmin',
+            cursor: 'pointer'
+        },
+        '&::-webkit-scrollbar-thumb': {
+            background: '#8E9699',
+            borderRadius: '1vmin'
+        }
     },
     table: {
-        minWidth: '100%'
+        minWidth: '480px'
     },
     tableRow: {
         letterSpacing: '.5px'
@@ -42,35 +49,35 @@ const Thumbnail = React.memo(({ src, classes }) => {
 
 const MyTableRow = React.memo(
     ({ classes, id, title, author, thumbnail, onChange, checked }) => {
-    console.log(`${id} rendered`);
-    console.log({ thumbnail });
+        console.log(`${id} rendered`);
+        console.log({ thumbnail });
 
-    return (
-        <TableRow
-            className={classes.tableRow}
-        >
-            <ThemeProvider theme={checkboxTheme}>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        id={id}
-                        disableRipple
-                        checked={checked}
-                        onChange={onChange}
-                    />
+        return (
+            <TableRow
+                className={classes.tableRow}
+            >
+                <ThemeProvider theme={checkboxTheme}>
+                    <TableCell padding="checkbox">
+                        <Checkbox
+                            id={id}
+                            disableRipple
+                            checked={checked}
+                            onChange={onChange}
+                        />
+                    </TableCell>
+                </ThemeProvider>
+                <TableCell className={classes.tableCell}>
+                    <Thumbnail src={thumbnail} classes={classes} />
                 </TableCell>
-            </ThemeProvider>
-            <TableCell className={classes.tableCell}>
-                <Thumbnail src={thumbnail} classes={classes} />
-            </TableCell>
-            <TableCell component="th" className={classes.tableCell}>
-                {title}
-            </TableCell>
-            <TableCell className={classes.tableCell}>
-                {author}
-            </TableCell>
-        </TableRow>
-    );
-});
+                <TableCell component="th" className={classes.tableCell}>
+                    {title}
+                </TableCell>
+                <TableCell className={classes.tableCell}>
+                    {author}
+                </TableCell>
+            </TableRow>
+        );
+    });
 
 const getSortedItems = (items, sort) => {
     const { orderBy, order } = sort;
@@ -134,7 +141,7 @@ class ToRead extends Component {
         // const { auth } = this.props;
         // const { username } = auth.user;
         const auth = { username: "test" };
-        const result = await modifyBookInfo_toRead({auth, checkedItemIds}, "delete");
+        const result = await modifyBookInfo_toRead({ auth, checkedItemIds }, "delete");
         console.log(result);
         const { items } = this.state;
         checkedItemIds.forEach(id => delete items[id]);
@@ -162,7 +169,7 @@ class ToRead extends Component {
         // const { auth } = this.props;
         // const { username } = auth.user;
         const auth = { username: "test" };
-        const result = await modifyBookInfo_toRead({auth, checkedItemIds}, "moveToHaveRead");
+        const result = await modifyBookInfo_toRead({ auth, checkedItemIds }, "moveToHaveRead");
         console.log(result);
         const { items } = this.state;
         checkedItemIds.forEach(id => delete items[id]);
@@ -261,7 +268,7 @@ class ToRead extends Component {
         const { items, hidden, allChecked, numSelected, sort, toolBar } = this.state;
         const numTotal = Object.keys(items).length;
         const { classes } = this.props;
-        
+
         return (
             <div
                 id="toRead"
@@ -274,7 +281,7 @@ class ToRead extends Component {
                             numTotal={numTotal}
                             ctrl={toolBar}
                         />
-                        <TableContainer>
+                        <TableContainer className={classes.tableContainer}>
                             <Table
                                 className={classes.table}
                             >
@@ -284,7 +291,7 @@ class ToRead extends Component {
                                     onChange={this.handleOnChangeSelecetAll}
                                 />
                                 <TableBody>
-                                    {                                    
+                                    {
                                         Object.keys(items).map(itemId => {
                                             return (
                                                 <MyTableRow
