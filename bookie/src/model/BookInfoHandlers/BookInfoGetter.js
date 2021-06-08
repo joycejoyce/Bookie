@@ -1,4 +1,4 @@
-import getItem, { getParams } from './DBHandlers/ItemGetter.js';
+import getItem, { getParams } from '../DBHandlers/ItemGetter.js';
 
 export async function getBookInfo_toRead(auth) {
     const params_User = getParams(auth, "User");
@@ -42,20 +42,6 @@ export async function getBookInfo_toRead(auth) {
 }
 
 function getItems_byQueryResult(results) {
-    // const items = numAry.reduce((accu, num) => {
-    //     const numStr = num.toString();
-    //     const key = "id".concat(numStr);
-    //     const value = {
-    //         checked: false,
-    //         title: 'Title'.concat(' ', getRandomInt(100)),
-    //         author: 'Author'.concat(' ', getRandomInt(100))
-    //     };
-    //     accu = {
-    //         ...accu,
-    //         [key]: value
-    //     };
-    //     return accu;
-    // }, {});
     const items = results.reduce((accu, result) => {
         const { msg } = result;
         const msgObj = JSON.parse(msg);
@@ -63,6 +49,7 @@ function getItems_byQueryResult(results) {
         const bookInfo = JSON.parse(bookInfoStr);
         const key = bookInfo.id;
         const value = {
+            id: bookInfo.id,
             checked: false,
             title: bookInfo.title,
             author: bookInfo.authors.join(', ')

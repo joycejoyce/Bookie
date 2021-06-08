@@ -72,9 +72,10 @@ const getStyle_icon = shouldHightlight => {
     };
 }
 
-function EnhancedTableToolbar({numSelected}) {
+function EnhancedTableToolbar({ numSelected, ctrl }) {
     const classes = useStyles();
     const shouldHightlight = numSelected > 0;
+    const { onClickDelete } = ctrl;
     
     return (
         <Toolbar
@@ -93,7 +94,7 @@ function EnhancedTableToolbar({numSelected}) {
                 </IconButton>
             </Tooltip>
             <Tooltip title="Delete">
-                <IconButton disabled={!shouldHightlight}>
+                <IconButton onClick={onClickDelete} disabled={!shouldHightlight}>
                     <DeleteIcon style={highlightStyle(shouldHightlight, 'delete')} />
                 </IconButton>
             </Tooltip>

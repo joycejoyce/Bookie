@@ -37,6 +37,7 @@ class Library extends Component {
                         />
                         <LibraryTabPanels
                             tabs={this.state.tabs}
+                            auth={this.props.auth}
                         />
                     </Paper>
                 </div>

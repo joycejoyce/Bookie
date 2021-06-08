@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 function LibraryPanels(props) {
-    const { tabs, setParentState } = props;
+    const { tabs, setParentState, auth } = props;
     const { value } = tabs;
     const theme = useTheme();
 
@@ -26,7 +26,7 @@ function LibraryPanels(props) {
             index={value}
             onChangeIndex={handleOnChangeIndex}
         >
-            <ToReadPanel value={value} index={0} dir={theme.direction} />
+            <ToReadPanel auth={auth} value={value} index={0} dir={theme.direction} />
             <HaveReadPanel value={value} index={1} dir={theme.direction} />
         </SwipeableViews>
     );

@@ -7,7 +7,7 @@ import searchBook from "../model/BookSearcher.js";
 import { getFilterBySearchResult } from '../model/BookFilter.js';
 import SortByDropdown from './sub/SortByDropdown.js';
 import SearchSummary from './sub/SearchSummary.js';
-import saveBookInfo from '../model/BookInfoSaver.js';
+import saveBookInfo from '../model/BookInfoHandlers/BookInfoSaver.js';
 
 const displayRowsPerPage = 10;
 

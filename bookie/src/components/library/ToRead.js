@@ -4,7 +4,8 @@ import EnhancedTableToolbar from './EnhancedTableToolbar.js';
 import EnhancedTableHead from './EnhancedTableHead.js';
 import { withStyles, ThemeProvider } from '@material-ui/core/styles';
 import { checkboxTheme } from '../Theme.js';
-import { getBookInfo_toRead } from '../../model/BookInfoGetter.js';
+import { getBookInfo_toRead } from '../../model/BookInfoHandlers/BookInfoGetter.js';
+import { modifyBookInfo_toRead } from '../../model/BookInfoHandlers/BookInfoModifier.js';
 
 const styles = theme => ({
     root: {
@@ -95,8 +96,38 @@ class ToRead extends Component {
                 orderBy: 'title',
                 order: 'asc',
                 onClickSort: this.handleOnClickSort
+            },
+            toolBar: {
+                onClickDelete: this.handleOnClickDelete
             }
         }
+    }
+
+    handleOnClickDelete = async () => {
+        const checkedItemIds = this.getCheckedItemIds();
+        console.log({ checkedItemIds });
+        // const { auth } = this.props;
+        // const { username } = auth.user;
+        const auth = { username: "test" };
+        const result = await modifyBookInfo_toRead({auth, checkedItemIds}, "delete");
+        console.log(result);
+        const { items } = this.state;
+        checkedItemIds.forEach(id => delete items[id]);
+        this.setState({ items });
+        this.setState({ numSelected: 0 });
+    }
+
+    getCheckedItemIds = () => {
+        const { items } = this.state;
+        const ids = Object.keys(items).reduce((accu, key) => {
+            const value = items[key];
+            const { checked, id } = value;
+            if (checked) {
+                accu.push(id);
+            }
+            return accu;
+        }, []);
+        return ids;
     }
 
     handleOnClickSort = (e, newOrderBy) => {
@@ -186,7 +217,7 @@ class ToRead extends Component {
     }
 
     render() {
-        const { items, hidden, allChecked, numSelected, sort } = this.state;
+        const { items, hidden, allChecked, numSelected, sort, toolBar } = this.state;
         const { classes } = this.props;
         return (
             <div
@@ -197,6 +228,7 @@ class ToRead extends Component {
                     <Paper>
                         <EnhancedTableToolbar
                             numSelected={numSelected}
+                            ctrl={toolBar}
                         />
                         <TableContainer>
                             <Table

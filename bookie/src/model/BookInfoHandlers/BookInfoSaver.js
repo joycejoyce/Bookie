@@ -1,7 +1,7 @@
 
-import createTable, { getParams as getParams_createTable } from './DBHandlers/TableCreator.js';
-import updateItem, { getParams as getParams_updateItem } from './DBHandlers/ItemUpdater.js';
-import getItem, { scan, getParams as getParams_getItem } from './DBHandlers/ItemGetter.js';
+import createTable, { getParams as getParams_createTable } from '../DBHandlers/TableCreator.js';
+import updateItem, { getParams as getParams_updateItem } from '../DBHandlers/ItemUpdater.js';
+import getItem, { scan, getParams as getParams_getItem } from '../DBHandlers/ItemGetter.js';
 
 export default async function save(auth, bookInfo) {
     console.log("save");
