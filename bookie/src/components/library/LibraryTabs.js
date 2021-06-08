@@ -28,6 +28,7 @@ function LibraryTabs(props) {
     const { value } = tabs;
 
     const handleOnChangeTab = (e, tabValue) => {
+        console.log({ tabValue });
         setParentState("tabs", "value", tabValue);
     }
 

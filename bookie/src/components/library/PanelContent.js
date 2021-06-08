@@ -4,7 +4,6 @@ import EnhancedTableToolbar from './EnhancedTableToolbar.js';
 import EnhancedTableHead from './EnhancedTableHead.js';
 import { withStyles, ThemeProvider } from '@material-ui/core/styles';
 import { checkboxTheme } from '../Theme.js';
-import { getBookInfo_toRead } from '../../model/BookInfoHandlers/BookInfoGetter.js';
 import { modifyBookInfo_toRead } from '../../model/BookInfoHandlers/BookInfoModifier.js';
 
 const styles = theme => ({
@@ -26,7 +25,7 @@ const styles = theme => ({
         marginBottom: '5vmin'
     },
     table: {
-        minWidth: '480px'
+        // minWidth: '480px'
     },
     tableRow: {
         letterSpacing: '.5px'
@@ -50,7 +49,6 @@ const Thumbnail = React.memo(({ src, classes }) => {
 const MyTableRow = React.memo(
     ({ classes, id, title, author, thumbnail, onChange, checked }) => {
         console.log(`${id} rendered`);
-        console.log({ thumbnail });
 
         return (
             <TableRow
@@ -79,49 +77,18 @@ const MyTableRow = React.memo(
         );
     });
 
-const getSortedItems = (items, sort) => {
-    const { orderBy, order } = sort;
-    const dataList = Object.keys(items).map(key => [items[key], items[key][orderBy], key]);
-    const comparator = getComparator(order);
-    const sortedDataList = dataList.sort(comparator);
-    const sortedItems = sortedDataList.reduce((accu, data) => {
-        const [item, orderByValue, key] = data;
-        accu = {
-            ...accu,
-            [key]: item
-        };
-        return accu;
-    }, {});
-    return sortedItems;
-}
-
-const getComparator = (order) => {
-    return order === 'desc'
-        ? (a, b) => descComparator(a, b)
-        : (a, b) => -descComparator(a, b);
-}
-
-const descComparator = (a, b) => {
-    return b[1].localeCompare(a[1]);
-}
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
-
 class ToRead extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hidden: true,
             items: {},
             allChecked: false,
             numSelected: 0,
-            sort: {
-                orderBy: 'title',
-                order: 'asc',
-                onClickSort: this.handleOnClickSort
-            },
+            // sort: {
+            //     orderBy: 'title',
+            //     order: 'asc',
+            //     onClickSort: this.handleOnClickSort
+            // },
             toolBar: {
                 onClickDelete: this.handleOnClickDelete,
                 onClickMoveToHaveRead: this.handleOnClickMoveToHaveRead
@@ -177,68 +144,13 @@ class ToRead extends Component {
         this.resetSelectItems();
     }
 
-    handleOnClickSort = (e, newOrderBy) => {
-        const { sort, items } = this.state;
-        const { orderBy, order } = sort;
-        const isAsc = (orderBy === newOrderBy && order === 'asc');
-        const newOrder = isAsc ? 'desc' : 'asc';
-        const newSort = {
-            ...sort,
-            orderBy: newOrderBy,
-            order: newOrder
-        };
-        this.setState({ sort: newSort });
-
-        const sortedItems = getSortedItems(items, newSort);
-        this.setState({ items: sortedItems });
-    }
-
-    getFakeData = () => {
-        const numAry = Array.from(Array(10).keys());
-        const items = numAry.reduce((accu, num) => {
-            const numStr = num.toString();
-            const key = "id".concat(numStr);
-            const value = {
-                checked: false,
-                title: 'Title'.concat(' ', getRandomInt(100)),
-                author: 'Author'.concat(' ', getRandomInt(100)),
-                thumbnail: ''
-            };
-            accu = {
-                ...accu,
-                [key]: value
-            };
-            return accu;
-        }, {});
-        const sortedData = getSortedItems(items, this.state.sort);
-        return sortedData;
-    }
-
-    getBookInfo_byAuth = async () => {
-        // const { auth } = this.props;
-        const auth = { username: "test" };
-        const { items } = await getBookInfo_toRead(auth);
-        console.log({ items });
-        const sortedData = getSortedItems(items, this.state.sort);
-        return sortedData;
-    }
-
-    async componentDidMount() {
-        const { value, index } = this.props;
-        this.setState({ hidden: value !== index });
-        const initItems = await this.getBookInfo_byAuth();
-        this.setState({ items: initItems }, () => {
-            console.log("initItems", this.state.items);
-        });
-    }
-
-    handleOnChangeItemCheckbox = (e) => {
-        const { id, checked } = e.target;
-        const { items } = this.state;
-        items[id].checked = checked;
-        this.setState({ items });
-        this.setNumSelected();
-    }
+    // handleOnChangeItemCheckbox = (e) => {
+    //     const { id, checked } = e.target;
+    //     const { items } = this.state;
+    //     items[id].checked = checked;
+    //     this.setState({ items });
+    //     this.setNumSelected();
+    // }
 
     handleOnChangeSelecetAll = (e) => {
         const { checked } = e.target;
@@ -265,13 +177,16 @@ class ToRead extends Component {
     }
 
     render() {
-        const { items, hidden, allChecked, numSelected, sort, toolBar } = this.state;
+        const { allChecked, toolBar } = this.state;
+        const { data, ctrl, tabIndex, classes } = this.props;
+        const { index, id, items, sort, numSelected } = data;
+        const { onCheckItem } = ctrl;
         const numTotal = Object.keys(items).length;
-        const { classes } = this.props;
+        const hidden = (tabIndex !== index);
 
         return (
             <div
-                id="toRead"
+                id={id}
                 className={classes.root}
             >
                 {!hidden && (
@@ -297,7 +212,7 @@ class ToRead extends Component {
                                                 <MyTableRow
                                                     key={itemId}
                                                     classes={classes}
-                                                    onChange={this.handleOnChangeItemCheckbox}
+                                                    onChange={onCheckItem}
                                                     id={itemId}
                                                     title={items[itemId].title}
                                                     author={items[itemId].author}

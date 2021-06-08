@@ -1,6 +1,6 @@
 import getItem, { getParams } from '../DBHandlers/ItemGetter.js';
 
-export async function getBookInfo_toRead(auth) {
+export default async function getBookInfo(classification, auth) {
     const params_User = getParams(auth, "User");
     const result_User = await getItem(params_User);
     // console.log({ result_User });
@@ -15,10 +15,10 @@ export async function getBookInfo_toRead(auth) {
     }
 
     const result_User_info = JSON.parse(result_User.msg);
-    if (!result_User_info.Item || !result_User_info.Item.ToRead) {
+    if (!result_User_info.Item || !result_User_info.Item[classification]) {
         return result;
     }
-    const { SS } = result_User_info.Item.ToRead;
+    const { SS } = result_User_info.Item[classification];
     const bookIds = SS;
     // console.log(bookIds);
     const resultList_Book = [];
