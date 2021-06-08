@@ -4,7 +4,6 @@ import EnhancedTableToolbar from './EnhancedTableToolbar.js';
 import EnhancedTableHead from './EnhancedTableHead.js';
 import { withStyles, ThemeProvider } from '@material-ui/core/styles';
 import { checkboxTheme } from '../Theme.js';
-import { modifyBookInfo_toRead } from '../../model/BookInfoHandlers/BookInfoModifier.js';
 
 const styles = theme => ({
     root: {
@@ -81,39 +80,10 @@ class ToRead extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: {},
-            allChecked: false,
-            numSelected: 0,
-            // sort: {
-            //     orderBy: 'title',
-            //     order: 'asc',
-            //     onClickSort: this.handleOnClickSort
-            // },
             toolBar: {
-                onClickDelete: this.handleOnClickDelete,
                 onClickMoveToHaveRead: this.handleOnClickMoveToHaveRead
             }
         }
-    }
-
-    resetSelectItems = () => {
-        this.setState({ numSelected: 0 });
-        this.setState({ allChecked: false });
-    }
-
-    handleOnClickDelete = async () => {
-        const checkedItemIds = this.getCheckedItemIds();
-        console.log({ checkedItemIds });
-        // TODO: 
-        // const { auth } = this.props;
-        // const { username } = auth.user;
-        const auth = { username: "test" };
-        const result = await modifyBookInfo_toRead({ auth, checkedItemIds }, "delete");
-        console.log(result);
-        const { items } = this.state;
-        checkedItemIds.forEach(id => delete items[id]);
-        this.setState({ items });
-        this.resetSelectItems();
     }
 
     getCheckedItemIds = () => {
@@ -130,38 +100,18 @@ class ToRead extends Component {
     }
 
     handleOnClickMoveToHaveRead = async () => {
-        const checkedItemIds = this.getCheckedItemIds();
-        console.log({ checkedItemIds });
-        // TODO: 
-        // const { auth } = this.props;
-        // const { username } = auth.user;
-        const auth = { username: "test" };
-        const result = await modifyBookInfo_toRead({ auth, checkedItemIds }, "moveToHaveRead");
-        console.log(result);
-        const { items } = this.state;
-        checkedItemIds.forEach(id => delete items[id]);
-        this.setState({ items });
-        this.resetSelectItems();
-    }
-
-    // handleOnChangeItemCheckbox = (e) => {
-    //     const { id, checked } = e.target;
-    //     const { items } = this.state;
-    //     items[id].checked = checked;
-    //     this.setState({ items });
-    //     this.setNumSelected();
-    // }
-
-    handleOnChangeSelecetAll = (e) => {
-        const { checked } = e.target;
-        this.setState({ allChecked: checked });
-        const { items } = this.state;
-        (Object.keys(items)).forEach(key => {
-            const item = items[key];
-            item.checked = checked;
-        });
-        this.setState({ items });
-        this.setNumSelected();
+        // const checkedItemIds = this.getCheckedItemIds();
+        // console.log({ checkedItemIds });
+        // // TODO: 
+        // // const { auth } = this.props;
+        // // const { username } = auth.user;
+        // const auth = { username: "test" };
+        // const result = await modifyBookInfo_toRead({ auth, checkedItemIds }, "moveToHaveRead");
+        // console.log(result);
+        // const { items } = this.state;
+        // checkedItemIds.forEach(id => delete items[id]);
+        // this.setState({ items });
+        // this.resetSelectItems();
     }
 
     setNumSelected = () => {
@@ -177,10 +127,10 @@ class ToRead extends Component {
     }
 
     render() {
-        const { allChecked, toolBar } = this.state;
+        // const { toolBar } = this.state;
         const { data, ctrl, tabIndex, classes } = this.props;
-        const { index, id, items, sort, numSelected } = data;
-        const { onCheckItem } = ctrl;
+        const { index, id, items, sort, numSelected, allChecked } = data;
+        const { onCheckItem, onCheckSelectAll } = ctrl;
         const numTotal = Object.keys(items).length;
         const hidden = (tabIndex !== index);
 
@@ -194,7 +144,7 @@ class ToRead extends Component {
                         <EnhancedTableToolbar
                             numSelected={numSelected}
                             numTotal={numTotal}
-                            ctrl={toolBar}
+                            ctrl={ctrl}
                         />
                         <TableContainer className={classes.tableContainer}>
                             <Table
@@ -203,7 +153,7 @@ class ToRead extends Component {
                                 <EnhancedTableHead
                                     sort={sort}
                                     checked={allChecked}
-                                    onChange={this.handleOnChangeSelecetAll}
+                                    onChange={onCheckSelectAll}
                                 />
                                 <TableBody>
                                     {

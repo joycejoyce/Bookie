@@ -1,16 +1,9 @@
 import { Component } from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import PanelContents from './PanelContent.js';
-// import { getItems_byAuth } from '../../model/Library/ItemGetter.js';
 import getBookInfo from '../../model/BookInfoHandlers/BookInfoGetter.js';
-
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//         // backgroundColor: theme.palette.background.paper,
-//         // width: 500,
-//     },
-// }));
+import { modifyBookInfo } from '../../model/BookInfoHandlers/BookInfoModifier.js';
 
 const styles = theme => ({
 
@@ -55,7 +48,8 @@ class LibraryPanels extends Component {
                     order: 'asc',
                     onClickSort: this.handleOnClickSort
                 },
-                numSelected: 0
+                numSelected: 0,
+                allChecked: false
             },
             HaveRead: {
                 id: "HaveRead",
@@ -66,10 +60,13 @@ class LibraryPanels extends Component {
                     order: 'asc',
                     onClickSort: this.handleOnClickSort
                 },
-                numSelected: 0
+                numSelected: 0,
+                allChecked: false
             },
             ctrl: {
-                onCheckItem: this.handleOnCheckItem
+                onCheckItem: this.handleOnCheckItem,
+                onCheckSelectAll: this.handleOnCheckSelectAll,
+                onClickDelete: this.handleOnClickDelete
             }
         }
     }
@@ -157,6 +154,56 @@ class LibraryPanels extends Component {
         return numSelected;
     }
 
+    handleOnCheckSelectAll = (e) => {
+        const { checked } = e.target;
+        const classification = this.getClassification();
+        this.setNestedState(classification, "allChecked", checked);
+
+        const { items } = this.state[classification];
+        (Object.keys(items)).forEach(key => {
+            const item = items[key];
+            item.checked = checked;
+        });
+        this.setNestedState(classification, "items", items);
+        this.setNestedState(classification, "numSelected", this.getNumSelected(classification));
+    }
+
+    handleOnClickDelete = async () => {
+        console.log("handleOnClickDelete");
+
+        const classification = this.getClassification();
+        const checkedItemIds = this.getCheckedItemIds(classification);
+        console.log({ checkedItemIds });
+
+        const auth = { username: "test" };
+        const action = "delete";
+        const result = await modifyBookInfo({ auth, checkedItemIds, classification, action });
+        console.log(result);
+
+        const { items } = this.state[classification];
+        checkedItemIds.forEach(id => delete items[id]);
+        this.setNestedState(classification, "items", items);
+        this.resetSelectItems(classification);
+    }
+
+    getCheckedItemIds = (classification) => {
+        const { items } = this.state[classification];
+        const ids = Object.keys(items).reduce((accu, key) => {
+            const value = items[key];
+            const { checked, id } = value;
+            if (checked) {
+                accu.push(id);
+            }
+            return accu;
+        }, []);
+        return ids;
+    }
+
+    resetSelectItems = (classification) => {
+        this.setNestedState(classification, "numSelected", 0);
+        this.setNestedState(classification, "allChecked", false);
+    }
+
     render() {
         const { auth, theme, tabs } = this.props;
         const { value: tabIdx } = tabs;
@@ -187,5 +234,4 @@ class LibraryPanels extends Component {
     }
 }
 
-// export default LibraryPanels;
 export default withStyles(styles, { withTheme: true })(LibraryPanels);
