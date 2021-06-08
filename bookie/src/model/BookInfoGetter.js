@@ -1,35 +1,59 @@
-import getDBApi from './DBHandlers/DBApiGetter.js';
+import getItem, { getParams } from './DBHandlers/ItemGetter.js';
 
-export default async function get(auth) {
-    // const userId = "test";
-    // const params = {
-        
-    //     ExpressionAttributeNames: {
-    //         "#UID": "UserId",
-    //         "#TO_READ": "ToRead",
-    //         "#HAVE_READ": "HaveRead"
-    //     },
-    //     ExpressionAttributeValues: {
-    //         ":userId": {
-    //             S: username
-    //         }
-    //         ":attrStr": {
-    //             S: "BookInfo"
-    //         }
-    //     },
-    //     KeyConditionExpression: "#UID = :userId AND begins_with(#ATTR, :attrStr)",
-    //     // FilterExpression: "begins_with(#ATTR, :attrStr)",
-    //     ProjectionExpression: "#UID, #ATTR, #VAL",
-        
-    // }
-    // const dbApi = getDBApi();
-    // dbApi.query(params, (err, data) => {
-    //     if (err) {
-    //         console.error(`Unable to getItem from table '${params.TableName}'`, JSON.stringify(err, null, 2));
-    //     }
-    //     else {
-    //         console.log(`Successfully getItem from table '${params.TableName}'`, JSON.stringify(data, null, 2));
-    //     }
-    // });
+export async function getBookInfo_toRead(auth) {
+    const params_User = getParams(auth, "User");
+    const result_User = await getItem(params_User);
+    console.log({ result_User });
+    if (!result_User.isNormalEnd) {
+        return result_User;
+    }
 
+    const result = {
+        isNormalEnd: true,
+        msg: "No data",
+        items: []
+    }
+
+    const result_User_info = JSON.parse(result_User.msg);
+    if (!result_User_info.Item || !result_User_info.Item.ToRead) {
+        return result;
+    }
+    const { SS } = result_User_info.Item.ToRead;
+    const bookIds = SS;
+    console.log(bookIds);
+    const resultList_Book = [];
+    for (let i in bookIds) {
+        const bookId = bookIds[i];
+        const params_Book = getParams(bookId, "Book_byId");
+        const result_Book = getItem(params_Book);
+        resultList_Book.push(result_Book);
+    }
+    let items = [];
+    await Promise.all(resultList_Book).then(results => {
+        console.log({ result });
+        items = getBookInfo_byQueryResult(results);
+        console.log({ items });
+    });
+    
+    result.isNormalEnd = true;
+    result.msg = "";
+    result.items = items;
+
+    console.log("going to return");
+
+    return result;
+}
+
+function getBookInfo_byQueryResult(results) {
+    const bookInfoList = results.reduce((accu, result) => {
+        const { msg } = result;
+        const msgObj = JSON.parse(msg);
+        const bookInfoStr = msgObj.Item.BookInfo.S;
+        const bookInfo = JSON.parse(bookInfoStr);
+        const author = bookInfo.authors.join(', ');
+        bookInfo.author = author;
+        accu.push(bookInfo);
+        return accu;
+    }, []);
+    return bookInfoList;
 }

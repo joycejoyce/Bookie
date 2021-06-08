@@ -149,7 +149,8 @@ class ExploreResult extends Component {
                 const newStatus = !displayedItems[i][name];
                 displayedItems[i][name] = newStatus;
                 const bookInfo = displayedItems[i];
-                saveBookInfo(this.props.auth, bookInfo);
+                saveBookInfo({ username: "test" }, bookInfo); // for test
+                // saveBookInfo(this.props.auth, bookInfo);
                 break;
             }
         }

@@ -49,13 +49,13 @@ export default async function save(auth, bookInfo) {
 }
 
 async function viewResult_User(auth) {
-    const params = getParams_getItem({ data: auth }, "User");
+    const params = getParams_getItem(auth, "User");
     const result = await getItem(params);
     console.log({ result });
 }
 
 async function viewResult_Book() {
-    const params = getParams_getItem({ data: {} }, "Book");
+    const params = getParams_getItem({}, "Book");
     const result = await scan(params);
     console.log({ result });
 }

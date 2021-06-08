@@ -44,14 +44,14 @@ export function getParams(data, tableName) {
             return getParams_User(data);
         case 'Book':
             return getParams_Book();
+        case 'Book_byId':
+            return getPrams_Book_byId(data);
         default:
             return null;
     }
 }
 
-function getParams_User({ auth }) {
-    // const { username } = auth;
-    const username = "test";
+function getParams_User({ username }) {
     const params = {
         TableName: "User",
         Key: {
@@ -76,14 +76,26 @@ function getParams_Book() {
             "#BookInfo": "BookInfo",
             "#ID": "ID"
         },
-        // ExpressionAttributeValues: {
-        //     ":a": {
-        //         S: "No One You Know"
-        //     }
-        // },
-        // FilterExpression: "Artist = :a",
         ProjectionExpression: "#ID, #BookInfo",
         TableName: "Book"
+    };
+
+    return params;
+}
+
+function getPrams_Book_byId(bookId) {
+    const params = {
+        TableName: "Book",
+        Key: {
+            ID: {
+                S: bookId
+            }
+        },
+        ExpressionAttributeNames: {
+            "#ID": "ID",
+            "#BookInfo": "BookInfo"
+        },
+        ProjectionExpression: "#ID, #BookInfo"
     };
 
     return params;

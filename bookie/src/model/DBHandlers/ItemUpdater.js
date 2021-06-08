@@ -33,8 +33,7 @@ export function getParams(auth, bookInfo, tableName) {
 }
 
 function getParams_User(auth, bookInfo) {
-    // const ID = auth.username;
-    const ID = "test";
+    const ID = auth.username;
     const bookId = bookInfo.id;
     const { toRead, haveRead } = bookInfo;
     const action = {

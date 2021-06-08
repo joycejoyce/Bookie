@@ -4,6 +4,7 @@ import EnhancedTableToolbar from './EnhancedTableToolbar.js';
 import EnhancedTableHead from './EnhancedTableHead.js';
 import { withStyles, ThemeProvider } from '@material-ui/core/styles';
 import { checkboxTheme } from '../Theme.js';
+import { getBookInfo_toRead } from '../../model/BookInfoGetter.js';
 
 const styles = theme => ({
     root: {
@@ -134,10 +135,19 @@ class ToRead extends Component {
         return sortedData;
     }
 
-    componentDidMount() {
+    getBookInfo_byAuth = async () => {
+        // const { auth } = this.props;
+        const auth = { username: "test" };
+        const { items } = await getBookInfo_toRead(auth);
+        console.log({ items });
+        const sortedData = getSortedItems(items, this.state.sort);
+        return sortedData;
+    }
+
+    async componentDidMount() {
         const { value, index } = this.props;
         this.setState({ hidden: value !== index });
-        const initItems = this.getFakeData();
+        const initItems = await this.getBookInfo_byAuth();
         this.setState({ items: initItems }, () => {
             console.log("initItems", this.state.items);
         });
