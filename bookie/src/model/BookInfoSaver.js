@@ -13,12 +13,12 @@ export default async function save(auth, bookInfo) {
     }
     
     const paramsList_updUser = getParams_updateItem(auth, bookInfo, "User");
-    console.log({ params_updUser_list: paramsList_updUser });
+    // console.log({ params_updUser_list: paramsList_updUser });
     for (let i in paramsList_updUser) {
         const params_updUser = paramsList_updUser[i];
-        console.log({ params_updUser });
+        // console.log({ params_updUser });
         const result_updUser = await updateItem(params_updUser);
-        console.log({ result_updUser });
+        // console.log({ result_updUser });
         if (!result_updUser.isNormalEnd) {
             return result_updUser;
         }
@@ -34,7 +34,7 @@ export default async function save(auth, bookInfo) {
 
     const params_updBook = getParams_updateItem(auth, bookInfo, "Book");
     const result_updBook = await updateItem(params_updBook);
-    console.log({ result_updBook });
+    // console.log({ result_updBook });
     if (!result_updBook.isNormalEnd) {
         return result_updBook;
     }
