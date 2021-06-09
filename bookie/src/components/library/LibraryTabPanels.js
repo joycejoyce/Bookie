@@ -4,36 +4,13 @@ import { withStyles } from '@material-ui/core/styles';
 import PanelContents from './PanelContent.js';
 import getBookInfo from '../../model/BookInfoHandlers/BookInfoGetter.js';
 import { modifyBookInfo } from '../../model/BookInfoHandlers/BookInfoModifier.js';
+import getSortedItems from './ItemSorter.js';
 
 const styles = theme => ({
-
+    wrapper: {
+        marginBottom: '5vmin'
+    }
 });
-
-function getSortedItems(items, sort) {
-    const { orderBy, order } = sort;
-    const dataList = Object.keys(items).map(key => [items[key], items[key][orderBy], key]);
-    const comparator = getComparator(order);
-    const sortedDataList = dataList.sort(comparator);
-    const sortedItems = sortedDataList.reduce((accu, data) => {
-        const [item, orderByValue, key] = data;
-        accu = {
-            ...accu,
-            [key]: item
-        };
-        return accu;
-    }, {});
-    return sortedItems;
-}
-
-function getComparator(order) {
-    return order === 'desc'
-        ? (a, b) => descComparator(a, b)
-        : (a, b) => -descComparator(a, b);
-}
-
-function descComparator(a, b) {
-    return b[1].localeCompare(a[1]);
-}
 
 class LibraryPanels extends Component {
     constructor(props) {
@@ -45,11 +22,24 @@ class LibraryPanels extends Component {
                 items: {},
                 sort: {
                     orderBy: 'title',
-                    order: 'asc',
-                    onClickSort: this.handleOnClickSort
+                    order: 'asc'
                 },
                 numSelected: 0,
-                allChecked: false
+                allChecked: false,
+                columns: [
+                    {
+                        label: "Cover",
+                        name: "thumbnail"
+                    },
+                    {
+                        label: "Title",
+                        name: "title"
+                    },
+                    {
+                        label: "Author",
+                        name: "author"
+                    }
+                ]
             },
             haveRead: {
                 id: "haveRead",
@@ -57,17 +47,39 @@ class LibraryPanels extends Component {
                 items: {},
                 sort: {
                     orderBy: 'title',
-                    order: 'asc',
-                    onClickSort: this.handleOnClickSort
+                    order: 'asc'
                 },
                 numSelected: 0,
-                allChecked: false
+                allChecked: false,
+                columns: [
+                    {
+                        label: "Cover",
+                        name: "thumbnail"
+                    },
+                    {
+                        label: "Rate",
+                        name: "id" // to modify
+                    },
+                    {
+                        label: "Review",
+                        name: "id" // to modify
+                    },
+                    // {
+                    //     label: "Title",
+                    //     name: "title"
+                    // },
+                    // {
+                    //     label: "Author",
+                    //     name: "author"
+                    // }
+                ]
             },
             ctrl: {
                 onCheckItem: this.handleOnCheckItem,
                 onCheckSelectAll: this.handleOnCheckSelectAll,
                 onClickDelete: this.handleOnClickDelete,
-                onClickMoveToHaveRead: this.handleOnClickMoveToHaveRead
+                onClickMoveToHaveRead: this.handleOnClickMoveToHaveRead,
+                onClickSort: this.handleOnClickSort
             }
         }
     }
@@ -241,7 +253,7 @@ class LibraryPanels extends Component {
     }
 
     render() {
-        const { auth, theme, tabs } = this.props;
+        const { auth, theme, tabs, classes } = this.props;
         const { value: tabIdx } = tabs;
         const { toRead, haveRead, ctrl } = this.state;
         
@@ -250,6 +262,7 @@ class LibraryPanels extends Component {
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={tabIdx}
                 onChangeIndex={this.handleOnChangeIndex}
+                className={classes.wrapper}
             >
                 <PanelContents
                     dir={theme.direction}

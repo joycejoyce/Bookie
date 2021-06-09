@@ -39,9 +39,13 @@ const headCells = [
     { id: 'author', label: 'Author' }    
 ];
 
-function EnhancedTableHead({ sort, checked, onChange }) {
-    const { orderBy, order, onClickSort } = sort;
-    // console.log({ sort });
+// ctrl={ctrl}
+// sort={sort}
+// checked={allChecked}
+// columns={columns}
+function EnhancedTableHead({ ctrl, sort, checked, columns }) {
+    const { orderBy, order } = sort;
+    const { onCheckSelectAll, onClickSort } = ctrl;
     const classes = useStyle();
     const createSortHandler = (sortByProp) => (e) => {
         onClickSort(e, sortByProp);
@@ -53,27 +57,27 @@ function EnhancedTableHead({ sort, checked, onChange }) {
                     <TableCell padding="checkbox">
                         <Checkbox
                             checked={checked}
-                            onChange={onChange}
+                            onChange={onCheckSelectAll}
                         />
                     </TableCell>
                 </ThemeProvider>
-                {headCells.map(cell => {
-                    const isSortByThis = orderBy === cell.id;
+                {columns.map(column => {
+                    const isSortByThis = orderBy === column.name;
                     const sortDirection = isSortByThis ? order : false;
                     const direction = isSortByThis ? order : 'asc';
                     return (
                         <TableCell
-                            key={cell.id}
+                            key={column.label}
                             align='left'
                             sortDirection={sortDirection}
                             classes={{root: classes.tableCell}}
                         >
                             <TableSortLabel
-                                active={orderBy === cell.id}
+                                active={orderBy === column.name}
                                 direction={direction}
-                                onClick={createSortHandler(cell.id)}
+                                onClick={createSortHandler(column.name)}
                             >
-                                <span className={classes.tableHead}>{cell.label}</span>
+                                <span className={classes.tableHead}>{column.label}</span>
                                 {isSortByThis ? (
                                     <span className={classes.visuallyHidden}>
                                         {order === 'desc' ? 'sorted descending' : 'sorted ascending'}

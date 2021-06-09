@@ -1,8 +1,13 @@
 import "../scss/Library.scss";
+import { withStyles } from '@material-ui/core/styles';
 import { Component } from "react";
 import LibraryTabs from './library/LibraryTabs.js';
 import LibraryTabPanels from './library/LibraryTabPanels.js';
 import { Paper } from '@material-ui/core';
+
+const styles = theme => ({
+    
+});
 
 class Library extends Component {
     constructor(props) {
@@ -25,6 +30,7 @@ class Library extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         console.log("render Library");
         return (
             <div className="library">
@@ -46,4 +52,5 @@ class Library extends Component {
     }
 }
 
-export default Library;
+// export default Library;
+export default withStyles(styles)(Library);

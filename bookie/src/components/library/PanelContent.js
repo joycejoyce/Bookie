@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Paper, TableContainer, Table, TableBody, TableRow, TableCell, Checkbox } from '@material-ui/core';
+import { Paper, TableContainer, Table, TableBody } from '@material-ui/core';
 import EnhancedTableToolbar from './EnhancedTableToolbar.js';
 import EnhancedTableHead from './EnhancedTableHead.js';
-import { withStyles, ThemeProvider } from '@material-ui/core/styles';
-import { checkboxTheme } from '../Theme.js';
+import { withStyles } from '@material-ui/core/styles';
+import LibraryTableRow from './LibraryTableRow.js';
 
 const styles = theme => ({
     root: {
@@ -14,17 +14,13 @@ const styles = theme => ({
     },
     tableContainer: {
         '&::-webkit-scrollbar': {
-            height: '2vmin',
-            width: '2vmin'
+            height: '8px',
+            width: '8px'
         },
         '&::-webkit-scrollbar-thumb': {
             background: '#8E9699',
-            borderRadius: '1vmin'
-        },
-        marginBottom: '5vmin'
-    },
-    table: {
-        // minWidth: '480px'
+            borderRadius: '4px'
+        }
     },
     tableRow: {
         letterSpacing: '.5px'
@@ -37,45 +33,6 @@ const styles = theme => ({
     }
 });
 
-const Thumbnail = React.memo(({ src, classes }) => {
-    return (
-        <div>
-            <img src={src} className={classes.thumbnail} />
-        </div>
-    );
-});
-
-const MyTableRow = React.memo(
-    ({ classes, id, title, author, thumbnail, onChange, checked }) => {
-        console.log(`${id} rendered`);
-
-        return (
-            <TableRow
-                className={classes.tableRow}
-            >
-                <ThemeProvider theme={checkboxTheme}>
-                    <TableCell padding="checkbox">
-                        <Checkbox
-                            id={id}
-                            disableRipple
-                            checked={checked}
-                            onChange={onChange}
-                        />
-                    </TableCell>
-                </ThemeProvider>
-                <TableCell className={classes.tableCell}>
-                    <Thumbnail src={thumbnail} classes={classes} />
-                </TableCell>
-                <TableCell component="th" className={classes.tableCell}>
-                    {title}
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                    {author}
-                </TableCell>
-            </TableRow>
-        );
-    });
-
 class PanelContent extends Component {
     constructor(props) {
         super(props);
@@ -85,8 +42,7 @@ class PanelContent extends Component {
 
     render() {
         const { data, ctrl, tabIndex, classes } = this.props;
-        const { index, id, items, sort, numSelected, allChecked } = data;
-        const { onCheckItem, onCheckSelectAll } = ctrl;
+        const { index, id, items, sort, numSelected, allChecked, columns } = data;
         const numTotal = Object.keys(items).length;
         const hidden = (tabIndex !== index);
 
@@ -107,22 +63,22 @@ class PanelContent extends Component {
                                 className={classes.table}
                             >
                                 <EnhancedTableHead
+                                    ctrl={ctrl}
                                     sort={sort}
                                     checked={allChecked}
-                                    onChange={onCheckSelectAll}
+                                    columns={columns}
                                 />
                                 <TableBody>
                                     {
                                         Object.keys(items).map(itemId => {
                                             return (
-                                                <MyTableRow
+                                                <LibraryTableRow
                                                     key={itemId}
                                                     classes={classes}
-                                                    onChange={onCheckItem}
+                                                    ctrl={ctrl}
                                                     id={itemId}
-                                                    title={items[itemId].title}
-                                                    author={items[itemId].author}
-                                                    thumbnail={items[itemId].thumbnail}
+                                                    data={items[itemId]}
+                                                    columns={columns}
                                                     checked={items[itemId].checked}
                                                 />
                                             );
