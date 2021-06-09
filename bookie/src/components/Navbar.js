@@ -1,36 +1,23 @@
 import { Component } from "react";
 import Logo from "./icon/Logo.js";
 import { withStyles } from '@material-ui/core/styles';
-import { Paper, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { 
-    Clear as CloseIcon,
-    Menu as MenuIcon,
-    Explore as ExploreIcon,
-    ImportContacts as BookIcon,
-    AccountCircleSharp as SignInIcon,
-    ExitToApp as SignOutIcon,
-    Info as AboutIcon
-} from '@material-ui/icons';
 import '../scss/Navbar.scss';
 import { withRouter } from 'react-router-dom';
 import SignOutModal from './sub/SignOutModal.js';
 import { Auth } from "aws-amplify";
+import MobileNavbar from './navbar/MobileNavbar.js';
+import DesktopNavbar from './navbar/DesktopNavbar.js';
+import {
+    Explore as ExploreIcon,
+    ImportContacts as LibraryIcon,
+    AccountCircleSharp as SignInIcon,
+    ExitToApp as SignOutIcon,
+    Info as AboutIcon
+} from '@material-ui/icons';
 
 const styles = theme => ({
     navbar: {
         position: 'relative'
-    },
-    menuList: {
-        display: 'none',
-        position: 'absolute',
-        right: 'clamp(28px, 6vmin, 36px)',
-        top: '1vmin',
-        '& .MuiListItemText-primary': {
-            fontSize: "clamp(0.875rem, 2vmin, 1rem)",
-            color: theme.palette.secondary.main
-        },
-        opacity: 0,
-        transition: 'opacity .1s ease-in'
     },
     icon: {
         color: '#073B4C',
@@ -39,107 +26,66 @@ const styles = theme => ({
     }
 });
 
-function MenuBtn(props) {
-    const { isListOpen, handleOnClickMenuBtn, classes } = props;
-
-    return (
-        <div className="menuBtn">
-            { isListOpen ?
-                (<CloseIcon className={classes.icon} onClick={handleOnClickMenuBtn} />) :
-                (<MenuIcon className={classes.icon} onClick={handleOnClickMenuBtn} />)
-            }
-        </div>
-    );
-}
-
-function AuthItems(props) {
-    const { closeMenuList, signOutModalCtrl, classes } = props;
-    const { onOpen } = signOutModalCtrl;
-
-    const handleOnClickSignOutBtn = () => {
-        closeMenuList();
-        onOpen();
-    }
-
-    return (
-        <>
-            <ListItem button>
-                <ListItemIcon><BookIcon className={classes.icon} /></ListItemIcon>
-                <ListItemText primary="My Library" />
-            </ListItem>
-            <ListItem button onClick={handleOnClickSignOutBtn}>
-                <ListItemIcon>
-                    <SignOutIcon
-                        className={classes.icon}
-                        signOutModalCtrl={signOutModalCtrl}
-                    />
-                </ListItemIcon>
-                <ListItemText primary="Sign Out" />
-            </ListItem>
-        </>
-    )
-}
-
-function NonAuthItems(props) {
-    const { closeMenuList, history, classes } = props;
-
-    function handleOnClickSignInIcon() {
-        closeMenuList();
-        history.push({
-            pathname: '/signIn'
-        });
-    }
-
-    return (
-        <>
-            <ListItem button onClick={handleOnClickSignInIcon}>
-                <ListItemIcon><SignInIcon className={classes.icon} /></ListItemIcon>
-                <ListItemText primary="Sign In" />
-            </ListItem>
-        </>
-    )
-}
-
-function MenuList(props) {
-    const { classes, closeMenuList, auth, history } = props;
-    const { isAuthenticated } = auth;
-
-    function handleOnClickExploreIcon() {
-        closeMenuList();
-        history.push({
-            pathname: '/explore'
-        });
-    }
-
-    return (
-        <div className={classes.menuList + " menuList"}>
-            <List component={Paper}>
-                <ListItem button onClick={handleOnClickExploreIcon}>
-                    <ListItemIcon><ExploreIcon className={classes.icon} /></ListItemIcon>
-                    <ListItemText primary="Explore Books" />
-                </ListItem>
-                { isAuthenticated ? <AuthItems {...props} /> : <NonAuthItems {...props} /> }
-                <ListItem button>
-                    <ListItemIcon><AboutIcon className={classes.icon} /></ListItemIcon>
-                    <ListItemText primary="About Bookie" />
-                </ListItem>
-            </List>
-        </div>
-    );
-}
-
 class Navbar extends Component {
     constructor(props) {
+        const { classes } = props;
         super(props);
         this.state = {
-            isListOpen: false,
             signOutModalCtrl: {
                 isOpen: false,
                 onOpen: this.handleOnOpenSignOutModal,
                 onClose: this.handleOnCloseSignOutModal,
                 doSignOut: this.doSignOut
+            },
+            mobileView: true,
+            removeResizeEventListener: null,
+            items: {
+                auth: [
+                    {
+                        label: 'Explore Books',
+                        icon: <ExploreIcon className={classes.icon} />,
+                        link: '/explore'
+                    },
+                    {
+                        label: 'My Library',
+                        icon: <LibraryIcon className={classes.icon} />,
+                        link: '/library'
+                    },
+                    {
+                        label: 'Sign Out',
+                        icon: <SignOutIcon className={classes.icon} />,
+                        link: '#'
+                    },
+                    {
+                        label: 'About Bookie',
+                        icon: <AboutIcon className={classes.icon} />,
+                        link: '#'
+                    }
+                ],
+                nonAuth: [
+                    {
+                        label: 'Explore Books',
+                        icon: <ExploreIcon className={classes.icon} />,
+                        link: '/explore'
+                    },
+                    {
+                        label: 'Sign In',
+                        icon: <SignInIcon className={classes.icon} />,
+                        link: '/signIn'
+                    },
+                    {
+                        label: 'About Bookie',
+                        icon: <AboutIcon className={classes.icon} />,
+                        link: '#'
+                    }
+                ]
             }
         }
+    }
+
+    handleOnClickItem = (link) => {
+        const { history } = this.props;
+        history.push(link);
     }
 
     async doSignOut() {
@@ -161,29 +107,6 @@ class Navbar extends Component {
         this.setNestedState("signOutModalCtrl", "isOpen", false);
     }
 
-    handleOnClickMenuBtn = () => {
-        const { isListOpen } = this.state;
-        if (isListOpen) {
-            this.closeMenuList();
-        }
-        else {
-            this.openMenuList();
-        }
-        this.setState({ isListOpen: !isListOpen });
-    }
-
-    closeMenuList = () => {
-        document.querySelector(".menuList").style.opacity = "0";
-        document.querySelector(".menuList").style.display = "none";
-        this.setState({ isListOpen: false });
-    }
-
-    openMenuList = () => {
-        document.querySelector(".menuList").style.opacity = "1";
-        document.querySelector(".menuList").style.display = "block";
-        this.setState({ isListOpen: true });
-    }
-
     setNestedState = (parentName, childName, value) => {
         this.setState(prevState => ({
             ...prevState,
@@ -194,26 +117,51 @@ class Navbar extends Component {
         }));
     }
 
+    componentDidMount() {
+        const setResponsiveness = () => {
+            return window.innerWidth < 600
+              ? this.setState({ mobileView: true })
+              : this.setState({ mobileView: false })
+          };
+
+        setResponsiveness();
+        window.addEventListener("resize", () => setResponsiveness());
+
+        const removeResizeEventListener = () => {
+            window.removeEventListener("resize", () => setResponsiveness());
+        }
+
+        this.setState({ removeResizeEventListener });
+    }
+
     render() {
+        console.log("render Navbar");
         const { classes, auth, history } = this.props;
+        const { mobileView, items } = this.state;
+        const theItems = auth.isAuthenticated ? items.auth : items.nonAuth;
 
         return (
             <div className="navbar" classes={classes.navbar}>
                 <div className="contents">
                     <Logo className="logo" />
-                    <MenuBtn
+                    <MobileNavbar
                         classes={classes}
-                        isListOpen={this.state.isListOpen}
-                        handleOnClickMenuBtn={this.handleOnClickMenuBtn}
-                    />
-                    <MenuList
-                        classes={classes}
-                        closeMenuList={this.closeMenuList}
+                        mobileView={mobileView}
                         auth={auth}
+                        onClickItem={this.handleOnClickItem}
+                        items={theItems}
                         history={history}
                         signOutModalCtrl={this.state.signOutModalCtrl}
                     />
-                    <SignOutModal signOutModalCtrl={this.state.signOutModalCtrl} />
+                    <DesktopNavbar
+                        mobileView={mobileView}
+                        onClickItem={this.handleOnClickItem}
+                        items={theItems}
+                    />
+                    <SignOutModal
+                        isOpen={this.state.signOutModalCtrl.isOpen}
+                        ctrl={this.state.signOutModalCtrl}
+                    />
                 </div>
             </div>
         );

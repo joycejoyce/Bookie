@@ -1,3 +1,4 @@
+import React from 'react';
 import { Modal, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -25,11 +26,9 @@ const styles = theme => ({
     }
 });
 
-function SignOutModal(props) {
+const SignOutModal = React.memo(({ isOpen, ctrl, classes }) => {
     console.log("render SignOutModal");
-    const { classes, signOutModalCtrl } = props;
-    const { isOpen, onClose, doSignOut } = signOutModalCtrl;
-    console.log({isOpen});
+    const { onClose, doSignOut } = ctrl;
 
     const handleOnClickYes = () => {
         onClose();
@@ -68,6 +67,6 @@ function SignOutModal(props) {
             {body}
         </Modal>
     );
-}
+});
 
 export default withStyles(styles)(SignOutModal);
