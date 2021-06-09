@@ -76,58 +76,14 @@ const MyTableRow = React.memo(
         );
     });
 
-class ToRead extends Component {
+class PanelContent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            toolBar: {
-                onClickMoveToHaveRead: this.handleOnClickMoveToHaveRead
-            }
         }
     }
 
-    getCheckedItemIds = () => {
-        const { items } = this.state;
-        const ids = Object.keys(items).reduce((accu, key) => {
-            const value = items[key];
-            const { checked, id } = value;
-            if (checked) {
-                accu.push(id);
-            }
-            return accu;
-        }, []);
-        return ids;
-    }
-
-    handleOnClickMoveToHaveRead = async () => {
-        // const checkedItemIds = this.getCheckedItemIds();
-        // console.log({ checkedItemIds });
-        // // TODO: 
-        // // const { auth } = this.props;
-        // // const { username } = auth.user;
-        // const auth = { username: "test" };
-        // const result = await modifyBookInfo_toRead({ auth, checkedItemIds }, "moveToHaveRead");
-        // console.log(result);
-        // const { items } = this.state;
-        // checkedItemIds.forEach(id => delete items[id]);
-        // this.setState({ items });
-        // this.resetSelectItems();
-    }
-
-    setNumSelected = () => {
-        const { items } = this.state;
-        const numSelected = Object.keys(items).reduce((accu, key) => {
-            const { checked } = items[key];
-            if (checked) {
-                accu = accu + 1;
-            }
-            return accu;
-        }, 0);
-        this.setState({ numSelected });
-    }
-
     render() {
-        // const { toolBar } = this.state;
         const { data, ctrl, tabIndex, classes } = this.props;
         const { index, id, items, sort, numSelected, allChecked } = data;
         const { onCheckItem, onCheckSelectAll } = ctrl;
@@ -182,4 +138,4 @@ class ToRead extends Component {
     }
 }
 
-export default withStyles(styles)(ToRead);
+export default withStyles(styles)(PanelContent);

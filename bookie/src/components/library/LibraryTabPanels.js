@@ -66,7 +66,8 @@ class LibraryPanels extends Component {
             ctrl: {
                 onCheckItem: this.handleOnCheckItem,
                 onCheckSelectAll: this.handleOnCheckSelectAll,
-                onClickDelete: this.handleOnClickDelete
+                onClickDelete: this.handleOnClickDelete,
+                onClickMoveToHaveRead: this.handleOnClickMoveToHaveRead
             }
         }
     }
@@ -180,16 +181,14 @@ class LibraryPanels extends Component {
     }
 
     handleOnClickDelete = async () => {
-        console.log("handleOnClickDelete");
-
         const classification = this.getClassification();
         const checkedItemIds = this.getCheckedItemIds(classification);
-        console.log({ checkedItemIds });
+        // console.log({ checkedItemIds });
 
         const auth = { username: "test" };
         const action = "delete";
         const result = await modifyBookInfo({ auth, checkedItemIds, classification, action });
-        console.log(result);
+        // console.log(result);
 
         const { items } = this.state[classification];
         checkedItemIds.forEach(id => delete items[id]);
@@ -213,6 +212,32 @@ class LibraryPanels extends Component {
     resetSelectItems = (classification) => {
         this.setNestedState(classification, "numSelected", 0);
         this.setNestedState(classification, "allChecked", false);
+    }
+
+    handleOnClickMoveToHaveRead = async () => {
+        const classification = this.state.toRead.id;
+        const checkedItemIds = this.getCheckedItemIds(classification);
+        console.log({ checkedItemIds });
+        const auth = { username: "test" };
+        const action = "moveToHaveRead";
+        const result = await modifyBookInfo({ auth, checkedItemIds, action });
+        // console.log(result);
+
+        // 1. set toRead items
+        const { items: items_toRead } = this.state.toRead;
+        let itemsToMove = {};
+        checkedItemIds.forEach(id => {
+            itemsToMove[id] = items_toRead[id];
+            itemsToMove[id].checked = false;
+            delete items_toRead[id];
+        });
+        this.setNestedState("toRead", "items", items_toRead);
+        this.resetSelectItems(classification);
+
+        // 2. set haveRead items
+        const { items: items_haveRead } = this.state.haveRead;
+        checkedItemIds.forEach(id => items_haveRead[id] = itemsToMove[id]);
+        this.setNestedState("haveRead", "items", items_haveRead);
     }
 
     render() {

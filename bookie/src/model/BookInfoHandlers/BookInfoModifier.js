@@ -10,7 +10,12 @@ export async function modifyBookInfo(data) {
             break;
         case 'moveToHaveRead':
             result = await modifyBookInfo_moveToHaveRead(data);
+            break;
         default:
+            const msg = `Unexpected action [${action}]`;
+            console.error(msg);
+            result.isNormalEnd = false;
+            result.msg = msg;
             break;
     }
     return result;
@@ -73,6 +78,7 @@ function setResult_byEachDBOperations(results, result) {
 }
 
 async function modifyBookInfo_moveToHaveRead({ auth, checkedItemIds }) {
+    console.log("modifyBookInfo_moveToHaveRead");
     // console.log({ auth, checkedItemIds });
     const resultList_User = [];
     for (let i in checkedItemIds) {
