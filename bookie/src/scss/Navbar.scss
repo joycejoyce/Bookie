@@ -11,13 +11,9 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        .logo,#menuIcon {
-            cursor: pointer;
-        }
         .logo {
-            // width: clamp(96px, 20vmin, 140px);
-            // height: clamp(20px, 4vmin, 50px);
-            height: clamp(20px, 4vmin, 28px);
+            cursor: pointer;
+            height: 22px;
             width: auto;
         }
         .MuiListItemText-primary {

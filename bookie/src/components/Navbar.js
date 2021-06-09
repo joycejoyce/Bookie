@@ -31,30 +31,29 @@ const styles = theme => ({
         },
         opacity: 0,
         transition: 'opacity .1s ease-in'
+    },
+    icon: {
+        color: '#073B4C',
+        cursor: 'pointer',
+        fontSize: "24px"
     }
 });
 
-const iconStyle = {
-    fontSize: "clamp(20px, 4vmin, 28px)",
-    color: "#073B4C",
-    cursor: 'pointer'
-};
-
 function MenuBtn(props) {
-    const { isListOpen, handleOnClickMenuBtn } = props;
+    const { isListOpen, handleOnClickMenuBtn, classes } = props;
 
     return (
         <div className="menuBtn">
             { isListOpen ?
-                (<CloseIcon style={iconStyle} onClick={handleOnClickMenuBtn} />) :
-                (<MenuIcon style={iconStyle} onClick={handleOnClickMenuBtn} />)
+                (<CloseIcon className={classes.icon} onClick={handleOnClickMenuBtn} />) :
+                (<MenuIcon className={classes.icon} onClick={handleOnClickMenuBtn} />)
             }
         </div>
     );
 }
 
 function AuthItems(props) {
-    const { closeMenuList, signOutModalCtrl } = props;
+    const { closeMenuList, signOutModalCtrl, classes } = props;
     const { onOpen } = signOutModalCtrl;
 
     const handleOnClickSignOutBtn = () => {
@@ -65,13 +64,13 @@ function AuthItems(props) {
     return (
         <>
             <ListItem button>
-                <ListItemIcon><BookIcon style={iconStyle} /></ListItemIcon>
+                <ListItemIcon><BookIcon className={classes.icon} /></ListItemIcon>
                 <ListItemText primary="My Library" />
             </ListItem>
             <ListItem button onClick={handleOnClickSignOutBtn}>
                 <ListItemIcon>
                     <SignOutIcon
-                        style={iconStyle}
+                        className={classes.icon}
                         signOutModalCtrl={signOutModalCtrl}
                     />
                 </ListItemIcon>
@@ -82,7 +81,7 @@ function AuthItems(props) {
 }
 
 function NonAuthItems(props) {
-    const { closeMenuList, history } = props;
+    const { closeMenuList, history, classes } = props;
 
     function handleOnClickSignInIcon() {
         closeMenuList();
@@ -94,7 +93,7 @@ function NonAuthItems(props) {
     return (
         <>
             <ListItem button onClick={handleOnClickSignInIcon}>
-                <ListItemIcon><SignInIcon style={iconStyle} /></ListItemIcon>
+                <ListItemIcon><SignInIcon className={classes.icon} /></ListItemIcon>
                 <ListItemText primary="Sign In" />
             </ListItem>
         </>
@@ -116,12 +115,12 @@ function MenuList(props) {
         <div className={classes.menuList + " menuList"}>
             <List component={Paper}>
                 <ListItem button onClick={handleOnClickExploreIcon}>
-                    <ListItemIcon><ExploreIcon style={iconStyle} /></ListItemIcon>
+                    <ListItemIcon><ExploreIcon className={classes.icon} /></ListItemIcon>
                     <ListItemText primary="Explore Books" />
                 </ListItem>
                 { isAuthenticated ? <AuthItems {...props} /> : <NonAuthItems {...props} /> }
                 <ListItem button>
-                    <ListItemIcon><AboutIcon style={iconStyle} /></ListItemIcon>
+                    <ListItemIcon><AboutIcon className={classes.icon} /></ListItemIcon>
                     <ListItemText primary="About Bookie" />
                 </ListItem>
             </List>
