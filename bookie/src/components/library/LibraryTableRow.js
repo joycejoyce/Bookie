@@ -2,14 +2,7 @@ import React from 'react';
 import { TableRow, TableCell, Checkbox } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { checkboxTheme } from '../Theme.js';
-
-const Thumbnail = ({ src, classes }) => {
-    return (
-        <div>
-            <img src={src} className={classes.thumbnail} />
-        </div>
-    );
-};
+import Thumbnail from "../sub/Thumbnail.js";
 
 const LibraryTableRow = React.memo(
 ({ classes, ctrl, id, data, columns, checked }) => {

@@ -7,6 +7,5 @@
   "DBConfig": {
     "region": "ap-southeast-1",
     "IdentityPoolId": "ap-southeast-1:f04cf5f3-0737-4405-8934-dd9471a7353a"
-  },
-  "NoImgPath": "./noImg.svg"
+  }
 }
