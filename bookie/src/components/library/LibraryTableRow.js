@@ -3,9 +3,16 @@ import { TableRow, TableCell, Checkbox } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { checkboxTheme } from '../Theme.js';
 import Thumbnail from "../sub/Thumbnail.js";
+import Rate from "./Rate.js";
+
+const styles = theme => ({
+    wrapper: {
+        marginBottom: '5vmin'
+    }
+});
 
 const LibraryTableRow = React.memo(
-({ classes, ctrl, id, data, columns, checked }) => {
+({ classes, ctrl, id, rate, data, columns, checked }) => {
     console.log(`${id} rendered`);
     const { onCheckItem } = ctrl;
     const { thumbnail } = data;
@@ -24,15 +31,21 @@ const LibraryTableRow = React.memo(
                     />
                 </TableCell>
             </ThemeProvider>
-            {/* <TableCell className={classes.tableCell}>
-                <Thumbnail src={thumbnail} classes={classes} />
-            </TableCell> */}
             {
                 columns.map(column => {
                     const { name } = column;
-                    const cellContent = name === "thumbnail" ?
-                        <Thumbnail src={thumbnail} classes={classes} /> :
-                        data[column.name];
+                    let cellContent = null;
+                    switch (name) {
+                        case 'thumbnail':
+                            cellContent = <Thumbnail src={thumbnail} classes={classes} />
+                            break;
+                        case 'rate':
+                            cellContent = <Rate id={id} rate={rate} ctrl={ctrl} />
+                            break;
+                        default:
+                            cellContent = data[column.name];
+                            break;
+                    }
                     return (
                         <TableCell className={classes.tableCell}>
                             {cellContent}
@@ -40,12 +53,6 @@ const LibraryTableRow = React.memo(
                     );
                 })
             }
-            {/* <TableCell component="th" className={classes.tableCell}>
-                {title}
-            </TableCell>
-            <TableCell className={classes.tableCell}>
-                {author}
-            </TableCell> */}
         </TableRow>
     );
 });

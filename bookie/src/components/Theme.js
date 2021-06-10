@@ -7,3 +7,11 @@ export const checkboxTheme = createMuiTheme({
         }
     }
 });
+
+export const rateTheme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#FEB610'
+        }
+    }
+});

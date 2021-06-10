@@ -79,6 +79,7 @@ class PanelContent extends Component {
                                                     classes={classes}
                                                     ctrl={ctrl}
                                                     id={itemId}
+                                                    rate={items[itemId].rate}
                                                     data={items[itemId]}
                                                     columns={columns}
                                                     checked={items[itemId].checked}

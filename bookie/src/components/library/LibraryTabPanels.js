@@ -58,7 +58,7 @@ class LibraryPanels extends Component {
                     },
                     {
                         label: "Rate",
-                        name: "id" // to modify
+                        name: "rate" // to modify
                     },
                     {
                         label: "Review",
@@ -79,7 +79,8 @@ class LibraryPanels extends Component {
                 onCheckSelectAll: this.handleOnCheckSelectAll,
                 onClickDelete: this.handleOnClickDelete,
                 onClickMoveToHaveRead: this.handleOnClickMoveToHaveRead,
-                onClickSort: this.handleOnClickSort
+                onClickSort: this.handleOnClickSort,
+                onClickRate: this.handleOnClickRate
             }
         }
     }
@@ -248,6 +249,19 @@ class LibraryPanels extends Component {
         const { items: items_haveRead } = this.state.haveRead;
         checkedItemIds.forEach(id => items_haveRead[id] = itemsToMove[id]);
         this.setNestedState("haveRead", "items", items_haveRead);
+    }
+
+    handleOnClickRate = (id,  rate) => {
+        const { items }  = this.state.haveRead;
+        for (let i in items) {
+            const item = items[i];
+            const { id: theId } = item;
+            if (theId === id) {
+                item.rate = rate;
+                break;
+            }
+        }
+        this.setNestedState("haveRead", "items", items);
     }
 
     render() {

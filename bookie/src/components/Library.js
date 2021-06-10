@@ -14,7 +14,7 @@ class Library extends Component {
         super(props);
         this.state = {
             tabs: {
-                value: 0
+                value: 1
             }
         }
     }
