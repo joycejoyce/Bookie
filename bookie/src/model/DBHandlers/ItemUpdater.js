@@ -25,6 +25,8 @@ export function getParams(auth, bookInfo, tableName) {
     switch (tableName) {
         case 'User': 
             return getParams_User(auth, bookInfo);
+        case 'UserRate':
+            return getParams_UserRate(auth, bookInfo);
         case 'Book': 
             return getParams_Book(bookInfo);
         default: 
@@ -75,6 +77,37 @@ function getParams_User(auth, bookInfo) {
             UpdateExpression: `${action.haveRead} #haveRead :haveRead`
         }
     ]
+    return params;
+}
+
+function getParams_UserRate(auth, bookInfo) {
+    const { id: bookId, rate, review } = bookInfo;
+    const { username: userId } = auth;
+    const params = {
+        TableName: "UserRate",
+        Key: {
+            userId: {
+                S: userId
+            },
+            bookId: {
+                S: bookId
+            }
+        },
+        ExpressionAttributeNames: {
+            "#rate": "rate",
+            "#review": "review"
+        },
+        ExpressionAttributeValues: {
+            ":rate": {
+                N: rate.toString()
+            },
+            ":review": {
+                S: review
+            }
+        },
+        ReturnValues: "ALL_NEW",
+        UpdateExpression: `SET #rate = :rate, #review = :review`
+    };
     return params;
 }
 

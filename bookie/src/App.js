@@ -70,7 +70,7 @@ class App extends Component {
               <Route path="/userProfile" render={(props) => <UserProfile auth={auth} />} />
               <Route path="/explore" component={Explore} />
               <Route path="/exploreResult" render={(props) => <ExploreResult {...props} auth={auth} /> } />
-              <Route path="/library" render={(props) => <Library {...props} auth={auth} /> } />
+              <Route path="/library" render={(props) => <Library {...props} auth={{ username: "test" }} /> } />
               <Route path="/" component={Explore} />
             </Switch>
           </div>

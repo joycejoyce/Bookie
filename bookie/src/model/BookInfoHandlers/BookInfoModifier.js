@@ -1,5 +1,6 @@
 import update, { getParams } from '../DBHandlers/ItemUpdater.js';
-import { viewResult_User } from '../DBHandlers/ItemViewer.js';
+import { viewResult_User, viewResult_UserRate } from '../DBHandlers/ItemViewer.js';
+import createTable, { getParams as getParams_createTable } from '../DBHandlers/TableCreator.js';
 
 export async function modifyBookInfo(data) {
     let result = null;
@@ -10,6 +11,9 @@ export async function modifyBookInfo(data) {
             break;
         case 'moveToHaveRead':
             result = await modifyBookInfo_moveToHaveRead(data);
+            break;
+        case 'rate':
+            result = await modifyBookInfo_rate(data);
             break;
         default:
             const msg = `Unexpected action [${action}]`;
@@ -39,15 +43,6 @@ async function modifyBookInfo_delete({ auth, checkedItemIds, classification }) {
         const params = paramList[theIndex];
         const result = update(params);
         resultList_User.push(result);
-        // const bookInfo = {
-        //     id,
-        //     toRead: false,
-        //     haveRead: null
-        // };
-        // const params = getParams(auth, bookInfo, "User");
-        // const [ params_toRead ] = params;
-        // const result = update(params_toRead);
-        // resultList_User.push(result);
     }
 
     const result = {};
@@ -102,6 +97,23 @@ async function modifyBookInfo_moveToHaveRead({ auth, checkedItemIds }) {
     });
 
     await viewResult_User(auth);
+
+    return result;
+}
+
+async function modifyBookInfo_rate({ auth, bookInfo }) {
+    const params_createTbl = getParams_createTable("UserRate");
+    const result_createTbl = await createTable(params_createTbl);
+    if (!result_createTbl.isNormalEnd) {
+        return result_createTbl;
+    }
+
+    // console.log({ auth, bookInfo });
+    const params = getParams(auth, bookInfo, "UserRate");
+    console.log({ params });
+    const result = await update(params);
+
+    await viewResult_UserRate(auth, bookInfo);
 
     return result;
 }

@@ -6,6 +6,12 @@ export async function viewResult_User(auth) {
     console.log({ auth, userData });
 }
 
+export async function viewResult_UserRate(auth, bookInfo) {
+    const params = getParams_getItem({ auth, bookInfo }, "UserRate");
+    const userRateData = await getItem(params);
+    console.log({ auth, userRateData });
+}
+
 export async function viewResult_Book() {
     const params = getParams_getItem({}, "Book");
     const bookData = await scan(params);

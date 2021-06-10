@@ -5,6 +5,7 @@ import PanelContents from './PanelContent.js';
 import getBookInfo, { classifications } from '../../model/BookInfoHandlers/BookInfoGetter.js';
 import { modifyBookInfo } from '../../model/BookInfoHandlers/BookInfoModifier.js';
 import getSortedItems from './ItemSorter.js';
+import { updateItem as updateItemForRating, updateDBData as updateDBDataForRating } from './Rater.js';
 
 const styles = theme => ({
     wrapper: {
@@ -80,7 +81,7 @@ class LibraryPanels extends Component {
                 onClickDelete: this.handleOnClickDelete,
                 onClickMoveToHaveRead: this.handleOnClickMoveToHaveRead,
                 onClickSort: this.handleOnClickSort,
-                onClickRate: this.handleOnClickRate
+                onClickRate: this.handleOnChangeRateOrReview
             }
         }
     }
@@ -251,17 +252,13 @@ class LibraryPanels extends Component {
         this.setNestedState("haveRead", "items", items_haveRead);
     }
 
-    handleOnClickRate = (id,  rate) => {
-        const { items }  = this.state.haveRead;
-        for (let i in items) {
-            const item = items[i];
-            const { id: theId } = item;
-            if (theId === id) {
-                item.rate = rate;
-                break;
-            }
-        }
+    handleOnChangeRateOrReview = async (id, name, value) => {
+        const { items } = this.state.haveRead;
+        updateItemForRating(items, id, name, value);
+        console.log({ items });
         this.setNestedState("haveRead", "items", items);
+
+        updateDBDataForRating(this.props.auth, items[id], id, name, value);
     }
 
     render() {

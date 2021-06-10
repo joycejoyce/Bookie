@@ -31,6 +31,31 @@ export default async function createTable(params) {
 }
 
 export function getParams(TableName) {
+    let params = null;
+    switch (TableName) {
+        case 'Book':
+            params = getParams_BookAndUser(TableName);
+            break;
+        case 'User':
+            params = getParams_BookAndUser(TableName);
+            break;
+        case 'UserRate':
+            params = getParams_UserRate();
+            break;
+        default:
+            const msg = `Unexpected TableName [${TableName}]`;
+            console.error(msg);
+            break;
+    }
+    return params;
+}
+
+const ProvisionedThroughput = {
+    ReadCapacityUnits: 10,
+    WriteCapacityUnits: 10
+};
+
+function getParams_BookAndUser(TableName) {
     const KeySchema = [
         {
             AttributeName: "ID",
@@ -43,10 +68,37 @@ export function getParams(TableName) {
             AttributeType: "S"
         }
     ];
-    const ProvisionedThroughput = {
-        ReadCapacityUnits: 10,
-        WriteCapacityUnits: 10
-    };
+    const params = {
+        TableName,
+        KeySchema,
+        AttributeDefinitions,
+        ProvisionedThroughput
+    }
+    return params;
+}
+
+function getParams_UserRate() {
+    const TableName = "UserRate";
+    const KeySchema = [
+        {
+            AttributeName: "userId",
+            KeyType: "HASH"
+        },
+        {
+            AttributeName: "bookId",
+            KeyType: "RANGE"
+        }
+    ];
+    const AttributeDefinitions = [
+        {
+            AttributeName: "userId",
+            AttributeType: "S"
+        },
+        {
+            AttributeName: "bookId",
+            AttributeType: "S"
+        }
+    ];
     const params = {
         TableName,
         KeySchema,

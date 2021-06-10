@@ -18,7 +18,7 @@ const Rate = React.memo(({ classes, id, rate, ctrl }) => {
         rate = 0;
     }
     const filled = Array.from(Array(rate).keys());
-    const empty = Array.from(Array(5).keys()).filter(x => !filled.includes(x));
+    const empty = Array.from(Array(3).keys()).filter(x => !filled.includes(x));
     const { onClickRate } = ctrl;
     console.log({filled});
     console.log({empty});
@@ -28,7 +28,7 @@ const Rate = React.memo(({ classes, id, rate, ctrl }) => {
             <div className={classes.root}>
                 {filled.map(key => (
                     <IconButton
-                        onClick={() => onClickRate(id, key+1)}
+                        onClick={() => onClickRate(id, 'rate', key+1)}
                         size="small"
                         color="primary"
                     >
@@ -41,7 +41,7 @@ const Rate = React.memo(({ classes, id, rate, ctrl }) => {
                 }
                 {empty.map(key => (
                     <IconButton
-                        onClick={() => onClickRate(id, key+1)}
+                        onClick={() => onClickRate(id, 'rate', key+1)}
                         size="small"
                     >
                         <EmptyStarIcon

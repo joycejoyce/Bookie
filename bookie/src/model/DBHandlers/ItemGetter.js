@@ -42,6 +42,8 @@ export function getParams(data, tableName) {
     switch (tableName) {
         case 'User':
             return getParams_User(data);
+        case 'UserRate':
+            return getParams_UserRate(data);
         case 'Book':
             return getParams_Book();
         case 'Book_byId':
@@ -65,6 +67,31 @@ function getParams_User({ username }) {
             "#haveRead": "haveRead"
         },
         ProjectionExpression: '#ID, #toRead, #haveRead'
+    };
+
+    return params;
+}
+
+function getParams_UserRate({ auth, bookInfo }) {
+    const { username: userId } = auth;
+    const { id: bookId } = bookInfo;
+    const params = {
+        TableName: "UserRate",
+        Key: {
+            userId: {
+                S: userId
+            },
+            bookId: {
+                S: bookId
+            }
+        },
+        ExpressionAttributeNames: {
+            "#userId": "userId",
+            "#bookId": "bookId",
+            "#rate": "rate",
+            "#review": "review"
+        },
+        ProjectionExpression: '#userId, #bookId, #rate, #review'
     };
 
     return params;
