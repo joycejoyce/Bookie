@@ -1,5 +1,17 @@
 import { modifyBookInfo } from '../../model/BookInfoHandlers/BookInfoModifier.js';
 
+export const names = ['rate', 'review'];
+
+export const types = {
+    rate: 'N',
+    review: 'S'
+}
+
+export const defaultValue = {
+    rate: 0,
+    review: ''
+};
+
 export function updateItem(items, id, name, value) {
     const item = items[id];
     const name_theOther = getName_theOther(name);
@@ -9,7 +21,6 @@ export function updateItem(items, id, name, value) {
 }
 
 function getName_theOther(name) {
-    const names = ['rate', 'review'];
     if (name === names[0]) {
         return names[1];
     }
@@ -17,11 +28,6 @@ function getName_theOther(name) {
         return names[0];
     }
 }
-
-const defaultValue = {
-    rate: 0,
-    review: ''
-};
 
 export async function updateDBData(auth, item, id, name, value) {
     const name_theOther = getName_theOther(name);
