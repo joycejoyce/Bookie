@@ -54,7 +54,7 @@ class Navbar extends Component {
                     {
                         label: 'Sign Out',
                         icon: <SignOutIcon className={classes.icon} />,
-                        link: '#'
+                        link: '/signOut'
                     },
                     {
                         label: 'About Bookie',
@@ -84,8 +84,15 @@ class Navbar extends Component {
     }
 
     handleOnClickItem = (link) => {
-        const { history } = this.props;
-        history.push(link);
+        switch (link) {
+            case '/signOut':
+                this.setNestedState("signOutModalCtrl", "isOpen", true);
+                break;
+            default:
+                const { history } = this.props;
+                history.push(link);
+                break;
+        }
     }
 
     async doSignOut() {
@@ -118,8 +125,10 @@ class Navbar extends Component {
     }
 
     componentDidMount() {
+        const minWidth = 850;
+
         const setResponsiveness = () => {
-            return window.innerWidth < 720
+            return window.innerWidth < minWidth
               ? this.setState({ mobileView: true })
               : this.setState({ mobileView: false })
           };
@@ -137,7 +146,7 @@ class Navbar extends Component {
     render() {
         console.log("render Navbar");
         const { classes, auth, history } = this.props;
-        const { mobileView, items } = this.state;
+        const { mobileView, items, signOutModalCtrl } = this.state;
         const theItems = auth.isAuthenticated ? items.auth : items.nonAuth;
 
         return (
@@ -151,7 +160,6 @@ class Navbar extends Component {
                         onClickItem={this.handleOnClickItem}
                         items={theItems}
                         history={history}
-                        signOutModalCtrl={this.state.signOutModalCtrl}
                     />
                     <DesktopNavbar
                         mobileView={mobileView}
@@ -159,8 +167,8 @@ class Navbar extends Component {
                         items={theItems}
                     />
                     <SignOutModal
-                        isOpen={this.state.signOutModalCtrl.isOpen}
-                        ctrl={this.state.signOutModalCtrl}
+                        isOpen={signOutModalCtrl.isOpen}
+                        ctrl={signOutModalCtrl}
                     />
                 </div>
             </div>

@@ -101,6 +101,16 @@ function MenuBtn(props) {
     );
 }
 
+function showMenuAnimation() {
+    document.querySelector(".menuList").classList.add('menuListAppear');
+    document.querySelector(".menuList").classList.remove('menuListDisappear');
+}
+
+function hideMenuAnimation() {
+    document.querySelector(".menuList").classList.add('menuListDisappear');
+    document.querySelector(".menuList").classList.remove('menuListAppear');
+}
+
 class MobileNavbar extends PureComponent{
     constructor(props) {
         super(props);
@@ -115,23 +125,22 @@ class MobileNavbar extends PureComponent{
         this.setState({ isListOpen: newValue });
         console.log({ newValue });
         if (newValue) {
-            document.querySelector(".menuList").classList.add('menuListAppear');
-            document.querySelector(".menuList").classList.remove('menuListDisappear');
+            showMenuAnimation();
         }
         else {
-            document.querySelector(".menuList").classList.add('menuListDisappear');
-            document.querySelector(".menuList").classList.remove('menuListAppear');
+            hideMenuAnimation();
         }
     }
 
     handleOnClickItem = (link) => {
         const { onClickItem } = this.props;
+        hideMenuAnimation();
         this.setState({ isListOpen: false });
         onClickItem(link);
     }
 
     render() {
-        const { classes, mobileView, items, signOutModalCtrl } = this.props;
+        const { classes, mobileView, items } = this.props;
         const { isListOpen } = this.state;
         const rootStyle = {
             display: mobileView ? 'block' : 'none'
@@ -149,7 +158,6 @@ class MobileNavbar extends PureComponent{
                     isListOpen={isListOpen}
                     onClick={this.handleOnClickItem}
                     items={items}
-                    signOutModalCtrl={signOutModalCtrl}
                 />
             </div>
         );
