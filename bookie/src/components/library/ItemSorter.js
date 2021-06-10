@@ -12,7 +12,6 @@ export default function getSortedItems(items, sort) {
         };
         return accu;
     }, {});
-    console.log({items, sortedItems});
     return sortedItems;
 }
 
