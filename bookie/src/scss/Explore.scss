@@ -5,6 +5,7 @@
     @extend %commonSettings;
     .contents {
         @include btnSection(128px);
+        max-width: $input_max_width;
         .rightBtn {
             position: absolute; right: 0;
             width: 100px;

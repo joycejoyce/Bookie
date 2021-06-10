@@ -7,7 +7,6 @@ import {
     Menu as MenuIcon
 } from '@material-ui/icons';
 import { PureComponent } from 'react';
-import '../../scss/Navbar.scss'
 import clsx from 'clsx';
 
 const styles = theme => ({

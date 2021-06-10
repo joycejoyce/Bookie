@@ -39,11 +39,7 @@ const headCells = [
     { id: 'author', label: 'Author' }    
 ];
 
-// ctrl={ctrl}
-// sort={sort}
-// checked={allChecked}
-// columns={columns}
-function EnhancedTableHead({ ctrl, sort, checked, columns }) {
+function EnhancedTableHead({ ctrl, sort, checked, columns, disabled }) {
     const { orderBy, order } = sort;
     const { onCheckSelectAll, onClickSort } = ctrl;
     const classes = useStyle();
@@ -58,6 +54,7 @@ function EnhancedTableHead({ ctrl, sort, checked, columns }) {
                         <Checkbox
                             checked={checked}
                             onChange={onCheckSelectAll}
+                            disabled={disabled}
                         />
                     </TableCell>
                 </ThemeProvider>

@@ -2,11 +2,18 @@
 
 .navbar {
     z-index: 99;
-    position: absolute;
-    top: 6vmin;
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+    height: 60px;
+    width: 100%;
+    border-bottom: .5px solid lightgray;
     .contents {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         width: $width_contents;
         display: flex;
         justify-content: space-between;
@@ -16,7 +23,7 @@
             height: 22px;
             width: auto;
         }
-        .MuiListItemText-primary {
+        .MuiListItemText-primary, .MuiButton-label {
             font-family: Montserrat-SemiBold;
         }
         .signOutModal {

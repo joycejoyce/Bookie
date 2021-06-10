@@ -119,7 +119,7 @@ class Navbar extends Component {
 
     componentDidMount() {
         const setResponsiveness = () => {
-            return window.innerWidth < 600
+            return window.innerWidth < 720
               ? this.setState({ mobileView: true })
               : this.setState({ mobileView: false })
           };

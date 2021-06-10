@@ -4,7 +4,9 @@ import { Button } from '@material-ui/core';
 
 const styles = theme => ({
     btn: {
-        textTransform: 'none'
+        textTransform: 'none',
+        color: theme.palette.secondary.main,
+        marginLeft: '18px'
     }
 });
 
@@ -20,14 +22,14 @@ class DesktopNavbar extends PureComponent {
         return (
             <div style={rootStyle}>
                 {items.map(item => {
-                    const { label, link } = item;
+                    const { label, icon, link } = item;
                     return (
                         <Button
                             key={label}
                             className={classes.btn}
                             onClick={() => onClickItem(link)}
                         >
-                            {label}
+                            {icon}&nbsp;&nbsp;{label}   
                         </Button>
                     );
                 })

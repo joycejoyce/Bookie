@@ -5,6 +5,7 @@
   @extend %commonSettings;
   .contents {
     @include btnSection(128px);
+    max-width: $input_max_width;
   }
   .forgotPwd {
     color: $blue1;

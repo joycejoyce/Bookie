@@ -45,6 +45,7 @@ class PanelContent extends Component {
         const { index, id, items, sort, numSelected, allChecked, columns } = data;
         const numTotal = Object.keys(items).length;
         const hidden = (tabIndex !== index);
+        const disableSelectAllCheckbox = numTotal === 0;
 
         return (
             <div
@@ -67,6 +68,7 @@ class PanelContent extends Component {
                                     sort={sort}
                                     checked={allChecked}
                                     columns={columns}
+                                    disabled={disableSelectAllCheckbox}
                                 />
                                 <TableBody>
                                     {
