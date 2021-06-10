@@ -21,42 +21,39 @@ const styles = theme => ({
         opacity: 0,
         transform: 'scale(0)'  
     },
-    menuListDisappear: {
-        animation: `$fadeOut 2000ms ease-out`
-    },
-    menuListAppear: {
-        opacity: 1,
-        transform: 'scale(1)',
-        animation: `$fadeIn 2000ms ease-in`
-    },
-    '@keyframes fadeIn': {
-        '0%': {
-            opacity: 0
-        },
-        '100%': {
-            opacity: 1
-        }
-    },
-    '@keyframes fadeOut': {
-        '0%': {
-            opacity: 1,
-            transform: 'scale(1)'
-        },
-        '99.9%': {
-            transform: 'scale(1)'
-        },
-        '100%': {
-            opacity: 0,
-            transform: 'scale(0)'
-        }
-    }
+    // menuListDisappear: {
+    //     animation: `$fadeOut 2000ms ease-out`
+    // },
+    // menuListAppear: {
+    //     opacity: 1,
+    //     transform: 'scale(1)',
+    //     animation: `$fadeIn 2000ms ease-in`
+    // },
+    // '@keyframes fadeIn': {
+    //     '0%': {
+    //         opacity: 0
+    //     },
+    //     '100%': {
+    //         opacity: 1
+    //     }
+    // },
+    // '@keyframes fadeOut': {
+    //     '0%': {
+    //         opacity: 1,
+    //         transform: 'scale(1)'
+    //     },
+    //     '99.9%': {
+    //         transform: 'scale(1)'
+    //     },
+    //     '100%': {
+    //         opacity: 0,
+    //         transform: 'scale(0)'
+    //     }
+    // }
 });
 
 function MenuList(props) {
     const { classes, items, onClick, isListOpen } = props;
-    // const style = {
-    //     opacity: isListOpen ? 1 : 0
-    // };
 
     return (
         <div
@@ -66,7 +63,6 @@ function MenuList(props) {
             // }, {
             //     [classes.menuListDisappear]: !isListOpen
             // })}
-            // style={style}
         >
             <List component={Paper}>
                 {items.map(item => {
