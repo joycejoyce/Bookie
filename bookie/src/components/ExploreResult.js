@@ -8,8 +8,20 @@ import { getFilterBySearchResult } from '../model/BookFilter.js';
 import SortByDropdown from './sub/SortByDropdown.js';
 import SearchSummary from './sub/SearchSummary.js';
 import saveBookInfo from '../model/BookInfoHandlers/BookInfoSaver.js';
+import getBookInfo, { classifications } from '../model/BookInfoHandlers/BookInfoGetter.js';
 
 const displayRowsPerPage = 10;
+
+const getItemIds = (items) => {
+    const ids = Object.keys(items).reduce((accu, key) => {
+        const { id } = items[key];
+        if (!accu.includes(id)) {
+            accu.push(id);
+        }
+        return accu;
+    }, []);
+    return ids;
+}
 
 class ExploreResult extends Component {
     constructor(props) {
@@ -77,6 +89,35 @@ class ExploreResult extends Component {
         return searchBook(searchConditions);
     }
 
+    setUserData = async (searchResult) => {
+        console.log("setUserData");
+        const auth = { username: "test" };
+        const result_getItems_toRead = getBookInfo(classifications.toRead, auth);
+        const result_getItems_haveRead = getBookInfo(classifications.haveRead, auth);
+
+        await Promise.all([result_getItems_toRead, result_getItems_haveRead])
+        .then(([result_getItems_toRead, result_getItems_haveRead]) => {
+            console.log({result_getItems_toRead});
+            console.log({result_getItems_haveRead});
+            const { items: items_toRead } = result_getItems_toRead;
+            const { items: items_haveRead } = result_getItems_haveRead;
+            const itemIds_toRead = getItemIds(items_toRead);
+            const itemIds_haveRead = getItemIds(items_haveRead);
+            const { items } = this.state.searchResult;
+            Object.keys(items).forEach(key => {
+                const item = items[key];
+                const { id } = item;
+                if (itemIds_toRead.includes(id)) {
+                    item.toRead = true;
+                }
+                if (itemIds_haveRead.includes(id)) {
+                    item.haveRead = true;
+                }
+            });
+            this.setNestedState("searchResult", "items", items);
+        });
+    }
+
     async componentDidMount() {
         document.getElementById("loadingIcon").style.display = "block";
         document.querySelector(".exploreResult").style.display = "none";
@@ -89,6 +130,7 @@ class ExploreResult extends Component {
     }
 
     async setInitStates() {
+        console.log("setInitStates");
         const { searchConditions } = this.props.location.state;
         searchConditions.startIndex = this.state.searchConditions.startIndex;
         searchConditions.maxResults = this.state.searchConditions.maxResults;
@@ -96,6 +138,8 @@ class ExploreResult extends Component {
         
         const searchResult = await this.getSearchResult(searchConditions);
         this.setSearchResult(searchResult);
+
+        await this.setUserData(searchResult);
 
         this.setFilter(searchResult);
     }
@@ -160,6 +204,7 @@ class ExploreResult extends Component {
     }
 
     render() {
+        // console.log("render ExploreResult");
         const { searchConditions } = this.props.location.state;
         const { searchResult, displayInfo, filter } = this.state;
         const { isNormalEnd, errMsg } = searchResult;

@@ -1,5 +1,10 @@
 import getItem, { getParams } from '../DBHandlers/ItemGetter.js';
 
+export const classifications = {
+    toRead: "toRead",
+    haveRead: "haveRead"
+};
+
 export default async function getBookInfo(classification, auth) {
     const params_User = getParams(auth, "User");
     const result_User = await getItem(params_User);

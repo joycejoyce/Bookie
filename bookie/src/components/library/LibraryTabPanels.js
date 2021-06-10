@@ -2,7 +2,7 @@ import { Component } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { withStyles } from '@material-ui/core/styles';
 import PanelContents from './PanelContent.js';
-import getBookInfo from '../../model/BookInfoHandlers/BookInfoGetter.js';
+import getBookInfo, { classifications } from '../../model/BookInfoHandlers/BookInfoGetter.js';
 import { modifyBookInfo } from '../../model/BookInfoHandlers/BookInfoModifier.js';
 import getSortedItems from './ItemSorter.js';
 
@@ -85,11 +85,9 @@ class LibraryPanels extends Component {
     }
 
     async componentDidMount() {
-        // const { auth } = this.props;
         const auth = { username: "test" };
-        const { toRead, haveRead } = this.state;
-        const result_getItems_toRead = getBookInfo(toRead.id, auth);
-        const result_getItems_haveRead = getBookInfo(haveRead.id, auth);
+        const result_getItems_toRead = getBookInfo(classifications.toRead, auth);
+        const result_getItems_haveRead = getBookInfo(classifications.haveRead, auth);
 
         try {
             await Promise.all([result_getItems_toRead, result_getItems_haveRead])
@@ -100,13 +98,13 @@ class LibraryPanels extends Component {
                     if (result_getItems_toRead && result_getItems_toRead.items) {
                         const { items: items_toRead } = result_getItems_toRead;
                         // console.log({ items_toRead });
-                        this.setNestedState(toRead.id, "items", items_toRead);
+                        this.setNestedState(classifications.toRead, "items", items_toRead);
                     }
                     
                     if (result_getItems_haveRead && result_getItems_haveRead.items) {
                         const { items: items_haveRead } = result_getItems_haveRead;
                         // console.log({ items_haveRead });
-                        this.setNestedState(haveRead.id, "items", items_haveRead);
+                        this.setNestedState(classifications.haveRead, "items", items_haveRead);
                     }
                 });
         } catch(err) {
@@ -150,10 +148,10 @@ class LibraryPanels extends Component {
         const { toRead, haveRead } = this.state;
         const { value: tabIdx } = this.props.tabs;
         if (tabIdx === toRead.index) {
-            return toRead.id;
+            return classifications.toRead;
         }
         else {
-            return haveRead.id;
+            return classifications.haveRead;
         }
     }
 
