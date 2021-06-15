@@ -59,11 +59,11 @@ class LibraryPanels extends Component {
                     },
                     {
                         label: "Rate",
-                        name: "rate" // to modify
+                        name: "rate"
                     },
                     {
                         label: "Review",
-                        name: "id" // to modify
+                        name: "review"
                     },
                     // {
                     //     label: "Title",
@@ -81,7 +81,8 @@ class LibraryPanels extends Component {
                 onClickDelete: this.handleOnClickDelete,
                 onClickMoveToHaveRead: this.handleOnClickMoveToHaveRead,
                 onClickSort: this.handleOnClickSort,
-                onClickRate: this.handleOnChangeRateOrReview
+                onClickRate: this.handleOnChangeRateOrReview,
+                onClickSaveReview: this.handleOnChangeRateOrReview
             }
         }
     }
@@ -253,6 +254,7 @@ class LibraryPanels extends Component {
     }
 
     handleOnChangeRateOrReview = async (id, name, value) => {
+        console.log({ id, name, value });
         const { items } = this.state.haveRead;
         updateItemForRating(items, id, name, value);
         console.log({ items });

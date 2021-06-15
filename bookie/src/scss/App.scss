@@ -156,3 +156,9 @@ body {
     margin-top: clamp(80px, 16vmin, 130px);
   }
 }
+
+.MuiButton-label {
+  text-transform: none;
+  font-family: Montserrat-SemiBold;
+  letter-spacing: .3px;
+}

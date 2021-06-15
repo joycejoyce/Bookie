@@ -13,7 +13,10 @@ export async function modifyBookInfo(data) {
             result = await modifyBookInfo_moveToHaveRead(data);
             break;
         case 'rate':
-            result = await modifyBookInfo_rate(data);
+            result = await modifyBookInfo_rateAndReview(data);
+            break;
+        case 'review':
+            result = await modifyBookInfo_rateAndReview(data);
             break;
         default:
             const msg = `Unexpected action [${action}]`;
@@ -101,7 +104,7 @@ async function modifyBookInfo_moveToHaveRead({ auth, checkedItemIds }) {
     return result;
 }
 
-async function modifyBookInfo_rate({ auth, bookInfo }) {
+async function modifyBookInfo_rateAndReview({ auth, bookInfo }) {
     const params_createTbl = getParams_createTable("UserRate");
     const result_createTbl = await createTable(params_createTbl);
     if (!result_createTbl.isNormalEnd) {

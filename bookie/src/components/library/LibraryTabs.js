@@ -11,7 +11,7 @@ const styles = theme => ({
             gap: '.5rem',
             textTransform: 'capitalize',
             fontSize: '1rem',
-            letterSpacing: '1px',
+            letterSpacing: '.8px',
             [theme.breakpoints.up('sm')]: {
                 flexDirection: 'row'
             }

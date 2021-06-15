@@ -31,6 +31,7 @@ function getName_theOther(name) {
 
 export async function updateDBData(auth, item, id, name, value) {
     const name_theOther = getName_theOther(name);
+    console.log({ name_theOther });
     const value_theOther = item[name_theOther];
     const action = name;
     const bookInfo = {

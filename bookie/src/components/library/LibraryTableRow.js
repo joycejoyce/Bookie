@@ -4,15 +4,14 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { checkboxTheme } from '../Theme.js';
 import Thumbnail from "../sub/Thumbnail.js";
 import Rate from "./Rate.js";
+import Review from "./Review.js";
 
 const styles = theme => ({
-    wrapper: {
-        marginBottom: '5vmin'
-    }
+
 });
 
 const LibraryTableRow = React.memo(
-({ classes, ctrl, id, rate, data, columns, checked }) => {
+({ classes, ctrl, id, rate, review, data, columns, checked }) => {
     console.log(`${id} rendered`);
     const { onCheckItem } = ctrl;
     const { thumbnail } = data;
@@ -41,6 +40,9 @@ const LibraryTableRow = React.memo(
                             break;
                         case 'rate':
                             cellContent = <Rate id={id} rate={rate} ctrl={ctrl} />
+                            break;
+                        case 'review':
+                            cellContent = <Review id={id} review={review} ctrl={ctrl}/>
                             break;
                         default:
                             cellContent = data[column.name];

@@ -23,10 +23,11 @@ const styles = theme => ({
         }
     },
     tableRow: {
-        letterSpacing: '.5px'
+        letterSpacing: '.5px',
     },
     tableCell: {
-        maxWidth: '250px'
+        maxWidth: '250px',
+        position: 'relative'
     },
     thumbnail: {
         width: '128px'
@@ -80,6 +81,7 @@ class PanelContent extends Component {
                                                     ctrl={ctrl}
                                                     id={itemId}
                                                     rate={items[itemId].rate}
+                                                    review={items[itemId].review}
                                                     data={items[itemId]}
                                                     columns={columns}
                                                     checked={items[itemId].checked}
