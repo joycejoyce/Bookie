@@ -42,7 +42,8 @@ class ExploreResult extends Component {
             displayInfo: {
                 page: 0,
                 rowsPerPage: displayRowsPerPage,
-                rowsPerPageOptions: [displayRowsPerPage]
+                rowsPerPageOptions: [displayRowsPerPage],
+                showBookStatus: false
             },
             searchResult: {
                 isNormalEnd: true,
@@ -89,9 +90,9 @@ class ExploreResult extends Component {
         return searchBook(searchConditions);
     }
 
-    setUserData = async (searchResult) => {
+    setUserData = async () => {
         console.log("setUserData");
-        const auth = { username: "test" };
+        const { userAuth: auth } = this.props;
         const result_getItems_toRead = getBookInfo(classifications.toRead, auth);
         const result_getItems_haveRead = getBookInfo(classifications.haveRead, auth);
 
@@ -139,7 +140,13 @@ class ExploreResult extends Component {
         const searchResult = await this.getSearchResult(searchConditions);
         this.setSearchResult(searchResult);
 
-        await this.setUserData(searchResult);
+        if (this.props.userAuth) {
+            await this.setUserData();
+            this.setNestedState("displayInfo", "showBookStatus", true);
+        }
+        else {
+            this.setNestedState("displayInfo", "showBookStatus", false);
+        }
 
         this.setFilter(searchResult);
     }

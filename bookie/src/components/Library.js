@@ -4,6 +4,7 @@ import { Component } from "react";
 import LibraryTabs from './library/LibraryTabs.js';
 import LibraryTabPanels from './library/LibraryTabPanels.js';
 import { Paper } from '@material-ui/core';
+import SignInReminder from './sub/SignInReminder.js';
 
 const styles = theme => ({
     
@@ -14,7 +15,7 @@ class Library extends Component {
         super(props);
         this.state = {
             tabs: {
-                value: 1
+                value: 0
             }
         }
     }
@@ -30,22 +31,31 @@ class Library extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, userAuth } = this.props;
         console.log("render Library");
+
+        console.log(userAuth ? "has user" : "no user");
+
         return (
             <div className="library">
                 <div className="contents">
-                    <h1>My Library</h1>
-                    <Paper>
-                        <LibraryTabs
-                            tabs={this.state.tabs}
-                            setParentState={this.setNestedState}
-                        />
-                        <LibraryTabPanels
-                            tabs={this.state.tabs}
-                            auth={this.props.auth}
-                        />
-                    </Paper>
+                    {userAuth ? (
+                        <>
+                            <h1>My Library</h1>
+                            <Paper>
+                                <LibraryTabs
+                                    tabs={this.state.tabs}
+                                    setParentState={this.setNestedState}
+                                />
+                                <LibraryTabPanels
+                                    tabs={this.state.tabs}
+                                    auth={userAuth}
+                                />
+                            </Paper>
+                        </>
+                    ) : (
+                        <SignInReminder />
+                    )}
                 </div>
             </div>
         );

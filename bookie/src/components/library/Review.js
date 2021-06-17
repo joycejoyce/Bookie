@@ -97,7 +97,9 @@ const EditReviewModal = ({ open, id, currentReview, ctrl }) => {
 }
 
 function getReviewSubStr(review) {
-    console.log({ review });
+    if (!review) {
+        return "";
+    }
     const maxLen = 90;
     let subStr = review.substring(0, maxLen);
     if (review.length > maxLen) {

@@ -27,7 +27,7 @@ const styles = theme => ({
 });
 
 const SignOutModal = React.memo(({ isOpen, ctrl, classes }) => {
-    console.log("render SignOutModal");
+    // console.log("render SignOutModal");
     const { onClose, doSignOut } = ctrl;
 
     const handleOnClickYes = () => {
@@ -46,14 +46,13 @@ const SignOutModal = React.memo(({ isOpen, ctrl, classes }) => {
                 >
                     No
                 </Button>
-                <a href="/" onClick={handleOnClickYes}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                    >
-                        Yes
-                    </Button>
-                </a>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleOnClickYes}
+                >
+                    Yes
+                </Button>
             </div>
         </div>
     );

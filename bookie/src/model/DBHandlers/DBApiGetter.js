@@ -8,20 +8,21 @@ export default function getDBApi() {
         return dbApi;
     }
 
-    console.log("going to create dbApi");
     try {
+        console.log("going to create dbApi...");
         const { region, IdentityPoolId } = DBConfig;
         const config = {
             region,
             credentials: new AWS.CognitoIdentityCredentials({IdentityPoolId})
         };
-        console.log({config});
 
         AWS.config.update(config);
 
         dbApi = new AWS.DynamoDB();
+        console.log("create dbApi done");
+
         return dbApi;
-    } catch(e) {
-        console.error("Caught error in connectDB()", e);
+    } catch(err) {
+        console.error({ err });
     }
 }

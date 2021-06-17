@@ -14,7 +14,7 @@ const BookInfo = React.memo(({ title, authors, publisher, publishedDate }) => {
     );
 });
 
-const BookSummary = ({ handleOnClickBookStatus, data }) => {
+const BookSummary = ({ handleOnClickBookStatus, data, showBookStatus }) => {
     const { id, volumeInfo, toRead, haveRead } = data;
     let { title, authors, publisher, publishedDate } = volumeInfo;
     title = title ? title : "";
@@ -30,12 +30,14 @@ const BookSummary = ({ handleOnClickBookStatus, data }) => {
                 publisher={publisher}
                 publishedDate={publishedDate}
             />
-            <BookStatus
-                id={id}
-                toRead={toRead}
-                haveRead={haveRead}
-                handleOnClickBookStatus={handleOnClickBookStatus}
-            />
+            {showBookStatus &&
+                <BookStatus
+                    id={id}
+                    toRead={toRead}
+                    haveRead={haveRead}
+                    handleOnClickBookStatus={handleOnClickBookStatus}
+                />
+            }
         </div>
     );
 };
@@ -51,7 +53,7 @@ function getThumbnailSrc(volumeInfo) {
 
 class ExploreTableRow extends Component {
     render() {
-        const { handleOnClickBookStatus, data } = this.props;
+        const { handleOnClickBookStatus, data, showBookStatus } = this.props;
         const thumbnail = getThumbnailSrc(data.volumeInfo);
 
         return (
@@ -61,6 +63,7 @@ class ExploreTableRow extends Component {
                     <BookSummary
                         data={data}
                         handleOnClickBookStatus={handleOnClickBookStatus}
+                        showBookStatus={showBookStatus}
                     />
                 </TableCell>
             </TableRow>

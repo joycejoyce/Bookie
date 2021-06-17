@@ -12,7 +12,7 @@ const styles = theme => ({
 
 class DesktopNavbar extends PureComponent {
     render() {
-        console.log("render DesktopNavbar");
+        // console.log("render DesktopNavbar");
 
         const { classes, mobileView, items, onClickItem } = this.props;
         const rootStyle = {

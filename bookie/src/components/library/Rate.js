@@ -20,8 +20,6 @@ const Rate = React.memo(({ classes, id, rate, ctrl }) => {
     const filled = Array.from(Array(rate).keys());
     const empty = Array.from(Array(3).keys()).filter(x => !filled.includes(x));
     const { onClickRate } = ctrl;
-    console.log({filled});
-    console.log({empty});
 
     return (
         <ThemeProvider theme={rateTheme}>

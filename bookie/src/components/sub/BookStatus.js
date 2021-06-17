@@ -66,7 +66,7 @@ const MyIconBtn = ({ id, name, status, handleOnClick, classes }) => {
 };
 
 const BookStatus = React.memo(({ id, toRead, haveRead, handleOnClickBookStatus, classes }) => {
-    console.log("render BookStatus (" + id + ")");
+    // console.log("render BookStatus (" + id + ")");
     return (
         <div className={classes.bookStatus}>
             <MyIconBtn

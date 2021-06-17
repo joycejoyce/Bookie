@@ -95,14 +95,15 @@ class Navbar extends Component {
         }
     }
 
-    async doSignOut() {
-        const { auth } = this.props;
+    doSignOut = async () => {
+        const { auth, history } = this.props;
         try {
             await Auth.signOut();
             auth.setIsAuthenticated(false);
             auth.setUser(null);
-        } catch (error) {
-            console.log('error signing out: ', error);
+            history.push("/");
+        } catch (err) {
+            console.error({ err });
         }
     }
 
@@ -144,7 +145,7 @@ class Navbar extends Component {
     }
 
     render() {
-        console.log("render Navbar");
+        // console.log("render Navbar");
         const { classes, auth, history } = this.props;
         const { mobileView, items, signOutModalCtrl } = this.state;
         const theItems = auth.isAuthenticated ? items.auth : items.nonAuth;

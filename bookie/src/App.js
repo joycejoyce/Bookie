@@ -16,6 +16,7 @@ import {
   Route
 } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { Auth } from 'aws-amplify';
 
 const theme = createMuiTheme({
   palette: {
@@ -36,6 +37,7 @@ class App extends Component {
     super(props);
     this.state = {
       isAuthenticated: false,
+      isAuthenticating: true,
       user: null
     }
   }
@@ -48,6 +50,22 @@ class App extends Component {
     this.setState({ user });
   }
 
+  async componentDidMount() {
+    try {
+      const session = await Auth.currentSession();
+      this.setIsAuthenticated(true);
+      console.log({ session });
+
+      const user = await Auth.currentAuthenticatedUser();
+      this.setUser(user);
+      console.log({ user });
+    } catch(err) {
+      console.error("App.js / componentDidMount()", { err });
+    }
+
+    this.setState({ isAuthenticating: false });
+  }
+
   render() {
     const auth = {
       isAuthenticated: this.state.isAuthenticated,
@@ -55,9 +73,11 @@ class App extends Component {
       setIsAuthenticated: this.setIsAuthenticated,
       setUser: this.setUser
     };
-    console.log(auth);
+
+    const userAuth = this.state.user ? { username: this.state.user.username } : null;
 
     return (
+      !this.state.isAuthenticating &&
       <ThemeProvider theme={theme}>
         <Router>
           <div className="container">
@@ -69,9 +89,9 @@ class App extends Component {
               <Route path="/signIn" render={(props) => <SignIn {...props} auth={auth} /> } />
               <Route path="/userProfile" render={(props) => <UserProfile auth={auth} />} />
               <Route path="/explore" component={Explore} />
-              <Route path="/exploreResult" render={(props) => <ExploreResult {...props} auth={auth} /> } />
-              <Route path="/library" render={(props) => <Library {...props} auth={{ username: "test" }} /> } />
-              <Route path="/" render={(props) => <Library {...props} auth={{ username: "test" }} /> } />
+              <Route path="/exploreResult" render={(props) => <ExploreResult {...props} userAuth={userAuth} /> } />
+              <Route path="/library" render={(props) => <Library {...props} userAuth={userAuth} /> } />
+              <Route path="/" component={Explore} />
             </Switch>
           </div>
         </Router>

@@ -19,6 +19,7 @@ class ExploreResultTable extends Component {
 
     render() {
         const { displayedItems, displayInfo, handleOnClickBookStatus } = this.props;
+        const { showBookStatus } = displayInfo;
         const items = this.getItems(displayedItems, displayInfo);
         // displayInfo: {
         //     page: 0,
@@ -38,6 +39,7 @@ class ExploreResultTable extends Component {
                                         key={idx}
                                         data={item}
                                         handleOnClickBookStatus={handleOnClickBookStatus}
+                                        showBookStatus={showBookStatus}
                                     />
                                 )) }
                             </TableBody>

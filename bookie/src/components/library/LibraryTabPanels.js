@@ -88,7 +88,7 @@ class LibraryPanels extends Component {
     }
 
     async componentDidMount() {
-        const auth = { username: "test" };
+        const { auth } = this.props;
         const result_getItems_toRead = getBookInfo(classifications.toRead, auth);
         const result_getItems_haveRead = getBookInfo(classifications.haveRead, auth);
 
