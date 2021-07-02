@@ -4,3 +4,13 @@ export function validateEmail(s) {
     }
     return "";
 }
+
+export function validatePwd(s) {
+    if(!s) {
+        return "Please enter password";
+    }
+    if(s.length < 8) {
+        return "Password should contains at least 8 characters";
+    }
+    return "";
+}

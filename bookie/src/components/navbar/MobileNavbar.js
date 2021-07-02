@@ -69,6 +69,7 @@ function MenuList(props) {
                     const { label, icon, link } = item;
                     return (
                         <ListItem
+                            key={label}
                             button
                             onClick={() => onClick(link)}
                             disabled={!isListOpen}

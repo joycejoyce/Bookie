@@ -3,21 +3,8 @@ import { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 import { Auth } from "aws-amplify";
 import { validateEmail } from "../utility/FormValidator.js";
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-    input: {
-        '& fieldset': {
-            width: '375px'
-        },
-        '& button': {
-            width: 'min-content'
-        }
-    }
-  }));
 
 export default function ForgotPassword(props) {
-    const classes = useStyles();
     const [email, setEmail] = useState();
     const [errMsg, setErrMsg] = useState();
 
@@ -36,7 +23,10 @@ export default function ForgotPassword(props) {
 
         try {
             await Auth.forgotPassword(email);
-            props.history.push('/forgotPasswordVerification');
+            props.history.push({
+                pathname: '/setNewPassword',
+                state: { email }
+            });
         } catch (error) {
             console.log(error);
         }
@@ -47,15 +37,17 @@ export default function ForgotPassword(props) {
             <div className="contents">
                 <h2>Forgot your password?</h2>
                 <p>
-                    Please enter the email address associated with your account and we'll email you a password reset link.
+                    Please enter the email address associated with your account and we'll email you a password reset code.
                 </p>
-                <div className={classes.input + " inputSection"}>
-                    <TextField
-                        label="Email"
-                        variant="outlined"
-                        onChange={handleOnChange}
-                    />
-                    <div className="errMsg">{errMsg}</div>
+                <div className="inputSection">
+                    <div className="textField">
+                        <TextField
+                            label="Email"
+                            variant="outlined"
+                            onChange={handleOnChange}
+                        />
+                        <div className="errMsg">{errMsg}</div>
+                    </div>
                     <Button
                         variant="contained"
                         onClick={handleOnClickSubmit}
@@ -64,7 +56,6 @@ export default function ForgotPassword(props) {
                     >
                         Submit
                     </Button>
-                    
                 </div>
             </div>
         </div>

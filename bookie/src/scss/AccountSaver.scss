@@ -3,12 +3,17 @@
 .accountSaver {
     @extend %commonSettings;
     color: $darkBlue;
-    .errMsg {
-        font-family: Montserrat-SemiBold;
-        color: $red;
-        font-size: .8rem;
-        position: absolute;
-        top: 60px;
+    .textField {
+        margin-top: 10px;
+        position: relative;
+        .errMsg {
+            font-family: Roboto-Medium;
+            letter-spacing: .3px;
+            color: $red;
+            font-size: .8rem;
+            position: absolute;
+            top: 58px;
+        }
     }
     p {
         line-height: 1.5;
@@ -20,5 +25,9 @@
     }
     button {
         margin-top: 10px;
+        width: max-content;
+    }
+    fieldset,.MuiInputBase-root {
+        width: 375px;
     }
 }

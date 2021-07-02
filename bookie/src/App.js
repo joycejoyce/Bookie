@@ -5,6 +5,7 @@ import Home from "./components/Home.js";
 import CreateAccount from "./components/CreateAccount.js";
 import SignIn from "./components/SignIn.js";
 import ForgotPassword from "./components/ForgotPassword.js";
+import SetNewPassword from "./components/SetNewPassword.js";
 import Welcome from "./components/Welcome.js";
 import UserProfile from "./components/UserProfile.js";
 import Explore from "./components/Explore.js";
@@ -94,7 +95,8 @@ class App extends Component {
               <Route path="/exploreResult" render={(props) => <ExploreResult {...props} userAuth={userAuth} /> } />
               <Route path="/library" render={(props) => <Library {...props} userAuth={userAuth} /> } />
               <Route path="/forgotPassword" component={ForgotPassword} />
-              <Route path="/" component={Explore} />
+              <Route path="/setNewPassword" component={SetNewPassword} />
+              <Route path="/" component={SetNewPassword} />
             </Switch>
           </div>
         </Router>
