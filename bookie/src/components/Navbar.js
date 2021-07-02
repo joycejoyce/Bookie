@@ -49,14 +49,14 @@ class Navbar extends Component {
             items: {
                 auth: [
                     {
-                        label: 'Explore Books',
-                        icon: <ExploreIcon className={classes.icon} />,
-                        link: '/explore'
-                    },
-                    {
                         label: 'My Library',
                         icon: <LibraryIcon className={classes.icon} />,
                         link: '/library'
+                    },
+                    {
+                        label: 'Explore Books',
+                        icon: <ExploreIcon className={classes.icon} />,
+                        link: '/explore'
                     },
                     {
                         label: 'Sign Out',
