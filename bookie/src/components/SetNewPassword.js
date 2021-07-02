@@ -5,6 +5,7 @@ import { Auth } from "aws-amplify";
 import { validatePwd } from "../utility/FormValidator.js";
 
 export default function ForgotPasswordVerification(props) {
+    const email = props.location.state && props.location.state.email ? props.location.state.email : "";
     const [info, setInfo] = useState({
         vCode: "",
         newPwd: "",
@@ -13,7 +14,8 @@ export default function ForgotPasswordVerification(props) {
     const [errMsg, setErrMsg] = useState({
         vCode: "",
         newPwd: "",
-        confirmPwd: ""
+        confirmPwd: "",
+        submit: ""
     });
 
     const handleOnChange = (e, name) => {
@@ -36,12 +38,14 @@ export default function ForgotPasswordVerification(props) {
         let msg = {
             vCode: "",
             newPwd: "",
-            confirmPwd: ""
+            confirmPwd: "",
+            submit: ""
         };
         msg.vCode = info.vCode ? "" : "Please enter the verification code";
         msg.newPwd = validatePwd(info.newPwd);
         msg.confirmPwd = info.newPwd === info.confirmPwd ? "" : "Confirm password is not consistent with password";
-        if (msg.vCode || msg.newPwd || msg.confirmPwd) {
+        msg.submit = email ? "" : "No email address specified";
+        if (msg.vCode || msg.newPwd || msg.confirmPwd || msg.submit) {
             setErrMsg(msg);
             return;
         }
@@ -55,6 +59,7 @@ export default function ForgotPasswordVerification(props) {
             props.history.push("/changePasswordConfirm");
         } catch (error) {
             console.log(error);
+            setErrMsg({...errMsg, submit: error.message});
         }
     }
 
@@ -63,9 +68,10 @@ export default function ForgotPasswordVerification(props) {
             <div className="contents">
                 <h2>Set new password</h2>
                 <p>
-                    Please enter the verification code sent to your email address and a new password.
+                    Please enter the verification code sent to your email address ({email || "No email specified"}) and a new password.
                 </p>
                 <div className="inputSection">
+                    <div className="errMsg submitErrMsg">{errMsg.submit}</div>
                     <div className="textField">
                         <TextField
                             label="Verification code"

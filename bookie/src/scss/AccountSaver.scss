@@ -3,14 +3,22 @@
 .accountSaver {
     @extend %commonSettings;
     color: $darkBlue;
+    .errMsg {
+        font-family: Roboto-Medium;
+        letter-spacing: .3px;
+        color: $red;
+        font-size: .8rem;
+    }
+    .submitErrMsg {
+        position: absolute;
+        top: -18px;
+        font-size: 1rem;
+//top: 58px;
+    }
     .textField {
         margin-top: 10px;
         position: relative;
         .errMsg {
-            font-family: Roboto-Medium;
-            letter-spacing: .3px;
-            color: $red;
-            font-size: .8rem;
             position: absolute;
             top: 58px;
         }
@@ -20,7 +28,7 @@
         letter-spacing: .5px;
     }
     .inputSection {
-        margin-top: 10px;
+        margin-top: 22px;
         position: relative;
     }
     button {
@@ -29,5 +37,14 @@
     }
     fieldset,.MuiInputBase-root {
         width: 375px;
+    }
+}
+
+.setNewPasswordConfirm {
+    .msg {
+        font-size: 1rem;
+    }
+    button {
+        margin-top: 3rem;
     }
 }
