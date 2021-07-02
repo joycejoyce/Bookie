@@ -47,6 +47,8 @@ class PanelContent extends Component {
         const numTotal = Object.keys(items).length;
         const hidden = (tabIndex !== index);
         const disableSelectAllCheckbox = numTotal === 0;
+        const showMoveToHeadReadIcon = id === "toRead";
+        console.log({id, showMoveToHeadReadIcon});
 
         return (
             <div
@@ -59,6 +61,7 @@ class PanelContent extends Component {
                             numSelected={numSelected}
                             numTotal={numTotal}
                             ctrl={ctrl}
+                            showMoveToHeadReadIcon={showMoveToHeadReadIcon}
                         />
                         <TableContainer className={classes.tableContainer}>
                             <Table
