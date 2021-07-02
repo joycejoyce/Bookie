@@ -52,9 +52,7 @@ const styles = theme => ({
     // }
 });
 
-function MenuList(props) {
-    const { classes, items, onClick, isListOpen } = props;
-
+function MenuList({ classes, items, onClick, isListOpen, activePage }) {
     return (
         <div
             className={classes.menuList + " menuList"}
@@ -67,12 +65,15 @@ function MenuList(props) {
             <List component={Paper}>
                 {items.map(item => {
                     const { label, icon, link } = item;
+                    const activeClassName = activePage === label ? "activeMobile" : "";
+                    
                     return (
                         <ListItem
                             key={label}
                             button
                             onClick={() => onClick(link)}
                             disabled={!isListOpen}
+                            className={activeClassName}
                         >
                             <ListItemIcon>{icon}</ListItemIcon>
                             <ListItemText primary={label} />
@@ -137,7 +138,7 @@ class MobileNavbar extends PureComponent{
     }
 
     render() {
-        const { classes, mobileView, items } = this.props;
+        const { classes, mobileView, items, activePage } = this.props;
         const { isListOpen } = this.state;
         const rootStyle = {
             display: mobileView ? 'block' : 'none'
@@ -155,6 +156,7 @@ class MobileNavbar extends PureComponent{
                     isListOpen={isListOpen}
                     onClick={this.handleOnClickItem}
                     items={items}
+                    activePage={activePage}
                 />
             </div>
         );

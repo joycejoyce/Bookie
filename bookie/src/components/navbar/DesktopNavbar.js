@@ -14,7 +14,7 @@ class DesktopNavbar extends PureComponent {
     render() {
         // console.log("render DesktopNavbar");
 
-        const { classes, mobileView, items, onClickItem } = this.props;
+        const { classes, mobileView, items, onClickItem, activePage } = this.props;
         const rootStyle = {
             display: mobileView ? 'none' : 'block'
         };
@@ -23,10 +23,11 @@ class DesktopNavbar extends PureComponent {
             <div style={rootStyle}>
                 {items.map(item => {
                     const { label, icon, link } = item;
+                    const activeClassName = activePage === label ? "active" : "";
                     return (
                         <Button
                             key={label}
-                            className={classes.btn}
+                            className={classes.btn + " " + activeClassName}
                             onClick={() => onClickItem(link)}
                         >
                             {icon}&nbsp;&nbsp;{label}   

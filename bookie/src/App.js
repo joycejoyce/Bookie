@@ -20,7 +20,6 @@ import {
 } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Auth } from 'aws-amplify';
-import { makeStyles } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {

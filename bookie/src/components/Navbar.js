@@ -26,6 +26,13 @@ const styles = theme => ({
     }
 });
 
+const PageName = {
+    explore: 'Explore Books',
+    library: 'My Library',
+    signIn: 'Sign In',
+    home: 'Home'
+  }
+
 class Navbar extends Component {
     constructor(props) {
         const { classes } = props;
@@ -145,10 +152,10 @@ class Navbar extends Component {
     }
 
     render() {
-        // console.log("render Navbar");
         const { classes, auth, history } = this.props;
         const { mobileView, items, signOutModalCtrl } = this.state;
         const theItems = auth.isAuthenticated ? items.auth : items.nonAuth;
+        const activePage = PageName[window.location.pathname.replaceAll('/', '')];
 
         return (
             <div className="navbar" classes={classes.navbar}>
@@ -161,11 +168,13 @@ class Navbar extends Component {
                         onClickItem={this.handleOnClickItem}
                         items={theItems}
                         history={history}
+                        activePage={activePage}
                     />
                     <DesktopNavbar
                         mobileView={mobileView}
                         onClickItem={this.handleOnClickItem}
                         items={theItems}
+                        activePage={activePage}
                     />
                     <SignOutModal
                         isOpen={signOutModalCtrl.isOpen}

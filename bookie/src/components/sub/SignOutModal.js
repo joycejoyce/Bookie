@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { PageName } from '../../App.js';
 
 const styles = theme => ({
     body: {

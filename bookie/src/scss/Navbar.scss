@@ -18,6 +18,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        .active {
+            border-bottom: 3px solid #FFD166;
+            border-radius: 0;
+        }
+        .activeMobile {
+            background: $lighterBlue;
+        }
         .logo {
             cursor: pointer;
             height: 40px;
