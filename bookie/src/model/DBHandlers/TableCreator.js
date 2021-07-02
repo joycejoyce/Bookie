@@ -51,8 +51,8 @@ export function getParams(TableName) {
 }
 
 const ProvisionedThroughput = {
-    ReadCapacityUnits: 10,
-    WriteCapacityUnits: 10
+    ReadCapacityUnits: 1,
+    WriteCapacityUnits: 1
 };
 
 function getParams_BookAndUser(TableName) {

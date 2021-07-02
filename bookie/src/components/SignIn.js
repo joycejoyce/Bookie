@@ -74,6 +74,10 @@ class SignIn extends Component {
         }
     }
 
+    handleOnClickForgotPwd = () => {
+        this.props.history.push("/forgotPassword");
+    }
+
     checkForm = () => {
         const errMsg_username = this.checkUsername();
         const isValid_username = errMsg_username.length === 0;
@@ -131,7 +135,8 @@ class SignIn extends Component {
                         <InputText data={this.state.username} handleOnChange={this.handleOnChange} />
                         <InputText data={this.state.password} handleOnChange={this.handleOnChange} />
                     </div>
-                    <div className="forgotPwd">Forgot password?</div>
+                    {/* <a href="/forgotPassword"><div className="forgotPwd">Forgot password?</div></a> */}
+                    <div className="forgotPwd" onClick={this.handleOnClickForgotPwd}>Forgot password?</div>
                     <BtnSection leftBtnText="Create account"
                         handleOnClickRightBtn={this.handleOnClickRightBtn}
                     />

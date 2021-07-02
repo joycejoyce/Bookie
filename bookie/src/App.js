@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar.js";
 import Home from "./components/Home.js";
 import CreateAccount from "./components/CreateAccount.js";
 import SignIn from "./components/SignIn.js";
+import ForgotPassword from "./components/ForgotPassword.js";
 import Welcome from "./components/Welcome.js";
 import UserProfile from "./components/UserProfile.js";
 import Explore from "./components/Explore.js";
@@ -17,6 +18,7 @@ import {
 } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Auth } from 'aws-amplify';
+import { makeStyles } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
@@ -91,6 +93,7 @@ class App extends Component {
               <Route path="/explore" component={Explore} />
               <Route path="/exploreResult" render={(props) => <ExploreResult {...props} userAuth={userAuth} /> } />
               <Route path="/library" render={(props) => <Library {...props} userAuth={userAuth} /> } />
+              <Route path="/forgotPassword" component={ForgotPassword} />
               <Route path="/" component={Explore} />
             </Switch>
           </div>
