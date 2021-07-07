@@ -99,6 +99,25 @@ export default function ControlledAccordions() {
           </div>
         </AccordionDetails>
       </Accordion>
+      <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel4bh-content"
+          id="panel4bh-header"
+        >
+          <div className="title">React Programming Techniques</div>
+        </AccordionSummary>
+        <AccordionDetails>
+          <div className="desc">
+            <div><span className="bold problem">★ Encountered problem:</span> When there are lots of checkboxes to render, everytime I click on one of the checkboxes, the other would all been re-rendered and causing bad render performance.</div>
+            <div>
+                <span className="bold solution">★ Solution:</span> Use React.memo to wrapped around the checkbox component. That way, only the props passed into the component changed that it would be re-rendered.
+                (<a href="https://medium.com/@freshmilkdev/reactjs-render-optimization-for-collapsible-material-ui-long-list-with-checkboxes-231b36892e20" target="blank">reference</a>)
+            </div>
+            
+          </div>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 }

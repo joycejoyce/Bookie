@@ -51,8 +51,11 @@
     .bold {
         font-family: Roboto-Medium;
     }
-    .story,.desc {
-        max-width: 80vw;
+    .problem {
+        color: $red;
+    }
+    .solution {
+        color: $green1;
     }
 }
 
