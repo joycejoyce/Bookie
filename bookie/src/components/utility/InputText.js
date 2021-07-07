@@ -1,5 +1,5 @@
 import { Component } from "react";
-import "../scss/InputText.scss";
+import "../../scss/InputText.scss";
 import { getClassName_onFocus, getClassName_onBlur } from "./InputClassNameGetter.js";
 
 class InputText extends Component {

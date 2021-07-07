@@ -193,6 +193,7 @@ class ExploreResult extends Component {
     }
 
     handleOnClickBookStatus = (inputId, name) => {
+        const { username } = this.props.userAuth;
         const { displayedItems } = this.state.filter;
         for (let i = 0; i < displayedItems.length; i ++) {
             const { id } = displayedItems[i];
@@ -200,8 +201,7 @@ class ExploreResult extends Component {
                 const newStatus = !displayedItems[i][name];
                 displayedItems[i][name] = newStatus;
                 const bookInfo = displayedItems[i];
-                saveBookInfo({ username: "test" }, bookInfo); // for test
-                // saveBookInfo(this.props.auth, bookInfo);
+                saveBookInfo({ username }, bookInfo);
                 break;
             }
         }

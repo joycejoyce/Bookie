@@ -6,4 +6,8 @@
     .contents {
         @include btnSection(128px);
     }
+    .innerContents {
+        max-width: $input_max_width;
+        margin: 0 auto;
+    }
 }

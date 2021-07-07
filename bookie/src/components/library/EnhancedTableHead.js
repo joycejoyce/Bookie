@@ -1,6 +1,6 @@
 import { TableHead, TableRow, TableCell, Checkbox, TableSortLabel, IconButton } from '@material-ui/core';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import { checkboxTheme } from '../Theme.js';
+import { checkboxTheme } from '../utility/Theme.js';
 // import { FilterListSharp as FilterIcon } from '@material-ui/icons';
 
 const useStyle = makeStyles((theme) => ({

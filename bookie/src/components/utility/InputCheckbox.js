@@ -1,5 +1,5 @@
 import { Component } from "react";
-import "../scss/InputCheckbox.scss";
+import "../../scss/InputCheckbox.scss";
 
 class InputCheckbox extends Component {
     render() {

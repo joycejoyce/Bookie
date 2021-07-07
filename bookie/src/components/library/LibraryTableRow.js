@@ -1,7 +1,7 @@
 import React from 'react';
 import { TableRow, TableCell, Checkbox } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { checkboxTheme } from '../Theme.js';
+import { checkboxTheme } from '../utility/Theme.js';
 import Thumbnail from "../sub/Thumbnail.js";
 import Rate from "./Rate.js";
 import Review from "./Review.js";

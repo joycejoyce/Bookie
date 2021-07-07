@@ -4,7 +4,7 @@ import { ListItem,
     ListItemText,
     Checkbox
 } from "@material-ui/core";
-import { checkboxTheme } from '../Theme.js';
+import { checkboxTheme } from '../utility/Theme.js';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 const FilterItem = React.memo(({ value, category, checked, onChange, classes }) => {

@@ -17,11 +17,12 @@
       .description {
           font-size: $fontSize_normal;
           text-align: left;
+          letter-spacing: .5px;
       }
       .signInBtn {
           display: block;
-          margin-top: calc(#{$titleMarginTop}*2);
-          @include btn(100%, $btnHeight);
+          margin-top: $titleMarginTop;
+          @include btn(100px, $btnHeight);
           background: transparent;
           color: $blue1;
           border: 2px solid $blue1;

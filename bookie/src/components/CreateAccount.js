@@ -1,11 +1,11 @@
 import { Component } from "react";
 import "../scss/CreateAccount.scss";
-import InputText from "./InputText.js";
-import InputCheckbox from "./InputCheckbox.js";
+import InputText from "./utility/InputText.js";
+import InputCheckbox from "./utility/InputCheckbox.js";
 import BtnSection from "./sub/BtnSection.js";
 import { Auth } from "aws-amplify";
-import { Msg_UsernameBlank, Msg_InvalidEmail, Msg_Password8Chars, Msg_PasswordNotMatch } from "./Message.js";
-import { getClassName_init, getClassName_onSubmit } from "./InputClassNameGetter.js";
+import { Msg_UsernameBlank, Msg_InvalidEmail, Msg_Password8Chars, Msg_PasswordNotMatch } from "./utility/Message.js";
+import { getClassName_init, getClassName_onSubmit } from "./utility/InputClassNameGetter.js";
 
 class CreateAccount extends Component {
     constructor(props) {
@@ -73,6 +73,10 @@ class CreateAccount extends Component {
                 elem.type = "password";
             }
         });
+    }
+
+    handleClickOnLeftBtn = () => {
+        this.props.history.push("signIn");
     }
 
     handleOnClickRightBtn = async () => {
@@ -191,20 +195,23 @@ class CreateAccount extends Component {
             <div className="createAccount">
                 <div className="contents">
                     <h1>Create your Bookie Account</h1>
-                    <div className="formErrMsg">{this.state.errMsg}</div>
-                    <div className="inputSection">
-                        <InputText data={this.state.username} handleOnChange={this.handleOnChange} />
-                        <InputText data={this.state.email} handleOnChange={this.handleOnChange} />
-                        <InputText data={this.state.password} handleOnChange={this.handleOnChange} />
-                        <InputText data={this.state.confirmPassword} handleOnChange={this.handleOnChange} />
-                        <InputCheckbox id="showPassword"
-                            label="Show password"
-                            handleOnClick={(e) => this.handleOnClickShowPassword(e)}
-                        />
+                    <div className="innerContents">
+                        <div className="formErrMsg">{this.state.errMsg}</div>
+                        <div className="inputSection">
+                            <InputText data={this.state.username} handleOnChange={this.handleOnChange} />
+                            <InputText data={this.state.email} handleOnChange={this.handleOnChange} />
+                            <InputText data={this.state.password} handleOnChange={this.handleOnChange} />
+                            <InputText data={this.state.confirmPassword} handleOnChange={this.handleOnChange} />
+                            <InputCheckbox id="showPassword"
+                                label="Show password"
+                                handleOnClick={(e) => this.handleOnClickShowPassword(e)}
+                            />
+                        </div>
+                        <BtnSection leftBtnText="Sign in instead"
+                            handleClickOnLeftBtn={this.handleClickOnLeftBtn}
+                            handleOnClickRightBtn={this.handleOnClickRightBtn} />
+                        </div>
                     </div>
-                    <BtnSection leftBtnText="Sign in instead"
-                        handleOnClickRightBtn={this.handleOnClickRightBtn} />
-                </div>
             </div>
         );
     }

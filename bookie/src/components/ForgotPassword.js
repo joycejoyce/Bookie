@@ -2,7 +2,7 @@ import "../scss/AccountSaver.scss";
 import { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 import { Auth } from "aws-amplify";
-import { validateEmail } from "../utility/FormValidator.js";
+import { validateEmail } from "./utility/FormValidator.js";
 
 export default function ForgotPassword(props) {
     const [email, setEmail] = useState();

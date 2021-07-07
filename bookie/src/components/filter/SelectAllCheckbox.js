@@ -1,4 +1,4 @@
-import { checkboxTheme } from '../Theme.js';
+import { checkboxTheme } from '../utility/Theme.js';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { ListItem,
     ListItemIcon,

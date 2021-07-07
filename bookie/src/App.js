@@ -1,6 +1,6 @@
 import { Component } from "react";
 import "./scss/App.scss";
-import Navbar from "./components/Navbar.js";
+import Navbar from "./components/sub/Navbar.js";
 import Home from "./components/Home.js";
 import CreateAccount from "./components/CreateAccount.js";
 import SignIn from "./components/SignIn.js";
@@ -8,7 +8,6 @@ import ForgotPassword from "./components/ForgotPassword.js";
 import SetNewPassword from "./components/SetNewPassword.js";
 import SetNewPasswordConfirm from "./components/SetNewPasswordConfirm.js";
 import Welcome from "./components/Welcome.js";
-import UserProfile from "./components/UserProfile.js";
 import Explore from "./components/Explore.js";
 import ExploreResult from "./components/ExploreResult.js";
 import LoadingIcon from "./components/sub/LoadingIcon.js";
@@ -90,7 +89,6 @@ class App extends Component {
               <Route path="/createAccount" component={CreateAccount} />
               <Route path="/welcome" component={Welcome} />
               <Route path="/signIn" render={(props) => <SignIn {...props} auth={auth} /> } />
-              <Route path="/userProfile" render={(props) => <UserProfile auth={auth} />} />
               <Route path="/explore" component={Explore} />
               <Route path="/exploreResult" render={(props) => <ExploreResult {...props} userAuth={userAuth} /> } />
               <Route path="/library" render={(props) => <Library {...props} userAuth={userAuth} /> } />

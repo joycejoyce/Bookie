@@ -198,7 +198,7 @@ class LibraryPanels extends Component {
         const checkedItemIds = this.getCheckedItemIds(classification);
         // console.log({ checkedItemIds });
 
-        const auth = { username: "test" };
+        const { auth } = this.props;
         const action = "delete";
         const result = await modifyBookInfo({ auth, checkedItemIds, classification, action });
         // console.log(result);
@@ -231,7 +231,7 @@ class LibraryPanels extends Component {
         const classification = this.state.toRead.id;
         const checkedItemIds = this.getCheckedItemIds(classification);
         console.log({ checkedItemIds });
-        const auth = { username: "test" };
+        const { auth } = this.props;
         const action = "moveToHaveRead";
         const result = await modifyBookInfo({ auth, checkedItemIds, action });
         // console.log(result);

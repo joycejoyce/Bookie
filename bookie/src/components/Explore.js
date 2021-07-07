@@ -1,6 +1,6 @@
 import { Component } from "react";
 import '../scss/Explore.scss';
-import { getClassName_init } from "./InputClassNameGetter.js";
+import { getClassName_init } from "./utility/InputClassNameGetter.js";
 import BtnSection from "./sub/BtnSection";
 import { TextField, Radio, RadioGroup, FormControl, FormControlLabel } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';

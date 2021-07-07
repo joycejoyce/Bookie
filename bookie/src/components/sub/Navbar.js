@@ -1,12 +1,12 @@
 import { Component } from "react";
-import Logo from "./icon/Logo.js";
+import Logo from "../icon/Logo.js";
 import { withStyles } from '@material-ui/core/styles';
-import '../scss/Navbar.scss';
+import '../../scss/Navbar.scss';
 import { withRouter } from 'react-router-dom';
-import SignOutModal from './sub/SignOutModal.js';
+import SignOutModal from './SignOutModal.js';
 import { Auth } from "aws-amplify";
-import MobileNavbar from './navbar/MobileNavbar.js';
-import DesktopNavbar from './navbar/DesktopNavbar.js';
+import MobileNavbar from '../navbar/MobileNavbar.js';
+import DesktopNavbar from '../navbar/DesktopNavbar.js';
 import {
     Explore as ExploreIcon,
     ImportContacts as LibraryIcon,
@@ -28,6 +28,7 @@ const styles = theme => ({
 
 const PageName = {
     explore: 'Explore Books',
+    exploreResult: 'Explore Books',
     library: 'My Library',
     signIn: 'Sign In',
     home: 'Home'
@@ -155,7 +156,7 @@ class Navbar extends Component {
         const { classes, auth, history } = this.props;
         const { mobileView, items, signOutModalCtrl } = this.state;
         const theItems = auth.isAuthenticated ? items.auth : items.nonAuth;
-        const activePage = PageName[window.location.pathname.replaceAll('/', '')];
+        let activePage = PageName[window.location.pathname.replaceAll('/', '')];
 
         return (
             <div className="navbar" classes={classes.navbar}>

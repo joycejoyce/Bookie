@@ -1,5 +1,5 @@
 import { lighten } from "@material-ui/core";
-import { Msg_UnexpectedSearchCond } from "../components/Message.js";
+import { Msg_UnexpectedSearchCond } from "../components/utility/Message.js";
 import { sendReq_GET } from "./HttpReqSender.js";
 
 const queryParam = {

@@ -1,10 +1,10 @@
 import { Component } from "react";
 import '../scss/SignIn.scss';
-import InputText from "./InputText.js";
+import InputText from "./utility/InputText.js";
 import BtnSection from "./sub/BtnSection.js";
 import { Auth } from "aws-amplify";
-import { Msg_UsernameBlank, Msg_PasswordBlank } from "./Message.js";
-import { getClassName_init, getClassName_onSubmit } from "./InputClassNameGetter.js";
+import { Msg_UsernameBlank, Msg_PasswordBlank } from "./utility/Message.js";
+import { getClassName_init, getClassName_onSubmit } from "./utility/InputClassNameGetter.js";
 
 class SignIn extends Component {
     constructor(props) {
@@ -42,6 +42,10 @@ class SignIn extends Component {
                 value
             }
         }));
+    }
+
+    handleOnClickLeftBtn = () => {
+        this.props.history.push("/createAccount");
     }
 
     handleOnClickRightBtn = async () => {
@@ -138,6 +142,7 @@ class SignIn extends Component {
                     {/* <a href="/forgotPassword"><div className="forgotPwd">Forgot password?</div></a> */}
                     <div className="forgotPwd" onClick={this.handleOnClickForgotPwd}>Forgot password?</div>
                     <BtnSection leftBtnText="Create account"
+                        handleClickOnLeftBtn={this.handleOnClickLeftBtn}
                         handleOnClickRightBtn={this.handleOnClickRightBtn}
                     />
                 </div>

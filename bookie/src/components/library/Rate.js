@@ -2,7 +2,7 @@ import React from 'react';
 import { IconButton } from '@material-ui/core';
 import { Star as FilledStarIcon, StarBorder as EmptyStarIcon } from '@material-ui/icons';
 import { withStyles, ThemeProvider } from '@material-ui/core/styles';
-import { rateTheme } from '../Theme.js';
+import { rateTheme } from '../utility/Theme.js';
 
 const styles = theme => ({
     root: {
