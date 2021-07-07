@@ -95,7 +95,8 @@ class App extends Component {
               <Route path="/forgotPassword" component={ForgotPassword} />
               <Route path="/setNewPassword" component={SetNewPassword} />
               <Route path="/setNewPasswordConfirm" component={SetNewPasswordConfirm} />
-              <Route path="/" component={SetNewPasswordConfirm} />
+              <Route path="/home" component={Home} />
+              <Route path="/" component={Home} />
             </Switch>
           </div>
         </Router>
