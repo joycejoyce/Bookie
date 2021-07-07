@@ -57,6 +57,11 @@
     .solution {
         color: $green1;
     }
+    .pairContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
 }
 
 .titleSection {
