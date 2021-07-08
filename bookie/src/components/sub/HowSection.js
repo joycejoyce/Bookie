@@ -122,7 +122,7 @@ export default function ControlledAccordions() {
                     </div>
                 </AccordionDetails>
             </Accordion>
-            <Accordion id="specialEffect" expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
+            <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel5bh-content"
@@ -131,11 +131,28 @@ export default function ControlledAccordions() {
                     <div className="title">Special Effect</div>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <div className="desc">
+                    <div className="desc" id="specialEffect">
                         <div className="itemTitle">Effect #1 Loading</div>
-                        <iframe width="600px" height="220px" src="//jsfiddle.net/dorith1989/p04dr1gs/22/embedded/js,html,css,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+                        <iframe src="//jsfiddle.net/dorith1989/p04dr1gs/22/embedded/js,html,css,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
                         <div className="itemTitle">Effect #2 Style scrollbar</div>
-                        <iframe width="600px" height="220px" src="//jsfiddle.net/dorith1989/c7ods3t4/26/embedded/html,css,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+                        <iframe src="//jsfiddle.net/dorith1989/c7ods3t4/26/embedded/html,css,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+                    </div>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')}>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel6bh-content"
+                    id="panel6bh-header"
+                >
+                    <div className="title">JavaScript Knowledge</div>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <div className="desc">
+                        <div className="itemTitle">Point #1 Compare Strings</div>
+                        <iframe src="//jsfiddle.net/dorith1989/fu5qy3sx/8/embedded/js/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+                        <div className="itemTitle">Point #2 Send HTTP Request</div>
+                        <iframe src="//jsfiddle.net/dorith1989/1zv23yh7/19/embedded/js/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
                     </div>
                 </AccordionDetails>
             </Accordion>
