@@ -12,7 +12,13 @@ const styles = theme => ({
             color: theme.palette.secondary.main
         }
     },
+    table: {
+        overflow: 'scroll',
+        '-webkit-overflow-scrolling': 'touch'
+    },
     tableContainer: {
+        overflow: 'scroll',
+        '-webkit-overflow-scrolling': 'touch',
         '&::-webkit-scrollbar': {
             height: '8px',
             width: '8px'
