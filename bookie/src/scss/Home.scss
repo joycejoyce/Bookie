@@ -13,9 +13,35 @@
     }
 }
 
+@mixin scrollbar() {
+    /* width (for vertical scrollbar) or heigt (for horizontal scrollbar) */
+    ::-webkit-scrollbar {
+        height: 10px;
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: rgb(231, 231, 231);
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: $blue1;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: $blue2;
+    }
+}
+
 .howSection {
-    .MuiAccordionDetails-root {
-        overflow-x: visible;
+    @include scrollbar();
+    #specialEffect {
+        overflow-x: auto;
     }
     margin-top: 10px;
     .title {

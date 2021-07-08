@@ -16,14 +16,14 @@ class Home extends Component {
         return(
             <div className="home">
                 <div className="contents">
-                    <div className="section whatSection">
+                    <div className="section">
                         <TitleSection t1="What" t2="Bookie Do" />
                     </div>
-                    <div className="section howSection">
-                        <TitleSection t1="How" t2="Bookie Do" />
+                    <div className="section">
+                        <TitleSection t1="How" t2="Bookie Do It" />
                         <HowSection />
                     </div>
-                    <div className="section aboutSection">
+                    <div className="section">
                         <TitleSection t1="About" t2="the Creator" />
                     </div>
                 </div>

@@ -61,7 +61,7 @@ export default function ControlledAccordions() {
                     <div className="desc">
                         <div className="story">
                             Follow the UI design flow makes the development for Bookie much smoother.<br /><br />
-                            For example, without following the flow, on top of head, only "sign in" button are included in the sign-in page.<br /><br />
+                            For example, without following the flow, on top of my head, only the "sign in" button is included in the sign-in page.<br /><br />
                             But after this series of design SOP, I found out the whole process of "user account management" should be considered all together, including "account rescue" and "reset password"
                         </div>
                         <br />
@@ -80,7 +80,7 @@ export default function ControlledAccordions() {
                         </div>
                         <div className="itemTitle">3. Flow Chart</div>
                         <div className="itemDesc">
-                            <div className="brief italic">The flow chart is being used to confirm all status and major functions, and is essential for sketching the wireframe later.</div>
+                            <div className="brief italic">The flow chart is being used to confirm all status and major functions, and is essential for sketching wireframe diagrams later.</div>
                         </div>
                         <div className="itemTitle">4. UI Flow</div>
                         <div className="itemDesc">
@@ -119,6 +119,23 @@ export default function ControlledAccordions() {
                         </div>
                         {/* <div><span className="bold problem">★ Encountered problem #2:</span> The state handlers should be located at the parent or the child component?</div>
                         <ProsConsTable /> */}
+                    </div>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion id="specialEffect" expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel5bh-content"
+                    id="panel5bh-header"
+                >
+                    <div className="title">Special Effect</div>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <div className="desc">
+                        <div className="itemTitle">Effect #1 Loading</div>
+                        <iframe width="600px" height="220px" src="//jsfiddle.net/dorith1989/p04dr1gs/22/embedded/js,html,css,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+                        <div className="itemTitle">Effect #2 Style scrollbar</div>
+                        <iframe width="600px" height="220px" src="//jsfiddle.net/dorith1989/c7ods3t4/26/embedded/html,css,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
                     </div>
                 </AccordionDetails>
             </Accordion>

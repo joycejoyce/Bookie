@@ -106,6 +106,7 @@ class Explore extends Component {
                             label={this.state.keyword.label}
                             value={this.state.keyword.value}
                             variant="outlined"
+                            autoComplete="off"
                             onChange={this.handleOnChange}
                         />
                         <FormControl component="fieldset" >
