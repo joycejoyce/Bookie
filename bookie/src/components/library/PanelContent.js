@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Paper, TableContainer, Table, TableBody } from '@material-ui/core';
+import { TableContainer, Table, TableBody } from '@material-ui/core';
 import EnhancedTableToolbar from './EnhancedTableToolbar.js';
 import EnhancedTableHead from './EnhancedTableHead.js';
 import { withStyles } from '@material-ui/core/styles';
@@ -7,18 +7,15 @@ import LibraryTableRow from './LibraryTableRow.js';
 
 const styles = theme => ({
     root: {
-        width: '100%',
         '& .MuiTableCell-root': {
             color: theme.palette.secondary.main
         }
     },
     table: {
-        overflow: 'scroll',
-        '-webkit-overflow-scrolling': 'touch'
+        minWidth: '400px',
     },
     tableContainer: {
-        overflow: 'scroll',
-        '-webkit-overflow-scrolling': 'touch',
+        overflow: 'auto',
         '&::-webkit-scrollbar': {
             height: '8px',
             width: '8px'
@@ -62,7 +59,7 @@ class PanelContent extends Component {
                 className={classes.root}
             >
                 {!hidden && (
-                    <Paper>
+                    <div>
                         <EnhancedTableToolbar
                             numSelected={numSelected}
                             numTotal={numTotal}
@@ -70,9 +67,7 @@ class PanelContent extends Component {
                             showMoveToHeadReadIcon={showMoveToHeadReadIcon}
                         />
                         <TableContainer className={classes.tableContainer}>
-                            <Table
-                                className={classes.table}
-                            >
+                            <Table className={classes.table}>
                                 <EnhancedTableHead
                                     ctrl={ctrl}
                                     sort={sort}
@@ -101,7 +96,7 @@ class PanelContent extends Component {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                    </Paper>
+                    </div>
                 )}
             </div>
         );
