@@ -1,5 +1,16 @@
 @import "App";
 
+a {
+    position: relative;
+    width: fit-content;
+}
+
+.logo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .navbar {
     z-index: 99;
     position: fixed;

@@ -12,7 +12,7 @@ import {
     ImportContacts as LibraryIcon,
     AccountCircleSharp as SignInIcon,
     ExitToApp as SignOutIcon,
-    Info as AboutIcon
+    Home as HomeIcon
 } from '@material-ui/icons';
 
 const styles = theme => ({
@@ -32,7 +32,13 @@ const PageName = {
     library: 'My Library',
     signIn: 'Sign In',
     home: 'Home'
-  }
+}
+
+function getActivePage() {
+    const pathName = window.location.pathname === '/' ? 'home' : window.location.pathname.replaceAll('/', '');
+    const activePage = PageName[pathName];
+    return activePage;
+}
 
 class Navbar extends Component {
     constructor(props) {
@@ -65,9 +71,9 @@ class Navbar extends Component {
                         link: '/signOut'
                     },
                     {
-                        label: 'About Bookie',
-                        icon: <AboutIcon className={classes.icon} />,
-                        link: '#'
+                        label: 'Home',
+                        icon: <HomeIcon className={classes.icon} />,
+                        link: '/'
                     }
                 ],
                 nonAuth: [
@@ -82,9 +88,9 @@ class Navbar extends Component {
                         link: '/signIn'
                     },
                     {
-                        label: 'About Bookie',
-                        icon: <AboutIcon className={classes.icon} />,
-                        link: '#'
+                        label: 'Home',
+                        icon: <HomeIcon className={classes.icon} />,
+                        link: '/'
                     }
                 ]
             }
@@ -133,6 +139,10 @@ class Navbar extends Component {
         }));
     }
 
+    handleOnClickLogo = () => {
+        document.location.href = "/";
+    }
+
     componentDidMount() {
         const minWidth = 850;
 
@@ -156,12 +166,14 @@ class Navbar extends Component {
         const { classes, auth, history } = this.props;
         const { mobileView, items, signOutModalCtrl } = this.state;
         const theItems = auth.isAuthenticated ? items.auth : items.nonAuth;
-        let activePage = PageName[window.location.pathname.replaceAll('/', '')];
+        // const pathName = window.location.pathname === '/' ? 'home' : window.location.pathname.replaceAll('/', '');
+        // const activePage = PageName[pathName];
+        const activePage = getActivePage();
 
         return (
             <div className="navbar" classes={classes.navbar}>
                 <div className="contents">
-                    <Logo className="logo" />
+                    <a href="/"><Logo className="logo" /></a>
                     <MobileNavbar
                         classes={classes}
                         mobileView={mobileView}

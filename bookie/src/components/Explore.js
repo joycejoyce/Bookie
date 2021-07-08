@@ -110,7 +110,7 @@ class Explore extends Component {
                             onChange={this.handleOnChange}
                         />
                         <FormControl component="fieldset" >
-                            <RadioGroup aria-label="gender" value={this.state.condition} onChange={this.handleOnSelect}>
+                            <RadioGroup value={this.state.condition} onChange={this.handleOnSelect}>
                                 <div className="checkSection">
                                     {
                                         options.map(opt => (

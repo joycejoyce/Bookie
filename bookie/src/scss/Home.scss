@@ -40,7 +40,7 @@
 
 .howSection {
     @include scrollbar();
-    #specialEffect {
+    #specialEffect,#jsKnowledge {
         overflow-x: auto;
     }
     iframe {
