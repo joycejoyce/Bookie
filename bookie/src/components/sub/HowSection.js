@@ -135,7 +135,7 @@ export default function ControlledAccordions() {
                         <div className="itemTitle">Effect #1 Loading</div>
                         <iframe src="//jsfiddle.net/dorith1989/p04dr1gs/22/embedded/js,html,css,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
                         <div className="itemTitle">Effect #2 Style scrollbar</div>
-                        <iframe src="//jsfiddle.net/dorith1989/c7ods3t4/26/embedded/html,css,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+                        <iframe src="//jsfiddle.net/dorith1989/c7ods3t4/29/embedded/html,css,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
                     </div>
                 </AccordionDetails>
             </Accordion>

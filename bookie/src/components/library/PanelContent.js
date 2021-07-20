@@ -11,14 +11,20 @@ const styles = theme => ({
             color: theme.palette.secondary.main
         }
     },
+    wrapper: {
+        
+    },
     table: {
+        width: '100%',
         minWidth: '400px',
     },
     tableContainer: {
-        overflow: 'auto',
+        width: '100%',
+        overflow: 'auto !important',
         '&::-webkit-scrollbar': {
             height: '8px',
-            width: '8px'
+            width: '8px',
+            '&::-webkit-overflow-scrolling': 'auto !important',
         },
         '&::-webkit-scrollbar-thumb': {
             background: '#8E9699',
@@ -59,7 +65,7 @@ class PanelContent extends Component {
                 className={classes.root}
             >
                 {!hidden && (
-                    <div>
+                    <div className={classes.wraper}>
                         <EnhancedTableToolbar
                             numSelected={numSelected}
                             numTotal={numTotal}
