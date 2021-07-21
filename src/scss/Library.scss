@@ -1,0 +1,11 @@
+@import "App";
+
+.library {
+    @extend %commonSettings;
+    .contents {
+        padding-bottom: 10px;
+    }
+    .MuiTableSortLabel-root *,.toolbarTitle {
+        font-family: Montserrat-SemiBold;
+    }
+}

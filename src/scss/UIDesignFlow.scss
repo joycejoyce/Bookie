@@ -1,0 +1,96 @@
+@import "App";
+
+.uiDesignFlow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.uiDesignFlowCard {
+    width: 200px;
+    min-width: 200px;
+    height: 233px;
+    position: relative;
+    * {
+        font-family: Montserrat-Regular;
+        color: $darkBlue;
+    }
+    button {
+        @include absoluteCenter();
+        width: 98%;
+    }
+}
+
+.card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: 1s all ease;
+    &:hover,&:active {
+        transform: rotateY(180deg);
+    }
+    .MuiPaper-root,.back,.front {
+        background: #E8F6FB;
+    }
+}
+
+.back,.front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.front {
+    .wrapper {
+        @include absoluteCenter();
+        width: 95%;
+        text-align: center;
+        display: grid;
+        grid-template-rows: 1.3fr 1fr 1fr 3fr;
+        align-items: center;
+        .num {
+            font-family: Montserrat-Bold;
+            font-size: 1.8rem;
+        }
+        .title {
+            font-size: 1.2rem;
+            color: $darkBlue;
+            font-family: Montserrat-SemiBold;
+        }
+        .line {
+            width: 100%;
+            height: 1px;
+            border: none;
+            border-bottom: .1px solid $darkBlue;
+            margin: 0 auto;
+        }
+        .desc {
+            font-size: .875rem;
+            font-family: Montserrat-Regular;
+        }
+    }
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+.userStory {
+    @include absoluteCenter();
+    width: 100%;
+    text-align: center;
+    display: grid;
+    align-items: center;
+    height: 90%;
+    .title {
+        color: $darkBlue;
+        font-family: Montserrat-Bold;
+        font-size: 1.2rem;
+    }
+    .desc {
+        font-family: Montserrat-Regular;
+        font-size: 1rem;
+    }
+}

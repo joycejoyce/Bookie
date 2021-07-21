@@ -1,0 +1,29 @@
+@mixin btnSection($leftBtnWidth) {
+  .leftBtn {
+    @include btn($leftBtnWidth, $btnHeight);
+    transform: translateX(-10px);
+    border: none;
+    background: transparent;
+    color: $blue1;
+
+    /*animation*/
+    &:hover {
+      background-position: left;
+      background: linear-gradient(to left, $lightBlue 50%, white 50%) right;
+      background-size: 200%;
+      transition: 0.1s ease-out;
+    }
+  }
+  .rightBtn {
+    @include btn(83px, $btnHeight);
+    border: none;
+    background: $blue1;
+    color: white;
+    &:hover {
+      background: $blue2;
+    }
+    &:active {
+      background: $blue1;
+    }
+  }
+}

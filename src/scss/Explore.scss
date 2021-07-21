@@ -1,0 +1,32 @@
+@import "App";
+@import "BtnSection";
+
+.explore {
+    @extend %commonSettings;
+    .contents {
+        @include btnSection(128px);
+        max-width: $input_max_width;
+        .rightBtn {
+            position: absolute; right: 0;
+            width: 100px;
+        }
+        .searchCondSection {
+            display: flex;
+            flex-direction: column;
+            /*.checkSection {
+                display: grid;
+                grid-template-columns: 1fr;
+                margin-top: .5rem;
+            }*/
+            .checkSection {
+                display: flex;
+                flex-direction: column;
+                margin-top: .5rem;
+            }
+        }
+        .MuiFormControlLabel-label {
+            font-family: Roboto-Medium;
+            letter-spacing: .4px;
+        }
+    }
+}
