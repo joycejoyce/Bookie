@@ -1,14 +1,6 @@
-import "../../scss/UIDesignFlow.scss";
 import { Paper } from '@material-ui/core';
-// import { useState } from 'react';
 
 export default function UIDesignFlowCard({num, title, desc, backElem}) {
-    // const [ isFront, setIsFront ] = useState(true);
-
-    // const handleOnClick = () => {
-    //     setIsFront(!isFront);
-    // }
-
     return (
         <div className="uiDesignFlowCard">
             <div className="card">

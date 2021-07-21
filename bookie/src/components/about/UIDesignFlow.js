@@ -1,3 +1,4 @@
+import "../../scss/UIDesignFlow.scss";
 import UIDesignFlowCard from "./UIDesignFlowCard";
 import UserStory from "./UserStory.js";
 import LinkBtn from "./LinkBtn.js";
@@ -17,7 +18,7 @@ export default function UIDeisngFlow() {
                 desc="Turn the user story into an easy-to-understand mind map"
                 backElem={
                     <LinkBtn
-                        text="Functional Map"
+                        text="Bookie's Functional Map"
                         link="https://drive.google.com/file/d/147xwMJWvZ3xwmdpNiVvM9lYsPgrLhMni/view?usp=sharing"
                     />
                 }
@@ -28,7 +29,7 @@ export default function UIDeisngFlow() {
                 desc="The flow of major functions"
                 backElem={
                     <LinkBtn
-                        text="Flow Chart"
+                        text="Bookie's Flow Chart"
                         link="https://docs.google.com/presentation/d/1_xY2oPmcajoFJkBx6FuaFJBbeHqTdn9KH93AXWWGk8Y/edit?usp=sharing"
                     />
                 }
@@ -39,7 +40,7 @@ export default function UIDeisngFlow() {
                 desc="Use a diagram to explain which pages would be visited to achieve a certain task"
                 backElem={
                     <LinkBtn
-                        text="UI Flow (sign-in)"
+                        text="Bookie's UI Flow (sign-in)"
                         link="https://drive.google.com/file/d/1QkRrWsty9u7rf5R5DLuOm1oJpuwMbGjw/view?usp=sharing"
                     />
                 }
@@ -50,7 +51,7 @@ export default function UIDeisngFlow() {
                 desc="The blueprint of each page"
                 backElem={
                     <LinkBtn
-                        text="Wireframe"
+                        text="Bookie's Wireframe"
                         link="https://www.figma.com/file/hlVjhmInLCDssjlMYgYpCN/Bookie-Wireframe"
                     />
                 }
@@ -61,7 +62,7 @@ export default function UIDeisngFlow() {
                 desc="The final look of each page"
                 backElem={
                     <LinkBtn
-                        text="Mockup"
+                        text="Bookie's Mockup"
                         link="https://www.figma.com/file/6vSZYTaM3GbYupyjTl5E6n/Bookie-Mockup"
                     />
                 }

@@ -1,17 +1,20 @@
-import { Button } from '@material-ui/core';
 import { LaunchOutlined as LinkIcon } from '@material-ui/icons';
+import { Button } from '@material-ui/core';
 
 export default function LinkBtn({text, link}) {
+    const handleOnClick = () => {
+        window.open(link);
+    }
+
     return (
-        <div className="linkBtn">
-            <a href={link} target="_blank">
-                <div className="text">
-                    Bookie's
-                    <br />
-                    {text}
-                </div>
-                <LinkIcon />
-            </a>
-        </div>
+        <Button
+            variant="outlined"
+            color="secondary"
+            size="large"
+            endIcon={<LinkIcon />}
+            onClick={handleOnClick}
+        >
+            {text}
+        </Button>
     );
 }
