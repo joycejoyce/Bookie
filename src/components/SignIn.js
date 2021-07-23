@@ -42,6 +42,7 @@ class SignIn extends Component {
                 value
             }
         }));
+        this.setState({ errMsg: "" });
     }
 
     handleOnClickLeftBtn = () => {

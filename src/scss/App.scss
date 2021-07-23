@@ -190,3 +190,10 @@ body {
     font-family: Montserrat-Regular;
   }
 }
+
+.formErrMsg {
+  color: $red;
+  margin-bottom: .5rem;
+  font-family: Roboto-Medium;
+  letter-spacing: .3px;
+}

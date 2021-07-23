@@ -56,7 +56,7 @@ export default function ForgotPasswordVerification(props) {
                 info.vCode,
                 info.newPwd
             );
-            props.history.push("/changePasswordConfirm");
+            props.history.push("/setNewPasswordConfirm");
         } catch (error) {
             console.log(error);
             setErrMsg({...errMsg, submit: error.message});

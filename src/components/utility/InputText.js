@@ -25,7 +25,9 @@ class InputText extends Component {
                 <input id={name} value={value} type={type}
                 onFocus={(e) => this.handleOnFocus(e, data)}
                 onChange={handleOnChange}
-                onBlur={(e) => this.handleOnBlur(e, data)} />
+                onBlur={(e) => this.handleOnBlur(e, data)}
+                autoComplete="off"
+            />
                 <div className="errMsg">{errMsg}</div>
             </div>
         );

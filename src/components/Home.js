@@ -1,6 +1,7 @@
 import { Component } from "react";
 import '../scss/Home.scss';
-import HowSection from './sub/HowSection.js';
+import HowSection from './howSection/HowSection.js';
+import WhatSection from './whatSection/WhatSection.js';
 
 function TitleSection({t1, t2}) {
     return (
@@ -18,6 +19,7 @@ class Home extends Component {
                 <div className="contents">
                     <div className="section">
                         <TitleSection t1="What" t2="Bookie Do" />
+                        <WhatSection />
                     </div>
                     <div className="section">
                         <TitleSection t1="How" t2="Bookie Do It" />

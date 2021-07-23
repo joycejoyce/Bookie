@@ -3,15 +3,8 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import UIDesignFlow from '../about/UIDesignFlow.js';
-import CodingTechnique from '../about/CodingTechnique.js';
-// import ProsConsTable from './ProsConsTable.js';
-
-// function MyAccordion({title, desc}) {
-//     return (
-
-//     )
-// }
+import UIDesignFlow from '../howSection/UIDesignFlow.js';
+import CodingTechnique from '../howSection/CodingTechnique.js';
 
 export default function ControlledAccordions() {
     const [expanded, setExpanded] = React.useState(false);

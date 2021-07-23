@@ -32,6 +32,10 @@ export default function CodingTechnique() {
                 text="Improve Checkbox Render Performance"
                 link="https://medium.com/@freshmilkdev/reactjs-render-optimization-for-collapsible-material-ui-long-list-with-checkboxes-231b36892e20"
             />
+            <LinkBtn 
+                text="Slide Effect"
+                link="https://jsfiddle.net/dorith1989/cv0Lfo47/80/"
+            />
         </div>
     );
 }
