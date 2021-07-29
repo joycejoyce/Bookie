@@ -25,9 +25,9 @@ class Home extends Component {
                         <TitleSection t1="How" t2="Bookie Do It" />
                         <HowSection />
                     </div>
-                    <div className="section">
+                    {/* <div className="section">
                         <TitleSection t1="About" t2="the Creator" />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         );

@@ -143,13 +143,17 @@ export default function WhatSection() {
     }
 
     useEffect(() => {
-        rootElem = document.querySelector(".whatSection .itemWrapper");
-        init("left");
+        // rootElem = document.querySelector(".whatSection .itemWrapper");
+        // init("left");
     });
 
     return (
         <div className="whatSection">
-            <div className="container">
+            <video controls>
+                <source src="WhatBookieDo.mp4" type="video/mp4" />
+                Your browser does not support HTML video.
+            </video>
+            {/* <div className="container">
                 <IconButton
                     className="navIcon left"
                     onClick={() => move("right")}
@@ -191,7 +195,7 @@ export default function WhatSection() {
                     <IndiButton text="4" />
                     <IndiButton text="5" />
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
