@@ -144,10 +144,10 @@ class Navbar extends Component {
     }
 
     componentDidMount() {
-        const minWidth = 850;
+        const minWidth = 650;
 
         const setResponsiveness = () => {
-            return window.innerWidth < minWidth
+            return document.querySelector(".navbar .contents").offsetWidth < minWidth
               ? this.setState({ mobileView: true })
               : this.setState({ mobileView: false })
           };
